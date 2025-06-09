@@ -28,3 +28,6 @@ map('n', '<leader>f', ':lua vim.lsp.buf.code_action()<CR>', { desc = 'Code Actio
 
 map('n', '[d', ':lua vim.diagnostic.goto_prev()<CR>', { desc = 'Previous Diagnostic' })
 map('n', ']d', ':lua vim.diagnostic.goto_next()<CR>', { desc = 'Next Diagnostic' })
+
+vim.api.nvim_set_keymap('n', '<C-p>', ':Files<CR>', { noremap = true, silent = true })
+
