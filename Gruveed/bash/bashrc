@@ -175,14 +175,3 @@ elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
 
-# # ═══════════════════════════════════════════════════════════════════════════════
-# # AESTHETIC WELCOME MESSAGE
-# # ═══════════════════════════════════════════════════════════════════════════════
-#
-# if [[ $- == *i* ]]; then
-#     echo -e "${CREAM}╭─────────────────────────────────────────╮${RESET}"
-#     echo -e "${CREAM}│${RESET}  ${BOLD}${GOLD}Welcome back, $(whoami)!${RESET}                    ${CREAM}│${RESET}"
-#     echo -e "${CREAM}│${RESET}  ${DIM}${STONE}$(date '+%A, %B %d %Y - %H:%M')${RESET}       ${CREAM}│${RESET}"
-#     echo -e "${CREAM}╰─────────────────────────────────────────╯${RESET}"
-#     echo
-# fi
