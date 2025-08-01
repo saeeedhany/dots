@@ -1,0 +1,5 @@
+dwmblocks &
+feh --bg-fill ~/Picture/Wallpaper/nature.jpg &
+picom &
+exec dwm
+
