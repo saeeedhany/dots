@@ -1,0 +1,41 @@
+
+/* Terminal colors (16 first used in escape sequence) */
+static const char *colorname[] = {
+	/* 8 normal colors */
+	"#282828", // black
+	"#cc241d", // red
+	"#98971a", // green
+	"#d79921", // yellow
+	"#458588", // blue
+	"#b16286", // magenta
+	"#689d6a", // cyan
+	"#a89984", // white (light gray)
+
+	/* 8 bright colors */
+	"#928374", // bright black (gray)
+	"#fb4934", // bright red
+	"#b8bb26", // bright green
+	"#fabd2f", // bright yellow
+	"#83a598", // bright blue
+	"#d3869b", // bright magenta
+	"#8ec07c", // bright cyan
+	"#ebdbb2", // bright white
+
+	[255] = 0,
+
+	/* Extra colors (used for default colors) */
+	"#ebdbb2", // 256 -> foreground (light beige)
+	"#282828", // 257 -> background (dark gray)
+	"#fe8019", // 258 -> cursor (orange)
+	"#3c3836", // 259 -> reverse cursor (gray background-ish)
+};
+
+
+/*
+ * Default colors (colorname index)
+ * foreground, background, cursor, reverse cursor
+ */
+unsigned int defaultfg = 256;
+unsigned int defaultbg = 257;
+unsigned int defaultcs = 258;
+static unsigned int defaultrcs = 259;
