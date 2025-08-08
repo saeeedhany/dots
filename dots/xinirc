@@ -1,5 +1,5 @@
 dwmblocks &
-feh --bg-fill ~/Picture/Wallpaper/nature.jpg &
+feh --bg-fill ~/Picture/Wallpaper/[Your choosin image.jpg/png\etc..] &
 picom &
 exec dwm
 
