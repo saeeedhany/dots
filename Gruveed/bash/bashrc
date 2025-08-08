@@ -84,16 +84,32 @@ alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
 
+# Command Faults
+# Navigation
+alias cdc="cd"
+alias c="cd"
+
+# Clear
+alias claer="clear"
+alias clewar="clear"
+alias clwear="clear"
+alias clea="clear"
+alias clae="clear"
+alias clar="clear"
+
+
 # Enhanced ls with custom colors
 export LS_COLORS="di=1;38;2;168;180;158:fi=0;38;2;204;195;184:ln=0;38;2;188;158;158:ex=1;38;2;218;188;148"
 alias ls="ls --color=auto"
 alias ll="ls -alF --color=auto"
 alias la="ls -A --color=auto"
+alias lh="ls -lh --color=auto"
 alias l="ls -CF --color=auto"
 alias tree="tree -C"
 
 # Editor
 alias v="nvim"
+alias vi="nvim"
 alias vim="nvim"
 
 # Enhanced cat
@@ -108,6 +124,13 @@ alias egrep="egrep --color=auto"
 alias gs="git status --short"
 alias gl="git log --oneline --graph --decorate --color=always"
 alias gd="git diff --color=always"
+
+# System
+alias upgrade="sudo pacman -Syu"
+alias u="sudo pacman -Syu"
+
+# Backgground
+alias f="feh --bg-fill"
 
 # System info
 alias df="df -h"
