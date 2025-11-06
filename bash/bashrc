@@ -83,6 +83,7 @@ bind -x '"\C-r": __fzf_history_search__'
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
+alias e="exit"
 
 # Command Faults
 # Navigation
@@ -128,14 +129,28 @@ alias gd="git diff --color=always"
 # System
 alias upgrade="sudo pacman -Syu"
 alias u="sudo pacman -Syu"
+alias install="sudo pacman -S"
+alias i="sudo pacman -S"
 
-# Backgground
+alias shutup="shutdown now"
+alias calmdown="shutdown now"
+alias takeiteasy="shutdown now"
+
+# Background
 alias f="feh --bg-fill"
 
 # System info
 alias df="df -h"
 alias free="free -h"
 alias du="du -h"
+
+# Other
+alias nv="watch -n 1 nvidia-smi"
+alias open="xdg-open"
+
+# Applications
+alias unity="~/Scripts/unity-cli.sh"
+
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # ENHANCED HISTORY SETTINGS
