@@ -1,5 +1,6 @@
 dwmblocks &
-feh --bg-fill ~/Picture/Wallpaper/[Your choosin image.jpg/png\etc..] &
+dunst &
+sxhkd &
+feh --bg-fill ~/Pictures/Wallpapers/cyberpunk.jpg &
 picom &
 exec dwm
-
