@@ -1,20 +1,44 @@
-# ThePrimeSetup.conf 
-the ThePrimeSetup.conf is my daily usable tools for my Linux(Arch btw) environment.
+# ThePrimeSetup.conf
 
-### here you should see the configuration files to these following tools : 
+**ThePrimeSetup.conf** is a curated collection of configuration files and daily-use tools that power my Arch Linux environment.
 
-- [Bash](https://github.com/saeeedhany/ThePrimeSetup.conf/tree/main/bash)
-- [Nvim](https://github.com/saeeedhany/ThePrimeSetup.conf/tree/main/nvim)
-- [Tmux](https://github.com/saeeedhany/ThePrimeSetup.conf/tree/main/tmux)
+This repository reflects a systems-oriented, minimalist workflow focused on efficiency, clarity, and full control over the development environment.
 
-[Xserver](https://github.com/saeeedhany/ThePrimeSetup.conf/tree/main/xdots) scripts :
+---
 
-- xinitrc
-- xprofile
-- bash_profile
+## Included Configurations
 
-### And for the aesthetic look : 
+This repository contains configuration files for the following tools:
 
-Here are some good [Wallpapers](https://github.com/saeeedhany/ThePrimeSetup.conf/tree/main/Wallpapers)
+- **[Bash](https://github.com/saeeedhany/ThePrimeSetup.conf/tree/main/bash)**  
+  Shell customizations and workflow enhancements
 
-And finally the themes to [st](https://github.com/saeeedhany/ThePrimeSetup.conf/tree/main/stColor)
+- **[Neovim](https://github.com/saeeedhany/ThePrimeSetup.conf/tree/main/nvim)**  
+  A carefully tuned editor setup focused on speed, extensibility, and keyboard-driven workflows
+
+- **[Tmux](https://github.com/saeeedhany/ThePrimeSetup.conf/tree/main/tmux)**  
+  Terminal multiplexing optimized for long-running sessions and parallel tasks
+
+---
+
+## X Server Configuration
+
+X-related startup and environment configuration scripts:
+
+- **[xdots](https://github.com/saeeedhany/ThePrimeSetup.conf/tree/main/xdots)**
+  - `xinitrc`
+  - `xprofile`
+  - `bash_profile`
+
+These files define session startup behavior, environment variables, and display initialization.
+
+---
+
+## Aesthetics & Visual Consistency
+
+While functionality comes first, visual consistency still matters:
+
+- A collection of curated **[Wallpapers](https://github.com/saeeedhany/ThePrimeSetup.conf/tree/main/Wallpapers)**
+- Custom color themes for **[st (simple terminal)](https://github.com/saeeedhany/ThePrimeSetup.conf/tree/main/stColor)**
+
+
