@@ -19,6 +19,9 @@ This repository contains configuration files for the following tools:
 - **[Tmux](https://github.com/saeeedhany/ThePrimeSetup.conf/tree/main/tmux)**  
   Terminal multiplexing optimized for long-running sessions and parallel tasks
 
+- **[Zathura](https://github.com/saeeedhany/ThePrimeSetup.conf/tree/main/zathura)**  
+  A minimal, keyboard-centric document viewer (Gruvbox)
+
 ---
 
 ## X Server Configuration
@@ -39,6 +42,7 @@ These files define session startup behavior, environment variables, and display 
 While functionality comes first, visual consistency still matters:
 
 - A collection of curated **[Wallpapers](https://github.com/saeeedhany/ThePrimeSetup.conf/tree/main/Wallpapers)**
-- Custom color themes for **[st (simple terminal)](https://github.com/saeeedhany/ThePrimeSetup.conf/tree/main/stColor)**
+- Custom (Gruvbox) color themes for **[st (simple terminal)](https://github.com/saeeedhany/ThePrimeSetup.conf/tree/main/stColor)**
+
 
 

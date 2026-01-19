@@ -1,0 +1,116 @@
+# Gruvbox Dark Theme for Zathura
+# Save this file as ~/.config/zathura/zathurarc
+
+# Gruvbox color scheme
+set notification-error-bg       "#cc241d" # red
+set notification-error-fg       "#fbf1c7" # fg
+set notification-warning-bg     "#d79921" # yellow
+set notification-warning-fg     "#3c3836" # bg1
+set notification-bg             "#3c3836" # bg1
+set notification-fg             "#fbf1c7" # fg
+
+set completion-bg               "#3c3836" # bg1
+set completion-fg               "#ebdbb2" # fg0
+set completion-group-bg         "#282828" # bg0
+set completion-group-fg         "#928374" # gray
+set completion-highlight-bg     "#83a598" # blue
+set completion-highlight-fg     "#282828" # bg0
+
+set inputbar-bg                 "#282828" # bg0
+set inputbar-fg                 "#fbf1c7" # fg
+
+set statusbar-bg                "#3c3836" # bg1
+set statusbar-fg                "#ebdbb2" # fg0
+
+set highlight-color             "#d79921" # yellow
+set highlight-active-color      "#fe8019" # orange
+
+set default-bg                  "#282828" # bg0
+set default-fg                  "#ebdbb2" # fg0
+
+set render-loading              true
+set render-loading-fg           "#282828" # bg0
+set render-loading-bg           "#ebdbb2" # fg0
+
+# Recolor mode settings
+set recolor-lightcolor          "#282828" # bg0
+set recolor-darkcolor           "#ebdbb2" # fg0
+set recolor                     true
+set recolor-keephue             false
+
+# UI settings
+set font                        "monospace normal 11"
+set guioptions                  none
+set statusbar-h-padding         10
+set statusbar-v-padding         5
+set selection-clipboard         clipboard
+
+# Zoom and scroll settings
+set zoom-min                    10
+set zoom-max                    1000
+set zoom-step                   10
+set scroll-step                 40
+set scroll-full-overlap         0.01
+set scroll-wrap                 false
+set scroll-page-aware           true
+
+# Window settings
+set window-title-home-tilde     true
+set window-title-basename       true
+set adjust-open                 width
+
+# Search settings
+set incremental-search          true
+set abort-clear-search          true
+
+# Performance
+set render-loading-fg           "#ebdbb2"
+set render-loading-bg           "#282828"
+
+# Additional settings
+set first-page-column           1:1
+set pages-per-row               1
+
+# Keybindings (Vim-like)
+# Scrolling
+map j scroll down
+map k scroll up
+map h scroll left
+map l scroll right
+
+# Half-page scrolling
+map <C-d> scroll half-down
+map <C-u> scroll half-up
+
+# Full-page scrolling
+map <C-f> scroll full-down
+map <C-b> scroll full-up
+
+# Navigation
+map gg goto top
+map G goto bottom
+map <C-n> navigate next
+map <C-p> navigate previous
+
+# Zoom
+map + zoom in
+map - zoom out
+map = zoom in
+map _ zoom out
+
+# Other commands
+map r reload
+map R rotate
+map i recolor
+map p print
+map a adjust_window best-fit
+map s adjust_window width
+map <A-s> adjust_window height
+
+# Fullscreen
+map f toggle_fullscreen
+map [fullscreen] f toggle_fullscreen
+
+# Index mode
+map <Tab> toggle_index
+map [index] <Tab> toggle_index
