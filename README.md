@@ -35,6 +35,9 @@ X-related startup and environment configuration scripts:
 
 These files define session startup behavior, environment variables, and display initialization.
 
+> [!NOTE]
+> If you use **X11 (X Server)**, you will likely need the **[picom](https://github.com/saeeedhany/ThePrimeSetup.conf/tree/main/picom)** configuration.
+
 ---
 
 ## Aesthetics & Visual Consistency
@@ -43,6 +46,7 @@ While functionality comes first, visual consistency still matters:
 
 - A collection of curated **[Wallpapers](https://github.com/saeeedhany/ThePrimeSetup.conf/tree/main/Wallpapers)**
 - Custom (Gruvbox) color themes for **[st (simple terminal)](https://github.com/saeeedhany/ThePrimeSetup.conf/tree/main/stColor)**
+
 
 
 
