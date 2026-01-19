@@ -1,0 +1,69 @@
+# Volume controls
+super + equal
+    pactl set-sink-volume @DEFAULT_SINK@ +5%
+
+super + minus
+    pactl set-sink-volume @DEFAULT_SINK@ -5%
+
+# Brightness controls
+super + shift + equal
+    brightnessctl set +10%
+
+super + shift + minus
+    brightnessctl set 10%-
+
+# Quick app launches
+super + n
+    st -e nnn
+
+# Window management helpers
+super + shift + x
+    xkill
+
+super + Escape
+    pkill -USR1 -x sxhkd
+
+# Take a full screenshot
+super + s
+    scrot ~/Pictures/screenshot_%Y-%m-%d-%H%M%S.png
+
+# Take a specific part of the screen
+super + shift + s
+    scrot -s ~/Pictures/screenshot_%Y-%m-%d-%H%M%S.png
+    
+
+#
+# Study Tracker (yduts) Keybindings
+#
+
+# Main dmenu interface
+super + y
+    study dmenu
+
+# Quick status notification
+super + shift + y
+    notify-send -u low "📚 Study Status" "$(study status 2>&1 | head -8 || echo 'No active session\n\nPress Super+Y to start')"
+
+# Quick stop
+super + ctrl + y
+    study stop && notify-send "Study Session Stopped"
+
+# Quick pause
+super + alt + y
+    study pause && notify-send "Session Paused"
+
+#
+# Notification Control System (dunst)
+#
+
+ctrl + space
+    dunstctl close
+
+ctrl + shift + space
+    dunstctl close-all
+
+ctrl + grave
+    dunstctl history-pop
+
+ctrl + shift + period
+    dunstctl context

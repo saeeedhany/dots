@@ -22,6 +22,12 @@ This repository contains configuration files for the following tools:
 - **[Zathura](https://github.com/saeeedhany/ThePrimeSetup.conf/tree/main/zathura)**  
   A minimal, keyboard-centric document viewer (Gruvbox)
 
+- **[Dunst](https://github.com/saeeedhany/ThePrimeSetup.conf/tree/main/dunst)**
+    Lightweight notification daemon (Gruvbox)
+
+- **[sxhkd](https://github.com/saeeedhany/ThePrimeSetup.conf/tree/main/sxhkd)**
+    Simple X hotkey daemon for keyboard shortcuts
+
 ---
 
 ## X Server Configuration
