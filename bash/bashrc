@@ -1,9 +1,9 @@
 #
-# ~/.bashrc - Aesthetic Terminal Configuration
+# ~/.bashrc - Configuration
 #
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# COLOR PALETTE - Your Custom Colors + Aesthetic Additions
+# COLOR PALETTE - Gruvbox
 # ═══════════════════════════════════════════════════════════════════════════════
 
 RESET="\[\e[0m\]"
@@ -29,17 +29,38 @@ BG_STONE="\[\e[48;2;122;115;115m\]"
 BG_OBSIDIAN="\[\e[48;2;15;18;14m\]"
 
 # ═══════════════════════════════════════════════════════════════════════════════
+# PATH CONFIGURATION 
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# Initialize PATH with system defaults if not already set
+if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
+    export PATH="$HOME/.local/bin:$PATH"
+fi
+
+# Pyenv
+if [[ ":$PATH:" != *":$HOME/.pyenv/bin:"* ]]; then
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+fi
+
+# Ruby gems (single entry, version-specific)
+if [[ ":$PATH:" != *":$HOME/.local/share/gem/ruby/3.4.0/bin:"* ]]; then
+    export PATH="$HOME/.local/share/gem/ruby/3.4.0/bin:$PATH"
+fi
+
+# ═══════════════════════════════════════════════════════════════════════════════
 # ENHANCED GIT BRANCH PARSER
 # ═══════════════════════════════════════════════════════════════════════════════
 
 parse_git_branch() {
-  git rev-parse --is-inside-work-tree &>/dev/null || return
-  branch=$(git symbolic-ref --short HEAD 2>/dev/null)
-  echo "  $branch"
+  # Quick check if we're in a git repo (faster than full rev-parse)
+  git rev-parse --git-dir &>/dev/null || return
+  local branch=$(git symbolic-ref --short HEAD 2>/dev/null || git describe --tags --exact-match 2>/dev/null || git rev-parse --short HEAD 2>/dev/null)
+  [[ -n "$branch" ]] && echo "  $branch"
 }
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# AESTHETIC PROMPT DESIGN
+# PROMPT DESIGN
 # ═══════════════════════════════════════════════════════════════════════════════
 
 # Main prompt
@@ -50,11 +71,132 @@ ${CREAM}╰─${RESET} ${TAUPE}❯${RESET} "
 PS2="${CREAM}│  ${TAUPE}❯${RESET} "
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# ENHANCED FZF HISTORY SEARCH
+# Z - FRECENT DIRECTORY JUMPING
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# Database file
+export _Z_DATA="${HOME}/.z_data"
+
+# Initialize database if it doesn't exist
+[[ -f "$_Z_DATA" ]] || touch "$_Z_DATA"
+
+# Track directory changes
+_z_add_to_db() {
+    local dir="$PWD"
+    
+    # Ignore home directory and root
+    [[ "$dir" == "$HOME" ]] && return
+    [[ "$dir" == "/" ]] && return
+    
+    # Get current timestamp
+    local now=$(date +%s)
+    
+    # Remove old entry if exists and add new one
+    local tempfile=$(mktemp)
+    grep -v "^$dir|" "$_Z_DATA" > "$tempfile" 2>/dev/null
+    echo "$dir|$now" >> "$tempfile"
+    mv "$tempfile" "$_Z_DATA"
+    
+    # Keep only last 1000 entries
+    tail -n 1000 "$_Z_DATA" > "$tempfile"
+    mv "$tempfile" "$_Z_DATA"
+}
+
+# Z command - jump to frecent directory
+z() {
+    if [[ -z "$1" ]]; then
+        cd "$HOME"
+        return
+    fi
+    
+    local query="$1"
+    local now=$(date +%s)
+    local results=""
+    
+    # Read database and calculate scores
+    while IFS='|' read -r dir timestamp; do
+        [[ ! -d "$dir" ]] && continue
+        [[ "$dir" != *"$query"* ]] && continue
+        
+        # Calculate frecency score (more recent = higher score)
+        local age=$((now - timestamp))
+        local score=0
+        
+        if [[ $age -lt 3600 ]]; then
+            score=100  # Last hour
+        elif [[ $age -lt 86400 ]]; then
+            score=50   # Last day
+        elif [[ $age -lt 604800 ]]; then
+            score=25   # Last week
+        else
+            score=10   # Older
+        fi
+        
+        results="${results}${score}|${dir}
+"
+    done < "$_Z_DATA"
+    
+    # Sort by score and get top result
+    local target=$(echo "$results" | sort -rn -t'|' -k1 | head -n1 | cut -d'|' -f2-)
+    
+    if [[ -n "$target" ]]; then
+        cd "$target"
+    else
+        echo "z: no matches found for '$query'"
+        return 1
+    fi
+}
+
+# Z with FZF for interactive selection
+zi() {
+    local query="$*"
+    local now=$(date +%s)
+    local formatted_dirs=""
+    
+    # Read and format directories with frecency info
+    while IFS='|' read -r dir timestamp; do
+        [[ ! -d "$dir" ]] && continue
+        [[ -n "$query" && "$dir" != *"$query"* ]] && continue
+        
+        local age=$((now - timestamp))
+        local age_str=""
+        
+        if [[ $age -lt 3600 ]]; then
+            age_str="hour ago"
+        elif [[ $age -lt 86400 ]]; then
+            age_str="$((age / 3600)) hours ago"
+        elif [[ $age -lt 604800 ]]; then
+            age_str="$((age / 86400)) days ago"
+        else
+            age_str="$((age / 604800)) weeks ago"
+        fi
+        
+        formatted_dirs="${formatted_dirs}${dir} [${age_str}]
+"
+    done < "$_Z_DATA"
+    
+    # Use FZF to select
+    local selected=$(echo "$formatted_dirs" | sort -r | fzf \
+        --height=50% \
+        --reverse \
+        --border=rounded \
+        --prompt='  Jump to ❯ ' \
+        --color='fg:#93877C,bg:#0F120E,hl:#A8B49E' \
+        --color='fg+:#CCC3B8,bg+:#504F50,hl+:#DABC94' \
+        --color='info:#7A7373,prompt:#DABC94,pointer:#BC9E9E' \
+        --color='marker:#A8B49E,spinner:#7A7373,header:#93877C' \
+        | sed 's/ \[.*\]$//')
+    
+    [[ -n "$selected" ]] && cd "$selected"
+}
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# ENHANCED FZF HISTORY SEARCH 
 # ═══════════════════════════════════════════════════════════════════════════════
 
 __fzf_history_search__() {
     local selected
+    # Strip both line numbers AND timestamps from history
     selected=$(history | tac | fzf \
         --height=50% \
         --reverse \
@@ -65,7 +207,7 @@ __fzf_history_search__() {
         --color='info:#7A7373,prompt:#DABC94,pointer:#BC9E9E' \
         --color='marker:#A8B49E,spinner:#7A7373,header:#93877C' \
         --preview-window=hidden \
-        | sed 's/^[ ]*[0-9]*[ ]*//')
+        | sed -E 's/^[ ]*[0-9]+[ ]+([0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2} )?//')
     
     if [[ -n "$selected" ]]; then
         READLINE_LINE="$selected"
@@ -76,28 +218,27 @@ __fzf_history_search__() {
 bind -x '"\C-r": __fzf_history_search__'
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# AESTHETIC ALIASES WITH COLORS
+# ALIASES 
 # ═══════════════════════════════════════════════════════════════════════════════
 
 # Navigation
 alias ..="cd .."
 alias ...="cd ../.."
 alias ....="cd ../../.."
+alias .....="cd ../../../.."
 alias e="exit"
 
-# Command Faults
-# Navigation
+# Navigation typo fixes
 alias cdc="cd"
 alias c="cd"
 
-# Clear
+# Clear command typo fixes
 alias claer="clear"
 alias clewar="clear"
 alias clwear="clear"
 alias clea="clear"
 alias clae="clear"
 alias clar="clear"
-
 
 # Enhanced ls with custom colors
 export LS_COLORS="di=1;38;2;168;180;158:fi=0;38;2;204;195;184:ln=0;38;2;188;158;158:ex=1;38;2;218;188;148"
@@ -113,25 +254,36 @@ alias v="nvim"
 alias vi="nvim"
 alias vim="nvim"
 
-# Enhanced cat
-alias cat="bat --style=plain"
+# Enhanced cat (if bat is installed)
+if command -v bat &> /dev/null; then
+    alias cat="bat --style=plain"
+fi
 
 # Colorful grep
-alias grep="grep --color=auto --color=always"
+alias grep="grep --color=auto"
 alias fgrep="fgrep --color=auto"
 alias egrep="egrep --color=auto"
 
 # Git aliases with aesthetic output
 alias gs="git status --short"
+alias ga="git add"
+alias gc="git commit"
+alias gp="git push"
 alias gl="git log --oneline --graph --decorate --color=always"
 alias gd="git diff --color=always"
+alias gco="git checkout"
+alias gb="git branch"
 
-# System
+# System (Arch Linux specific)
 alias upgrade="sudo pacman -Syu"
 alias u="sudo pacman -Syu"
 alias install="sudo pacman -S"
 alias i="sudo pacman -S"
+alias remove="sudo pacman -Rns"
+alias search="pacman -Ss"
+alias orphans="sudo pacman -Rns \$(pacman -Qtdq)"
 
+# Shutdown aliases
 alias shutup="shutdown now"
 alias calmdown="shutdown now"
 alias takeiteasy="shutdown now"
@@ -143,6 +295,7 @@ alias f="feh --bg-fill"
 alias df="df -h"
 alias free="free -h"
 alias du="du -h"
+alias ps="ps aux"
 
 # Other
 alias nv="watch -n 1 nvidia-smi"
@@ -150,21 +303,32 @@ alias open="xdg-open"
 
 # Applications
 alias unity="~/Scripts/unity-cli.sh"
+alias n='nnn -de'
 
+# Download Settings
+alias ddtf="yt-dlp -S 'ext:mp4:m4a' --recode mp4"
+
+# Quick utilities
+alias myip="curl -s ifconfig.me"
+alias ports="netstat -tulanp"
+alias watch="watch -c"  # Color support for watch
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# ENHANCED HISTORY SETTINGS
+# HISTORY SETTINGS
 # ═══════════════════════════════════════════════════════════════════════════════
 
 export HISTCONTROL=ignoredups:erasedups
 export HISTSIZE=50000
 export HISTFILESIZE=100000
-export HISTTIMEFORMAT="%F %T "
+export HISTTIMEFORMAT="%F %T "  # Keeps timestamp in history file but strips it in FZF
 shopt -s histappend
 shopt -s histreedit
 shopt -s histverify
 shopt -s checkwinsize
 shopt -s cmdhist
+
+# Save and reload the history after each command, and track with z
+PROMPT_COMMAND="_z_add_to_db; history -a; history -c; history -r"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # COMPLETION & BEHAVIOR SETTINGS
@@ -177,6 +341,16 @@ bind "set colored-stats on"
 bind "set visible-stats on"
 bind "set mark-symlinked-directories on"
 
+# Better tab completion
+bind "set menu-complete-display-prefix on"
+bind "TAB:menu-complete"
+bind "set show-all-if-unmodified on"
+
+# SMART ARROW KEY HISTORY - This is the REAL working alternative to fish-like suggestions!
+# Start typing a command, press UP arrow, and it will search your history for commands that START with what you typed
+bind '"\e[A": history-search-backward'
+bind '"\e[B": history-search-forward'
+
 # ═══════════════════════════════════════════════════════════════════════════════
 # ENVIRONMENT VARIABLES
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -187,7 +361,7 @@ export PAGER=less
 export LESS='-R -S -M -I -J'
 
 # Enhanced FZF configuration
-export FZF_DEFAULT_COMMAND='find . -type f -not -path "*/\.git/*"'
+export FZF_DEFAULT_COMMAND='find . -type f -not -path "*/\.git/*" 2>/dev/null'
 export FZF_DEFAULT_OPTS="
     --height=50%
     --reverse
@@ -199,6 +373,74 @@ export FZF_DEFAULT_OPTS="
     --color='marker:#A8B49E,spinner:#7A7373,header:#93877C'
     --preview-window=right:60%:wrap
 "
+
+# Better fd command if installed
+if command -v fd &> /dev/null; then
+    export FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
+fi
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# APPS CONFIGURATIONS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# Pyenv initialization (if installed)
+if command -v pyenv &> /dev/null; then
+    eval "$(pyenv init -)"
+fi
+
+# nnn file manager
+export NNN_OPTS="eH"
+export NNN_FIFO="/tmp/nnn.fifo"
+export NNN_PLUG="p:preview-tui;o:fzopen;t:trash;d:diffs;g:gitroot"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# USEFUL FUNCTIONS
+# ═══════════════════════════════════════════════════════════════════════════════
+
+# Create directory and cd into it
+mkcd() {
+    mkdir -p "$1" && cd "$1"
+}
+
+# Extract any archive
+extract() {
+    if [ -f "$1" ]; then
+        case "$1" in
+            *.tar.bz2)   tar xjf "$1"     ;;
+            *.tar.gz)    tar xzf "$1"     ;;
+            *.bz2)       bunzip2 "$1"     ;;
+            *.rar)       unrar x "$1"     ;;
+            *.gz)        gunzip "$1"      ;;
+            *.tar)       tar xf "$1"      ;;
+            *.tbz2)      tar xjf "$1"     ;;
+            *.tgz)       tar xzf "$1"     ;;
+            *.zip)       unzip "$1"       ;;
+            *.Z)         uncompress "$1"  ;;
+            *.7z)        7z x "$1"        ;;
+            *)           echo "'$1' cannot be extracted" ;;
+        esac
+    else
+        echo "'$1' is not a valid file"
+    fi
+}
+
+# Quickly find and edit files with FZF
+fe() {
+    local file
+    file=$(fzf --preview 'bat --style=numbers --color=always {} 2>/dev/null || cat {}' --preview-window=right:60%:wrap)
+    [[ -n "$file" ]] && ${EDITOR:-nvim} "$file"
+}
+
+# Search in file contents with ripgrep and FZF
+rg_fzf() {
+    if [ ! "$#" -gt 0 ]; then echo "Need a string to search for!"; return 1; fi
+    rg --files-with-matches --no-messages "$1" | fzf --preview "highlight -O ansi -l {} 2> /dev/null | rg --colors 'match:bg:yellow' --ignore-case --pretty --context 10 '$1' || rg --ignore-case --pretty --context 10 '$1' {}"
+}
+
+# Show directory sizes sorted
+ducks() {
+    du -cks * | sort -rn | head -n ${1:-10}
+}
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # STARTUP CONFIGURATION
@@ -213,3 +455,6 @@ elif [ -f /etc/bash_completion ]; then
     . /etc/bash_completion
 fi
 
+# FZF key bindings if available
+[ -f /usr/share/fzf/key-bindings.bash ] && source /usr/share/fzf/key-bindings.bash
+[ -f /usr/share/fzf/completion.bash ] && source /usr/share/fzf/completion.bash
