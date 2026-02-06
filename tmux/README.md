@@ -1,4 +1,4 @@
-# Enhanced Tmux Configuration
+# The Most Handsome Tmux Configuration
 
 ---
 
@@ -841,6 +841,6 @@ tmux -V
 
 ---
 
-**Configuration File:** ~/.tmux.conf  
-**Version:** 2.0  
+**Configuration File:** ~/.tmux.conf
+**Version:** 2.0
 **Last Updated:** 2026-02-06
