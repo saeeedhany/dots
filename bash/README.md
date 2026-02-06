@@ -1,6 +1,4 @@
-# Bash Configuration - User Manual
-
-Version 2.0
+# The Most Handsome Bash Configuration - User Manual
 
 ---
 
@@ -274,7 +272,7 @@ All these work as shortcuts to avoid common typos:
 # Clear variants
 claer, clewar, clwear, clea, clae, clar  # All execute: clear
 
-# CD variants  
+# CD variants
 c, cdc                                    # Both execute: cd
 ```
 
@@ -657,7 +655,7 @@ Z calculates a "frecency" score for each directory:
 
 **Scoring:**
 - Last hour: 100 points
-- Last day: 50 points  
+- Last day: 50 points
 - Last week: 25 points
 - Older: 10 points
 
@@ -718,6 +716,6 @@ To report issues, include:
 
 ---
 
-**Configuration File:** ~/.bashrc  
-**Version:** 2.0  
+**Configuration File:** ~/.bashrc
+**Version:** 2.0
 **Last Updated:** 2026-02-06
