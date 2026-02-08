@@ -1,4 +1,4 @@
-# The Most Handsome Vim Setup
+# The Most Handsome Minimal Neovim Setup
 
 ---
 
