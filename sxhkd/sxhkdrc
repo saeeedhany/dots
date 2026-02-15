@@ -30,15 +30,10 @@ super + s
 # Take a specific part of the screen
 super + shift + s
     scrot -s ~/Pictures/screenshot_%Y-%m-%d-%H%M%S.png
-    
 
 #
 # Study Tracker (yduts) Keybindings
 #
-
-# Main dmenu interface
-super + y
-    study dmenu
 
 # Quick status notification
 super + shift + y
