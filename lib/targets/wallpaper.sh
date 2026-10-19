@@ -16,6 +16,6 @@ render_wallpaper() {
 }
 
 reload_wallpaper() {
-  [[ -n "${DISPLAY:-}" ]] || return 0
+  [[ "${THEME_X:-0}" == 1 ]] || return 0
   feh --bg-fill "$(wallpaper_path)"
 }

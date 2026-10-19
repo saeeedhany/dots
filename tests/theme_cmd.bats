@@ -77,22 +77,74 @@ teardown() { teardown_fake_home; }
   binary_supports "$BATS_TEST_TMPDIR/dwm2" normbgcolor
 }
 
-@test "with X, a patched dwm gets SIGHUP and then an X event to act on it" {
+# Fake dwm/st processes for the signal tests. pgrep is stubbed to report only
+# these, so the real session's dwm and st can never be signalled.
+fake_session() {
   stubs="$BATS_TEST_TMPDIR/stubs"; mkdir -p "$stubs"
-  log="$BATS_TEST_TMPDIR/calls"
-  for c in xrdb pkill feh xsetroot; do
+  log="$BATS_TEST_TMPDIR/calls"; : > "$log"
+  # pkill is stubbed to only log: signals must go to checked pids, never by name
+  for c in xrdb feh xsetroot pkill; do
     printf '#!/bin/sh\necho "%s $*" >> "%s"\n' "$c" "$log" > "$stubs/$c"
   done
   printf '#!/bin/sh\necho "WM_NAME(UTF8_STRING) = \\"bar text\\""\n' > "$stubs/xprop"
-  printf 'normbgcolor cursorColor' > "$stubs/dwm"
-  cp "$stubs/dwm" "$stubs/st"
+  # what is installed on disk: always the patched builds
+  printf 'normbgcolor cursorColor' > "$stubs/dwm"; cp "$stubs/dwm" "$stubs/st"
+  # what is running: $1 = patched|unpatched
+  if [ "$1" = patched ]; then
+    { cat "$(command -v sleep)"; printf 'normbgcolor cursorColor'; } > "$BATS_TEST_TMPDIR/run-bin"
+  else
+    cp "$(command -v sleep)" "$BATS_TEST_TMPDIR/run-bin"
+  fi
+  chmod +x "$BATS_TEST_TMPDIR/run-bin"
+  "$BATS_TEST_TMPDIR/run-bin" 60 & DWM_PID=$!
+  "$BATS_TEST_TMPDIR/run-bin" 60 & ST_PID=$!
+  printf '#!/bin/sh\ncase "$*" in *dwm*) echo %s ;; *-x\ st*) echo %s ;; *) exit 1 ;; esac\n' "$DWM_PID" "$ST_PID" > "$stubs/pgrep"
   chmod +x "$stubs"/*
+}
+
+@test "with X, a running patched dwm gets SIGHUP then an X event; st gets USR1" {
+  fake_session patched
   DISPLAY=:42 PATH="$stubs:$PATH" run "$REPO_ROOT/theme" grey
   [ "$status" -eq 0 ]
-  hup=$(grep -n 'pkill -HUP -x dwm' "$log" | cut -d: -f1)
-  ev=$(grep -n 'xsetroot -name bar text' "$log" | cut -d: -f1)
-  [ -n "$hup" ]
-  [ -n "$ev" ]
-  [ "$hup" -lt "$ev" ]
-  grep -q 'pkill -USR1 -x st' "$log"
+  sleep 0.3
+  ! kill -0 "$DWM_PID" 2>/dev/null
+  ! kill -0 "$ST_PID" 2>/dev/null
+  grep -q 'xsetroot -name bar text' "$log"
+  grep -q '^pkill' "$log" && return 1; true
+}
+
+@test "a running dwm/st built before the patch is never signalled, even if disk has the new build" {
+  fake_session unpatched
+  DISPLAY=:42 PATH="$stubs:$PATH" run "$REPO_ROOT/theme" grey
+  [ "$status" -eq 0 ]
+  sleep 0.3
+  kill -0 "$DWM_PID"
+  kill -0 "$ST_PID"
+  kill "$DWM_PID" "$ST_PID"
+  [[ "$output" == *"log out and back in"* ]]
+}
+
+@test "dunst running without D-Bus (tty, ssh): theme still succeeds and is recorded" {
+  cp "$(command -v sleep)" "$BATS_TEST_TMPDIR/dunst"
+  "$BATS_TEST_TMPDIR/dunst" 30 & fake=$!
+  run "$REPO_ROOT/theme" blue
+  kill "$fake"
+  [ "$status" -eq 0 ]
+  [ "$(cat "$HOME/.config/theme")" = blue ]
+}
+
+@test "a DISPLAY with no X server behind it counts as no X" {
+  DISPLAY=:77 run "$REPO_ROOT/theme" blue
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"no X"* ]]
+  [ "$(cat "$HOME/.config/theme")" = blue ]
+}
+
+@test "a broken vesktop settings.json is reported, not fatal" {
+  mkdir -p "$HOME/.config/vesktop/settings"
+  echo '{ not json' > "$HOME/.config/vesktop/settings/settings.json"
+  run "$REPO_ROOT/theme" blue
+  [ "$status" -eq 0 ]
+  [[ "$output" == *"settings.json"* ]]
+  [ "$(cat "$HOME/.config/theme")" = blue ]
 }

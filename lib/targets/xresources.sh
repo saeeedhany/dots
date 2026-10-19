@@ -3,9 +3,24 @@
 # shellcheck disable=SC2154 # theme variables are set by theme_load
 
 # binary_supports <path> <marker>: true if the binary was built with the
-# xresources patch. Unpatched dwm dies on SIGHUP and unpatched st on SIGUSR1,
-# so never signal a binary that lacks the marker.
+# xresources patch.
 binary_supports() { [[ -f "$1" ]] && grep -qa "$2" "$1"; }
+
+# signal_patched <name> <marker> <signal>: signal each running <name> whose
+# own binary carries the patch marker. Checks /proc/<pid>/exe, not the file
+# on disk: after a reinstall the running process is still the old build, and
+# an unpatched dwm dies on SIGHUP (ending the X session), st on SIGUSR1.
+# Prints the pids it signalled.
+signal_patched() {
+  local name="$1" marker="$2" sig="$3" pid
+  for pid in $(pgrep -x "$name"); do
+    if grep -qa "$marker" "/proc/$pid/exe" 2>/dev/null; then
+      kill "-$sig" "$pid" && printf '%s\n' "$pid"
+    else
+      info "$name ($pid): built before the xresources patch, log out and back in to recolor it" >&2
+    fi
+  done
+}
 
 render_xresources() {
   local i c
@@ -30,18 +45,11 @@ render_xresources() {
 }
 
 reload_xresources() {
-  [[ -n "${DISPLAY:-}" ]] || return 0
+  [[ "${THEME_X:-0}" == 1 ]] || return 0
   xrdb -merge "$HOME/.cache/theme/Xresources"
-  if binary_supports "$(command -v dwm || true)" normbgcolor; then
-    pkill -HUP -x dwm || true
+  if [[ -n "$(signal_patched dwm normbgcolor HUP)" ]]; then
     # dwm acts on SIGHUP at its next X event: re-set the bar text to send one
     xsetroot -name "$(xprop -root WM_NAME 2>/dev/null | sed -n 's/^WM_NAME([A-Z0-9_]*) = "\(.*\)"$/\1/p')"
-  else
-    info "dwm: not built with xresources yet, restart it to recolor"
   fi
-  if binary_supports "$(command -v st || true)" cursorColor; then
-    pkill -USR1 -x st || true
-  else
-    info "st: not built with xresources reload yet, new windows only"
-  fi
+  signal_patched st cursorColor USR1 >/dev/null
 }

@@ -29,5 +29,8 @@ DUNST
 
 reload_dunst() {
   pgrep -x dunst >/dev/null || return 0
+  # dunstctl talks over D-Bus; without a session bus (tty, ssh) dunst picks
+  # the drop-in up on its next start
+  [[ -n "${DBUS_SESSION_BUS_ADDRESS:-}" ]] || return 0
   dunstctl reload
 }

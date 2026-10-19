@@ -50,21 +50,34 @@ write_colors() {
   } > "$CACHE/colors.sh"
 }
 
+# have_x: a display is set and an X server answers on it
+have_x() { [[ -n "${DISPLAY:-}" ]] && xprop -root WM_NAME >/dev/null 2>&1; }
+
 apply() {
   theme_load "$1" || exit 1
   mkdir -p "$CACHE" "$(dirname "$STATE")"
   write_colors
-  local t
+  local t failed=0
   for t in "${TARGETS[@]}"; do
-    if declare -F "render_$t" >/dev/null; then "render_$t"; fi
+    if declare -F "render_$t" >/dev/null; then
+      "render_$t" || { warn "$t: could not write its theme files"; failed=1; }
+    fi
   done
-  if [[ -z "${DISPLAY:-}" ]]; then
+  # The files are written: record the theme before any reload can fail.
+  printf '%s\n' "$THEME" > "$STATE"
+  if have_x; then
+    THEME_X=1
+  else
+    THEME_X=0
     info "no X session: skipping wallpaper and X reloads"
   fi
+  export THEME_X
   for t in "${TARGETS[@]}"; do
-    if declare -F "reload_$t" >/dev/null; then "reload_$t"; fi
+    if declare -F "reload_$t" >/dev/null; then
+      "reload_$t" || warn "$t: reload failed, it picks the theme up on its next start"
+    fi
   done
-  printf '%s\n' "$THEME" > "$STATE"
+  [[ "$failed" -eq 0 ]] || exit 1
   ok "theme: $THEME"
 }
 

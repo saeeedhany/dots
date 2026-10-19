@@ -7,7 +7,12 @@ render_vesktop() {
   settings="$dir/settings/settings.json"
   [[ -f "$settings" ]] || return 0
   tmp="$(mktemp)"
-  jq --arg t "$THEME.theme.css" '.enabledThemes = [$t]' "$settings" > "$tmp" && mv "$tmp" "$settings"
+  if jq --arg t "$THEME.theme.css" '.enabledThemes = [$t]' "$settings" > "$tmp" 2>/dev/null; then
+    mv "$tmp" "$settings"
+  else
+    rm -f "$tmp"
+    warn "vesktop: $settings is not valid JSON; pick $THEME.theme.css in Vesktop's settings"
+  fi
 }
 
 reload_vesktop() {
