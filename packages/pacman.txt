@@ -1,0 +1,65 @@
+# Packages this desktop needs, taken from what the configs actually call.
+# For an exact copy of the origin machine instead: ./install.sh --all
+
+# build (suckless is compiled from source)
+base-devel
+git
+libx11
+libxinerama
+libxft
+fribidi
+
+# X session
+xorg-server
+xorg-xinit
+xorg-xrandr
+xorg-xsetroot
+xorg-setxkbmap
+xorg-xkill
+xorg-xrdb
+xdg-desktop-portal
+xdg-desktop-portal-gtk
+
+# desktop
+picom
+dunst
+sxhkd
+feh
+scrot
+xdotool
+xclip
+brightnessctl
+pamixer
+libnotify
+acpi
+lm_sensors
+
+# shell and terminal tools
+tmux
+neovim
+fzf
+bat
+ripgrep
+fd
+tree
+nnn
+zathura
+zathura-pdf-poppler
+
+# themes
+jq
+imagemagick
+
+# tests (headless X for the suckless pixel tests)
+xorg-server-xvfb
+
+# fonts (st and dmenu ask for 0xProto Nerd Font)
+ttf-0xproto-nerd
+ttf-jetbrains-mono
+noto-fonts
+
+# misc
+curl
+wget
+unzip
+rsync
