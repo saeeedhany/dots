@@ -20,7 +20,7 @@ setup() { setup_repo_root; }
 @test "xinitrc has no hardcoded wallpaper and every xrandr is guarded" {
   f="$REPO_ROOT/home/xinitrc"
   [ -f "$f" ]
-  ! grep -q 'Onyx.png' "$f"
+  grep -q 'Onyx.png' "$f" && return 1
   while read -r line; do
     [[ "$line" == "xrandr --query | grep -q '^HDMI-1-0 connected' && "* ]] || { echo "unguarded: $line"; return 1; }
   done < <(grep 'xrandr --output' "$f")
@@ -28,7 +28,7 @@ setup() { setup_repo_root; }
 
 @test "xprofile runs no xrandr" {
   [ -f "$REPO_ROOT/home/xprofile" ]
-  ! grep -q xrandr "$REPO_ROOT/home/xprofile"
+  grep -q xrandr "$REPO_ROOT/home/xprofile" && return 1; true
 }
 
 @test "xinitrc sources local.sh, applies the theme, restores the wallpaper, then execs dwm last" {
