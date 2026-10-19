@@ -76,3 +76,23 @@ teardown() { teardown_fake_home; }
   [ "$status" -eq 1 ]
   binary_supports "$BATS_TEST_TMPDIR/dwm2" normbgcolor
 }
+
+@test "with X, a patched dwm gets SIGHUP and then an X event to act on it" {
+  stubs="$BATS_TEST_TMPDIR/stubs"; mkdir -p "$stubs"
+  log="$BATS_TEST_TMPDIR/calls"
+  for c in xrdb pkill feh xsetroot; do
+    printf '#!/bin/sh\necho "%s $*" >> "%s"\n' "$c" "$log" > "$stubs/$c"
+  done
+  printf '#!/bin/sh\necho "WM_NAME(UTF8_STRING) = \\"bar text\\""\n' > "$stubs/xprop"
+  printf 'normbgcolor cursorColor' > "$stubs/dwm"
+  cp "$stubs/dwm" "$stubs/st"
+  chmod +x "$stubs"/*
+  DISPLAY=:42 PATH="$stubs:$PATH" run "$REPO_ROOT/theme" grey
+  [ "$status" -eq 0 ]
+  hup=$(grep -n 'pkill -HUP -x dwm' "$log" | cut -d: -f1)
+  ev=$(grep -n 'xsetroot -name bar text' "$log" | cut -d: -f1)
+  [ -n "$hup" ]
+  [ -n "$ev" ]
+  [ "$hup" -lt "$ev" ]
+  grep -q 'pkill -USR1 -x st' "$log"
+}

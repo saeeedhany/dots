@@ -25,7 +25,7 @@ setup() {
 @test "every binary the configs call is on PATH" {
   for b in picom dunst sxhkd feh scrot xdotool xclip brightnessctl pamixer \
            notify-send acpi sensors tmux nvim fzf bat rg fd tree nnn zathura \
-           setxkbmap xrandr xsetroot xkill jq magick xrdb dunstctl; do
+           setxkbmap xrandr xsetroot xkill jq magick xrdb xprop dunstctl; do
     command -v "$b" >/dev/null || { echo "not on PATH: $b"; return 1; }
   done
 }

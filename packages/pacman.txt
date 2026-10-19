@@ -17,6 +17,7 @@ xorg-xsetroot
 xorg-setxkbmap
 xorg-xkill
 xorg-xrdb
+xorg-xprop
 xdg-desktop-portal
 xdg-desktop-portal-gtk
 

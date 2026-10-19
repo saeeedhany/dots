@@ -34,6 +34,8 @@ reload_xresources() {
   xrdb -merge "$HOME/.cache/theme/Xresources"
   if binary_supports "$(command -v dwm || true)" normbgcolor; then
     pkill -HUP -x dwm || true
+    # dwm acts on SIGHUP at its next X event: re-set the bar text to send one
+    xsetroot -name "$(xprop -root WM_NAME 2>/dev/null | sed -n 's/^WM_NAME([A-Z0-9_]*) = "\(.*\)"$/\1/p')"
   else
     info "dwm: not built with xresources yet, restart it to recolor"
   fi

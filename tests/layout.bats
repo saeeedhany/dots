@@ -36,8 +36,11 @@ setup() { setup_repo_root; }
   local_n=$(grep -nF '[ -f ~/.config/local.sh ] && . ~/.config/local.sh' "$f" | cut -d: -f1)
   theme_n=$(grep -nF 'theme "$(cat ~/.config/theme 2>/dev/null || echo grey)"' "$f" | cut -d: -f1)
   feh_n=$(grep -nF '[ -x ~/.fehbg ] && ~/.fehbg &' "$f" | cut -d: -f1)
-  [ -n "$local_n" ] && [ -n "$theme_n" ] && [ -n "$feh_n" ]
-  [ "$local_n" -lt "$theme_n" ] && [ "$theme_n" -lt "$feh_n" ]
+  [ -n "$local_n" ]
+  [ -n "$theme_n" ]
+  [ -n "$feh_n" ]
+  [ "$local_n" -lt "$theme_n" ]
+  [ "$theme_n" -lt "$feh_n" ]
   [ "$(grep -v '^[[:space:]]*$' "$f" | tail -1)" = "exec dbus-run-session dwm" ]
 }
 
