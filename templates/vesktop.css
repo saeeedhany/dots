@@ -1,0 +1,881 @@
+/**
+ * @name {{name}}
+ * @description Warm-gold minimal dark theme for Discord. Soft rounded corners, one unified typeface everywhere, and borderless surfaces separated only by subtle elevation.
+ * @version 1.0.0
+ * @author Saeed Hany
+ * @authorLink https://github.com/saeeedhany
+ * @website https://saeedz.vercel.app/
+ * @source https://github.com/saeeedhany/onyx-minimal/blob/main/OnyxMinimal.theme.css
+ * @tags dark, minimal, gold, rounded, borderless
+ */
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+:root {
+  --onyx-bg: {{bg}};
+  --onyx-bg-elevated-1: {{bg1}};
+  --onyx-bg-elevated-2: {{bg2}};
+  --onyx-bg-elevated-3: {{bg3}};
+  --onyx-border-primary: {{line}};
+  --onyx-border-secondary: {{line2}};
+  --onyx-text-primary: {{fg}};
+  --onyx-text-secondary: {{fg1}};
+  --onyx-text-muted: {{fg2}};
+  --onyx-text-disabled: {{fg3}};
+  --onyx-accent: {{accent}};
+  --onyx-accent-hover: {{accent_light1}};
+  --onyx-accent-active: {{accent_light2}};
+  --onyx-success: {{green}};
+  --onyx-warning: {{accent}};
+  --onyx-danger: {{red}};
+  --onyx-info: {{blue}};
+  --onyx-radius-sm: 4px;
+  --onyx-radius-default: 6px;
+  --onyx-radius-lg: 8px;
+  --onyx-shadow: 0 1px 2px rgba(0, 0, 0, .15);
+  --onyx-font: '0xProto Nerd Font', 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --background-primary: {{bg2}};
+  --background-secondary: {{bg1}};
+  --background-secondary-alt: {{bg3}};
+  --background-tertiary: {{bg}};
+  --background-floating: {{bg3}};
+  --background-accent: {{line}};
+  --background-modifier-hover: rgba({{line_rgb}}, 0.3);
+  --background-modifier-active: rgba({{line_rgb}}, 0.5);
+  --background-modifier-selected: rgba({{line_rgb}}, 0.6);
+  --background-modifier-accent: {{line}};
+  --background-mentioned: rgba({{accent_rgb}}, 0.07);
+  --background-mentioned-hover: rgba({{accent_rgb}}, 0.12);
+  --background-mentioned-focus: rgba({{accent_rgb}}, 0.15);
+  --background-message-hover: rgba(0, 0, 0, 0.08);
+  --app-frame-background: {{bg}};
+  --home-background: {{bg2}};
+  --chat-background: {{bg2}};
+  --chat-background-default: {{bg2}};
+  --chat-border: {{bg}};
+  --chat-text-muted: {{fg1}};
+  --userarea-background: {{bg}};
+  --activity-card-background: {{bg2}};
+  --__header-bar-background: {{bg3}};
+  --bg-surface-raised: {{bg3}};
+  --background-gradient-highest: {{bg2}};
+  --background-surface-high: {{bg2}};
+  --background-surface-higher: {{bg3}};
+  --background-surface-highest: {{line}};
+  --background-base-lowest: {{bg}};
+  --background-base-lower: {{bg1}};
+  --background-base-low: {{bg2}};
+  --background-mod-muted: rgba({{line_rgb}}, 0.05);
+  --background-mod-normal: rgba({{line_rgb}}, 0.15);
+  --background-mod-subtle: rgba({{line_rgb}}, 0.25);
+  --background-mod-strong: rgba({{line_rgb}}, 0.45);
+  --card-background-default: {{bg3}};
+  --custom-channel-members-bg: {{bg1}};
+  --custom-status-bubble-background: {{bg}};
+  --custom-status-bubble-background-color: {{bg1}};
+  --border-subtle: {{bg2}};
+  --border-muted: {{bg3}};
+  --border-normal: {{bg}};
+  --border-strong: {{bg1}};
+  --border-color: {{line}};
+  --deprecated-text-input-border: {{line}};
+  --deprecated-text-input-border-hover: {{line2}};
+  --deprecated-text-input-border-disabled: {{bg3}};
+  --deprecated-text-input-prefix: {{fg}};
+  --header-primary: {{fg}};
+  --header-secondary: {{fg1}};
+  --text-normal: {{fg}};
+  --text-muted: {{fg1}};
+  --text-link: {{accent}};
+  --text-positive: {{green}};
+  --text-warning: {{accent}};
+  --text-danger: {{red}};
+  --text-default: {{fg}};
+  --text-strong: {{fg}};
+  --text-subtle: {{fg}};
+  --text-brand: {{accent}};
+  --text-feedback-positive: {{green}};
+  --text-feedback-critical: {{red}};
+  --text-feedback-warning: {{accent}};
+  --text-feedback-info: {{accent}};
+  --text-status-online: {{green}};
+  --text-status-idle: {{accent}};
+  --text-status-dnd: {{red}};
+  --text-status-offline: {{fg1}};
+  --interactive-normal: {{fg1}};
+  --interactive-hover: {{fg}};
+  --interactive-active: {{fg}};
+  --interactive-muted: {{line2}};
+  --interactive-icon-default: {{fg}};
+  --interactive-icon-hover: {{fg}};
+  --interactive-icon-active: {{fg}};
+  --interactive-text-default: {{fg}};
+  --interactive-text-hover: {{fg}};
+  --interactive-text-active: {{fg}};
+  --interactive-background-hover: rgba({{line_rgb}}, 0.15);
+  --interactive-background-selected: rgba({{line_rgb}}, 0.2);
+  --interactive-background-active: rgba({{fg_rgb}}, 0.17);
+  --channels-default: {{fg1}};
+  --channels-voice-default: {{fg1}};
+  --channel-icon: {{fg1}};
+  --channel-text-area-placeholder: rgba({{fg_rgb}}, 0.5);
+  --channeltextarea-background: {{bg1}};
+  --voice-color: {{green}};
+  --status-speaking: {{green}};
+  --brand-experiment: {{accent}};
+  --brand-experiment-560: {{accent}};
+  --brand-experiment-600: {{accent}};
+  --control-brand-foreground: {{accent}};
+  --control-brand-foreground-new: {{accent}};
+  --brand-100: {{accent_light2}};
+  --brand-130: {{accent_light2}};
+  --brand-160: {{accent_light2}};
+  --brand-200: {{accent_light1}};
+  --brand-230: {{accent_light1}};
+  --brand-260: {{accent_light1}};
+  --brand-300: {{accent_light1}};
+  --brand-330: {{accent}};
+  --brand-360: {{accent}};
+  --brand-400: {{accent}};
+  --brand-430: {{accent}};
+  --brand-460: {{accent}};
+  --brand-500: {{accent}};
+  --brand-530: {{accent}};
+  --brand-560: {{accent}};
+  --brand-600: {{accent}};
+  --brand-630: {{accent_dark1}};
+  --brand-660: {{accent_dark1}};
+  --brand-700: {{accent_dark2}};
+  --brand-730: {{accent_dark2}};
+  --brand-760: {{accent_dark3}};
+  --brand-800: {{accent_dark3}};
+  --brand-830: {{accent_dark4}};
+  --brand-860: {{accent_dark4}};
+  --brand-900: {{line}};
+  --brand-05a: rgba({{accent_rgb}}, 0.05);
+  --brand-10a: rgba({{accent_rgb}}, 0.1);
+  --brand-15a: rgba({{accent_rgb}}, 0.15);
+  --brand-20a: rgba({{accent_rgb}}, 0.2);
+  --brand-25a: rgba({{accent_rgb}}, 0.25);
+  --brand-30a: rgba({{accent_rgb}}, 0.3);
+  --brand-35a: rgba({{accent_rgb}}, 0.35);
+  --brand-40a: rgba({{accent_rgb}}, 0.4);
+  --brand-45a: rgba({{accent_rgb}}, 0.45);
+  --brand-50a: rgba({{accent_rgb}}, 0.5);
+  --brand-55a: rgba({{accent_rgb}}, 0.55);
+  --brand-60a: rgba({{accent_rgb}}, 0.6);
+  --brand-65a: rgba({{accent_rgb}}, 0.65);
+  --brand-70a: rgba({{accent_rgb}}, 0.7);
+  --brand-75a: rgba({{accent_rgb}}, 0.75);
+  --brand-80a: rgba({{accent_rgb}}, 0.8);
+  --brand-85a: rgba({{accent_rgb}}, 0.85);
+  --brand-90a: rgba({{accent_rgb}}, 0.9);
+  --brand-95a: rgba({{accent_rgb}}, 0.95);
+  --opacity-blurple-8: rgba({{accent_rgb}}, 0.08);
+  --opacity-blurple-16: rgba({{accent_rgb}}, 0.16);
+  --opacity-blurple-24: rgba({{accent_rgb}}, 0.24);
+  --opacity-blurple-32: rgba({{accent_rgb}}, 0.32);
+  --opacity-blurple-60: rgba({{accent_rgb}}, 0.6);
+  --blurple-50: {{accent}};
+  --blurple-60: {{accent_light1}};
+  --control-primary-background-default: {{accent}};
+  --control-primary-background-hover: {{accent}};
+  --control-primary-background-active: {{accent}};
+  --control-secondary-background-default: {{line}};
+  --control-secondary-background-hover: {{line2}};
+  --control-secondary-background-active: {{line2}};
+  --control-secondary-border-default: {{line}};
+  --control-secondary-text-default: {{fg}};
+  --control-secondary-text-hover: {{fg}};
+  --control-critical-primary-background-default: {{red_dark}};
+  --control-critical-primary-background-hover: {{red}};
+  --control-critical-primary-background-active: {{red}};
+  --control-critical-primary-text-default: {{bg}};
+  --control-critical-primary-text-hover: {{bg}};
+  --control-critical-secondary-background-default: transparent;
+  --control-critical-secondary-background-hover: rgba({{red_rgb}}, 0.15);
+  --control-critical-secondary-background-active: rgba({{red_rgb}}, 0.2);
+  --control-critical-secondary-border-default: {{red}};
+  --control-critical-secondary-border-hover: {{red}};
+  --control-critical-secondary-border-active: {{red}};
+  --control-critical-secondary-text-default: {{fg}};
+  --control-critical-secondary-text-hover: {{bg}};
+  --control-critical-secondary-text-active: {{bg}};
+  --control-connected-background-default: {{green}};
+  --control-connected-background-hover: {{green_light}};
+  --control-connected-background-active: {{green}};
+  --control-connected-border-default: {{green}};
+  --control-connected-border-hover: {{green_light}};
+  --control-connected-border-active: {{green_light}};
+  --button-outline-primary-text: {{fg}};
+  --button-outline-brand-text: {{fg}};
+  --button-outline-brand-background-hover: rgba({{accent_rgb}}, 0.3);
+  --button-outline-brand-border-active: {{accent}};
+  --status-positive: {{green}};
+  --status-positive-background: {{green}};
+  --status-positive-text: {{bg}};
+  --status-warning: {{accent}};
+  --status-warning-background: {{accent}};
+  --status-warning-text: {{bg}};
+  --status-danger: {{red}};
+  --icon-status-online: {{green}};
+  --icon-status-idle: {{accent}};
+  --icon-status-dnd: {{red}};
+  --icon-status-offline: {{fg1}};
+  --background-feedback-positive: rgba({{green_rgb}}, 0.15);
+  --background-feedback-warning: rgba({{accent_rgb}}, 0.15);
+  --background-feedback-critical: rgba({{red_rgb}}, 0.15);
+  --background-feedback-info: rgba({{accent_rgb}}, 0.15);
+  --background-feedback-notification: {{red}};
+  --badge-notification-background: {{red}};
+  --icon-feedback-positive: {{green}};
+  --icon-feedback-warning: {{accent}};
+  --icon-feedback-critical: {{red}};
+  --icon-feedback-info: {{accent}};
+  --icon-feedback-notification: {{red}};
+  --notice-background-critical: {{red}};
+  --notice-background-info: {{accent}};
+  --notice-background-positive: {{green}};
+  --notice-background-warning: {{accent}};
+  --notice-text-critical: {{bg}};
+  --notice-text-info: {{bg}};
+  --notice-text-positive: {{bg}};
+  --notice-text-warning: {{bg}};
+  --info-positive-background: rgba({{green_rgb}}, 0.15);
+  --info-positive-text: {{fg}};
+  --info-warning-background: rgba({{accent_rgb}}, 0.15);
+  --info-warning-text: {{fg}};
+  --info-danger-background: rgba({{red_rgb}}, 0.15);
+  --info-danger-text: {{fg}};
+  --info-help-background: rgba({{accent_rgb}}, 0.15);
+  --info-help-foreground: {{accent}};
+  --info-help-text: {{fg}};
+  --scrollbar-thin-thumb: {{line}};
+  --scrollbar-thin-track: transparent;
+  --scrollbar-auto-thumb: {{line}};
+  --scrollbar-auto-track: {{bg}};
+  --scrollbar-auto-scrollbar-color-thumb: {{line}};
+  --scrollbar-auto-scrollbar-color-track: {{bg}};
+  --elevation-low: 0 1px 0 rgba(0, 0, 0, 0.3), 0 2px 0 rgba(0, 0, 0, 0.1);
+  --elevation-medium: 0 4px 4px rgba(0, 0, 0, 0.24);
+  --elevation-high: 0 8px 16px rgba(0, 0, 0, 0.36);
+  --elevation-stroke: 0 0 0 1px rgba(0, 0, 0, 0.2);
+  --mention-foreground: {{accent}};
+  --mention-background: rgba({{accent_rgb}}, 0.3);
+  --message-mentioned-background-default: rgba({{accent_rgb}}, 0.07);
+  --message-mentioned-background-hover: rgba({{accent_rgb}}, 0.05);
+  --message-automod-background-default: rgba({{red_dark_rgb}}, 0.05);
+  --message-automod-background-hover: rgba({{red_dark_rgb}}, 0.1);
+  --message-highlight-background-default: rgba({{accent_rgb}}, 0.08);
+  --message-highlight-background-hover: rgba({{accent_rgb}}, 0.06);
+  --message-reacted-background-default: rgba({{accent_rgb}}, 0.3);
+  --message-reacted-text-default: {{accent}};
+  --message-background-hover: rgba(0, 0, 0, 0.08);
+  --background-code: {{bg}};
+  --spoiler-revealed-background: {{bg3}};
+  --spoiler-hidden-background: {{line}};
+  --__spoiler-background-color--hidden: {{line}};
+  --__spoiler-warning-background-color: {{line2}};
+  --input-background-default: {{bg}};
+  --input-text-default: {{fg}};
+  --input-placeholder-text-default: rgba({{fg_rgb}}, 0.5);
+  --input-border-default: {{line}};
+  --icon-muted: {{line2}};
+  --icon-voice-muted: {{red}};
+  --icon-default: {{fg}};
+  --icon-strong: {{fg}};
+  --icon-subtle: {{fg}};
+  --user-profile-overlay-background: {{bg2}};
+  --user-profile-overlay-background-hover: {{bg3}};
+  --modal-background: {{bg2}};
+  --modal-footer-background: {{bg2}};
+  --__adaptive-focus-ring-color: {{accent}};
+  --textbox-markdown-syntax: {{fg2}};
+  --logo-primary: {{fg}};
+  --checkbox-border-default: {{line2}};
+  --checkbox-icon-active: {{bg}};
+  --radio-thumb-background-active: {{bg}};
+  --plum-23: {{bg2}};
+  --badge-text-brand: {{bg}};
+  --deprecated-panel-background: {{bg3}};
+  --deprecated-card-bg: {{bg1}};
+  --deprecated-card-editable-bg: {{bg1}};
+  --deprecated-store-bg: {{bg3}};
+  --deprecated-quickswitcher-input-background: {{bg1}};
+  --deprecated-quickswitcher-input-placeholder: rgba({{fg_rgb}}, 0.3);
+  --deprecated-text-input-bg: {{bg1}};
+  --white: {{fg}};
+  --white-500: {{fg}};
+  --black-500: {{bg}};
+  --green-360: {{green}};
+  --green-300: {{green}};
+  --yellow-360: {{accent}};
+  --yellow-300: {{accent}};
+  --red-400: {{red}};
+  --red-430: {{red}};
+  --red-500: {{red_dark}};
+  --blue-500: {{accent}};
+  --blue-530: {{accent}};
+  --primary-100: {{fg}};
+  --primary-200: {{fg1}};
+  --primary-300: {{fg}};
+  --primary-400: {{fg}};
+  --primary-630: {{bg3}};
+  --primary-700: {{line}};
+  --primary-800: {{bg}};
+  --twitch: {{fg}};
+  --playstation: {{accent}};
+  --spotify: {{green}};
+  --guild-boosting-pink: {{green}};
+  --guild-boosting-blue: {{accent}};
+  --guild-boosting-purple: {{fg}};
+  --premium-perk-yellow: {{accent}};
+  --premium-perk-purple: {{fg}};
+  --premium-perk-dark-blue: {{accent}};
+  --premium-perk-light-blue: {{green}};
+  --premium-perk-blue: {{accent}};
+  --premium-perk-green: {{green}};
+  --premium-perk-pink: {{fg}};
+  --premium-perk-orange: {{accent}};
+  --premium-tier-0-blue: {{accent}};
+  --premium-tier-0-purple: {{fg}};
+  --premium-tier-1-blue-for-gradients: {{green}};
+  --premium-tier-1-dark-blue-for-gradients: {{accent}};
+  --premium-tier-2-purple-for-gradients: {{fg}};
+  --premium-tier-2-purple-for-gradients-2: {{fg1}};
+  --premium-tier-2-pink-for-gradients: {{fg}};
+}
+
+.visual-refresh.theme-dark,
+.visual-refresh .theme-dark {
+  --__header-bar-background: {{bg3}} !important;
+  --background-surface-high: {{bg2}} !important;
+  --background-surface-higher: {{bg3}} !important;
+  --background-surface-highest: {{line}} !important;
+  --background-base-lowest: {{bg}} !important;
+  --background-base-lower: {{bg1}} !important;
+  --background-base-low: {{bg2}} !important;
+  --bg-surface-raised: {{bg3}};
+  --background-gradient-highest: {{bg2}};
+  --background-primary: {{bg2}};
+  --background-secondary: {{bg1}};
+  --background-secondary-alt: {{bg3}} !important;
+  --background-tertiary: {{bg}};
+  --background-floating: {{bg3}};
+  --background-accent: {{line}} !important;
+  --background-modifier-hover: rgba({{line_rgb}}, 0.3);
+  --background-modifier-active: rgba({{line_rgb}}, 0.5);
+  --background-modifier-selected: rgba({{line_rgb}}, 0.6);
+  --background-modifier-accent: {{line}};
+  --background-mod-muted: rgba({{line_rgb}}, 0.05);
+  --background-mod-normal: rgba({{line_rgb}}, 0.15);
+  --background-mod-subtle: rgba({{line_rgb}}, 0.25) !important;
+  --background-mod-strong: rgba({{line_rgb}}, 0.45) !important;
+  --app-frame-background: {{bg}};
+  --home-background: {{bg2}};
+  --chat-background: {{bg2}};
+  --chat-background-default: {{bg2}};
+  --chat-border: {{bg}};
+  --chat-text-muted: {{fg1}};
+  --userarea-background: {{bg}};
+  --activity-card-background: {{bg2}};
+  --card-background-default: {{bg3}} !important;
+  --custom-channel-members-bg: {{bg1}};
+  --custom-status-bubble-background: {{bg}} !important;
+  --custom-status-bubble-background-color: {{bg1}} !important;
+  --border-subtle: {{bg2}} !important;
+  --border-muted: {{bg3}};
+  --border-normal: {{bg}};
+  --border-strong: {{bg1}};
+  --border-color: {{line}};
+  --deprecated-text-input-border: {{line}};
+  --deprecated-text-input-border-hover: {{line2}};
+  --deprecated-text-input-border-disabled: {{bg3}};
+  --deprecated-text-input-prefix: {{fg}};
+  --header-primary: {{fg}};
+  --header-secondary: {{fg1}};
+  --text-normal: {{fg}};
+  --text-muted: {{fg1}} !important;
+  --text-link: {{accent}} !important;
+  --text-positive: {{green}};
+  --text-warning: {{accent}};
+  --text-danger: {{red}};
+  --text-default: {{fg}};
+  --text-strong: {{fg}} !important;
+  --text-subtle: {{fg}};
+  --text-brand: {{accent}};
+  --text-feedback-positive: {{green}};
+  --text-feedback-critical: {{red}};
+  --text-feedback-warning: {{accent}};
+  --text-feedback-info: {{accent}};
+  --text-status-online: {{green}};
+  --text-status-idle: {{accent}};
+  --text-status-dnd: {{red}};
+  --text-status-offline: {{fg1}};
+  --interactive-normal: {{fg1}};
+  --interactive-hover: {{fg}};
+  --interactive-active: {{fg}};
+  --interactive-muted: {{line2}};
+  --interactive-icon-default: {{fg}} !important;
+  --interactive-icon-hover: {{fg}};
+  --interactive-icon-active: {{fg}};
+  --interactive-text-default: {{fg}} !important;
+  --interactive-text-hover: {{fg}};
+  --interactive-text-active: {{fg}};
+  --interactive-background-hover: rgba({{line_rgb}}, 0.15);
+  --interactive-background-selected: rgba({{line_rgb}}, 0.2);
+  --interactive-background-active: rgba({{fg_rgb}}, 0.17);
+  --channels-default: {{fg1}} !important;
+  --channels-voice-default: {{fg1}};
+  --channel-icon: {{fg1}} !important;
+  --channel-text-area-placeholder: rgba({{fg_rgb}}, 0.5);
+  --channeltextarea-background: {{bg1}};
+  --voice-color: {{green}};
+  --status-speaking: {{green}} !important;
+  --brand-experiment: {{accent}};
+  --brand-experiment-560: {{accent}};
+  --brand-experiment-600: {{accent}};
+  --control-brand-foreground: {{accent}};
+  --control-brand-foreground-new: {{accent}};
+  --brand-100: {{accent_light2}};
+  --brand-130: {{accent_light2}};
+  --brand-160: {{accent_light2}};
+  --brand-200: {{accent_light1}};
+  --brand-230: {{accent_light1}};
+  --brand-260: {{accent_light1}};
+  --brand-300: {{accent_light1}};
+  --brand-330: {{accent}};
+  --brand-360: {{accent}};
+  --brand-400: {{accent}};
+  --brand-430: {{accent}};
+  --brand-460: {{accent}};
+  --brand-500: {{accent}} !important;
+  --brand-530: {{accent}};
+  --brand-560: {{accent}};
+  --brand-600: {{accent}};
+  --brand-630: {{accent_dark1}};
+  --brand-660: {{accent_dark1}};
+  --brand-700: {{accent_dark2}};
+  --brand-730: {{accent_dark2}};
+  --brand-760: {{accent_dark3}};
+  --brand-800: {{accent_dark3}};
+  --brand-830: {{accent_dark4}};
+  --brand-860: {{accent_dark4}};
+  --brand-900: {{line}};
+  --brand-05a: rgba({{accent_rgb}}, 0.05);
+  --brand-10a: rgba({{accent_rgb}}, 0.1);
+  --brand-15a: rgba({{accent_rgb}}, 0.15);
+  --brand-20a: rgba({{accent_rgb}}, 0.2);
+  --brand-25a: rgba({{accent_rgb}}, 0.25);
+  --brand-30a: rgba({{accent_rgb}}, 0.3);
+  --brand-35a: rgba({{accent_rgb}}, 0.35);
+  --brand-40a: rgba({{accent_rgb}}, 0.4);
+  --brand-45a: rgba({{accent_rgb}}, 0.45);
+  --brand-50a: rgba({{accent_rgb}}, 0.5);
+  --brand-55a: rgba({{accent_rgb}}, 0.55);
+  --brand-60a: rgba({{accent_rgb}}, 0.6);
+  --brand-65a: rgba({{accent_rgb}}, 0.65);
+  --brand-70a: rgba({{accent_rgb}}, 0.7);
+  --brand-75a: rgba({{accent_rgb}}, 0.75);
+  --brand-80a: rgba({{accent_rgb}}, 0.8);
+  --brand-85a: rgba({{accent_rgb}}, 0.85);
+  --brand-90a: rgba({{accent_rgb}}, 0.9);
+  --brand-95a: rgba({{accent_rgb}}, 0.95);
+  --opacity-blurple-8: rgba({{accent_rgb}}, 0.08);
+  --opacity-blurple-16: rgba({{accent_rgb}}, 0.16);
+  --opacity-blurple-24: rgba({{accent_rgb}}, 0.24);
+  --opacity-blurple-32: rgba({{accent_rgb}}, 0.32);
+  --opacity-blurple-60: rgba({{accent_rgb}}, 0.6);
+  --blurple-50: {{accent}};
+  --blurple-60: {{accent_light1}};
+  --control-primary-background-default: {{accent}};
+  --control-primary-background-hover: {{accent}};
+  --control-primary-background-active: {{accent}};
+  --control-secondary-background-default: {{line}} !important;
+  --control-secondary-background-hover: {{line2}};
+  --control-secondary-background-active: {{line2}};
+  --control-secondary-border-default: {{line}};
+  --control-secondary-text-default: {{fg}} !important;
+  --control-secondary-text-hover: {{fg}};
+  --control-critical-primary-background-default: {{red_dark}};
+  --control-critical-primary-background-hover: {{red}};
+  --control-critical-primary-background-active: {{red}};
+  --control-critical-primary-text-default: {{bg}};
+  --control-critical-primary-text-hover: {{bg}};
+  --control-critical-secondary-background-default: transparent;
+  --control-critical-secondary-background-hover: rgba({{red_rgb}}, 0.15);
+  --control-critical-secondary-background-active: rgba({{red_rgb}}, 0.2);
+  --control-critical-secondary-border-default: {{red}};
+  --control-critical-secondary-border-hover: {{red}};
+  --control-critical-secondary-border-active: {{red}};
+  --control-critical-secondary-text-default: {{fg}};
+  --control-critical-secondary-text-hover: {{bg}};
+  --control-critical-secondary-text-active: {{bg}};
+  --control-connected-background-default: {{green}};
+  --control-connected-background-hover: {{green_light}};
+  --control-connected-background-active: {{green}};
+  --control-connected-border-default: {{green}};
+  --control-connected-border-hover: {{green_light}};
+  --control-connected-border-active: {{green_light}};
+  --button-outline-primary-text: {{fg}};
+  --button-outline-brand-text: {{fg}};
+  --button-outline-brand-background-hover: rgba({{accent_rgb}}, 0.3);
+  --button-outline-brand-border-active: {{accent}};
+  --status-positive: {{green}} !important;
+  --status-positive-background: {{green}} !important;
+  --status-positive-text: {{bg}};
+  --status-warning: {{accent}};
+  --status-warning-background: {{accent}};
+  --status-warning-text: {{bg}};
+  --status-danger: {{red}};
+  --icon-status-online: {{green}};
+  --icon-status-idle: {{accent}};
+  --icon-status-dnd: {{red}};
+  --icon-status-offline: {{fg1}};
+  --background-feedback-positive: rgba({{green_rgb}}, 0.15) !important;
+  --background-feedback-warning: rgba({{accent_rgb}}, 0.15);
+  --background-feedback-critical: rgba({{red_rgb}}, 0.15);
+  --background-feedback-info: rgba({{accent_rgb}}, 0.15);
+  --background-feedback-notification: {{red}};
+  --badge-notification-background: {{red}};
+  --icon-feedback-positive: {{green}} !important;
+  --icon-feedback-warning: {{accent}};
+  --icon-feedback-critical: {{red}};
+  --icon-feedback-info: {{accent}};
+  --icon-feedback-notification: {{red}};
+  --notice-background-critical: {{red}};
+  --notice-background-info: {{accent}};
+  --notice-background-positive: {{green}};
+  --notice-background-warning: {{accent}};
+  --notice-text-critical: {{bg}};
+  --notice-text-info: {{bg}};
+  --notice-text-positive: {{bg}};
+  --notice-text-warning: {{bg}};
+  --background-mentioned: rgba({{accent_rgb}}, 0.07);
+  --background-mentioned-hover: rgba({{accent_rgb}}, 0.12);
+  --background-mentioned-focus: rgba({{accent_rgb}}, 0.15);
+  --mention-foreground: {{accent}};
+  --mention-background: rgba({{accent_rgb}}, 0.3);
+  --message-mentioned-background-default: rgba({{accent_rgb}}, 0.07);
+  --message-mentioned-background-hover: rgba({{accent_rgb}}, 0.05);
+  --message-automod-background-default: rgba({{red_dark_rgb}}, 0.05);
+  --message-automod-background-hover: rgba({{red_dark_rgb}}, 0.1);
+  --message-highlight-background-default: rgba({{accent_rgb}}, 0.08);
+  --message-highlight-background-hover: rgba({{accent_rgb}}, 0.06);
+  --message-reacted-background-default: rgba({{accent_rgb}}, 0.3) !important;
+  --message-reacted-text-default: {{accent}};
+  --message-background-hover: rgba(0, 0, 0, 0.08) !important;
+  --background-code: {{bg}};
+  --spoiler-revealed-background: {{bg3}};
+  --spoiler-hidden-background: {{line}};
+  --__spoiler-background-color--hidden: {{line}};
+  --__spoiler-warning-background-color: {{line2}};
+  --input-background-default: {{bg}};
+  --input-text-default: {{fg}};
+  --input-placeholder-text-default: rgba({{fg_rgb}}, 0.5);
+  --input-border-default: {{line}};
+  --icon-muted: {{line2}} !important;
+  --icon-voice-muted: {{red}};
+  --icon-default: {{fg}};
+  --icon-strong: {{fg}};
+  --icon-subtle: {{fg}};
+  --scrollbar-thin-thumb: {{line}};
+  --scrollbar-thin-track: transparent;
+  --scrollbar-auto-thumb: {{line}};
+  --scrollbar-auto-track: {{bg}};
+  --scrollbar-auto-scrollbar-color-thumb: {{line}};
+  --scrollbar-auto-scrollbar-color-track: {{bg}};
+  --elevation-low: 0 1px 0 rgba(0, 0, 0, 0.3), 0 2px 0 rgba(0, 0, 0, 0.1);
+  --elevation-medium: 0 4px 4px rgba(0, 0, 0, 0.24);
+  --elevation-high: 0 8px 16px rgba(0, 0, 0, 0.36);
+  --elevation-stroke: 0 0 0 1px rgba(0, 0, 0, 0.2);
+  --user-profile-overlay-background: {{bg2}};
+  --user-profile-overlay-background-hover: {{bg3}};
+  --modal-background: {{bg2}} !important;
+  --modal-footer-background: {{bg2}};
+  --logo-primary: {{fg}};
+  --__adaptive-focus-ring-color: {{accent}};
+  --textbox-markdown-syntax: {{fg2}};
+  --checkbox-border-default: {{line2}};
+  --checkbox-icon-active: {{bg}};
+  --radio-thumb-background-active: {{bg}};
+  --plum-23: {{bg2}};
+  --badge-text-brand: {{bg}};
+  --deprecated-panel-background: {{bg3}};
+  --deprecated-card-bg: {{bg1}};
+  --deprecated-card-editable-bg: {{bg1}};
+  --deprecated-store-bg: {{bg3}};
+  --deprecated-quickswitcher-input-background: {{bg1}};
+  --deprecated-quickswitcher-input-placeholder: rgba({{fg_rgb}}, 0.3);
+  --deprecated-text-input-bg: {{bg1}};
+  --white: {{fg}};
+  --white-500: {{fg}};
+  --black-500: {{bg}};
+  --green-360: {{green}};
+  --green-300: {{green}};
+  --yellow-360: {{accent}};
+  --yellow-300: {{accent}};
+  --red-400: {{red}};
+  --red-430: {{red}};
+  --red-500: {{red_dark}};
+  --blue-500: {{accent}};
+  --blue-530: {{accent}};
+  --primary-100: {{fg}};
+  --primary-200: {{fg1}};
+  --primary-300: {{fg}};
+  --primary-400: {{fg}};
+  --primary-630: {{bg3}};
+  --primary-700: {{line}};
+  --primary-800: {{bg}};
+  --twitch: {{fg}};
+  --playstation: {{accent}};
+  --spotify: {{green}};
+  --guild-boosting-pink: {{green}};
+  --guild-boosting-blue: {{accent}};
+  --guild-boosting-purple: {{fg}};
+  --premium-perk-yellow: {{accent}};
+  --premium-perk-purple: {{fg}};
+  --premium-perk-dark-blue: {{accent}};
+  --premium-perk-light-blue: {{green}};
+  --premium-perk-blue: {{accent}};
+  --premium-perk-green: {{green}};
+  --premium-perk-pink: {{fg}};
+  --premium-perk-orange: {{accent}};
+  --premium-tier-0-blue: {{accent}};
+  --premium-tier-0-purple: {{fg}};
+  --premium-tier-1-blue-for-gradients: {{green}};
+  --premium-tier-1-dark-blue-for-gradients: {{accent}};
+  --premium-tier-2-purple-for-gradients: {{fg}};
+  --premium-tier-2-purple-for-gradients-2: {{fg1}};
+  --premium-tier-2-pink-for-gradients: {{fg}};
+}
+
+.visual-refresh.theme-dark button[class*=button_][class*=lookFilled_][class*=colorGreen_],
+.visual-refresh .theme-dark button[class*=button_][class*=lookFilled_][class*=colorGreen_],
+.visual-refresh.theme-dark button[class*=colorable_][class*=join_],
+.visual-refresh .theme-dark button[class*=colorable_][class*=join_] {
+  color: {{bg}} !important;
+}
+
+:is(.visual-refresh.theme-dark, .visual-refresh .theme-dark) :is(div[class^=item_][class*=addFriend_],
+div[class^=numberBadge_][style*="background-color: var(--background-feedback-notification);"],
+div[class^=numberBadge_][style*="background-color: var(--badge-notification-background);"],
+div[class*=iconBadge_][class*=isCurrentUserConnected_],
+span[class*=botTag_],
+span[class^=unreadPill_],
+div[class^=listItem_] div[class^=wrapper_] [class*=selected_],
+div[class^=icon_][class*=noIcon_],
+button[class^=container_] > div[class^=icon_] > svg,
+div[class^=newBadge_],
+button[class*=button_][class*=lookFilled_][class*=colorBrand_],
+button[class*=button_][class*=lookFilled_][class*=colorLink_],
+div[class*=textBadge_][class*=base_],
+svg[class^=descriptionIcon_],
+div[class^=uploadDropModal_],
+svg[class^=stepIcon_],
+svg[class^=activeIcon_],
+div[class*=tooltipBrand_],
+div[class*=tooltipGreen_],
+span[class*=planOptionDiscount_],
+div[class*=memberCount_],
+svg[class*=flowerStar_] + div[class*=childContainer_],
+div[class*=streamerModeEnabledBtn_],
+div[class*=nowPlaying_],
+div[class^=pageControlContainer_],
+[class*=notice_][class*=colorBrand_],
+[class*=colorStreamerMode_],
+[class*=colorSpotify_],
+[class*=colorPremium_],
+[class*=colorPlayStation_]) {
+  --white: {{fg}};
+  --white-500: {{fg}};
+}
+
+.visual-refresh.theme-dark ::-moz-selection, .visual-refresh .theme-dark ::-moz-selection {
+  background-color: rgba({{accent_rgb}}, 0.6);
+}
+
+.visual-refresh.theme-dark ::selection,
+.visual-refresh .theme-dark ::selection {
+  background-color: rgba({{accent_rgb}}, 0.6);
+}
+
+.visual-refresh.theme-dark button.vc-btn-primary,
+.visual-refresh .theme-dark button.vc-btn-primary {
+  color: {{fg}} !important;
+  background-color: {{accent}} !important;
+}
+.visual-refresh.theme-dark button.vc-btn-primary:hover, .visual-refresh.theme-dark button.vc-btn-primary:active,
+.visual-refresh .theme-dark button.vc-btn-primary:hover,
+.visual-refresh .theme-dark button.vc-btn-primary:active {
+  background-color: {{accent}} !important;
+}
+
+.visual-refresh.theme-dark button.vc-btn-positive,
+.visual-refresh .theme-dark button.vc-btn-positive {
+  color: {{bg}} !important;
+}
+
+.visual-refresh.theme-dark button[class^=button_][class*=" primary_"],
+.visual-refresh .theme-dark button[class^=button_][class*=" primary_"] {
+  color: {{fg}} !important;
+  background-color: {{accent}} !important;
+}
+.visual-refresh.theme-dark button[class^=button_][class*=" primary_"]:hover, .visual-refresh.theme-dark button[class^=button_][class*=" primary_"]:active,
+.visual-refresh .theme-dark button[class^=button_][class*=" primary_"]:hover,
+.visual-refresh .theme-dark button[class^=button_][class*=" primary_"]:active {
+  background-color: {{accent}} !important;
+}
+
+.theme-dark {
+  --background-mentioned: rgba({{accent_rgb}}, 0.07);
+  --background-mentioned-hover: rgba({{accent_rgb}}, 0.12);
+  --background-message-hover: rgba(0, 0, 0, 0.08);
+  --text-normal: {{fg}};
+  --text-link: {{accent}};
+  --header-primary: {{fg}};
+  --header-secondary: {{fg1}};
+  --interactive-normal: {{fg1}};
+  --interactive-hover: {{fg}};
+  --interactive-active: {{fg}};
+  --channels-default: {{fg1}};
+}
+
+.theme-light {
+  --background-primary: {{bg2}};
+  --background-secondary: {{bg1}};
+  --background-tertiary: {{bg}};
+  --background-floating: {{bg3}};
+  --header-primary: {{fg}};
+  --header-secondary: {{fg1}};
+  --text-normal: {{fg}};
+  --deprecated-text-input-bg: {{bg1}};
+}
+
+/* ---------- shape: soft, unified, never sharp ---------- */
+/* A single small radius everywhere except circular/icon elements,
+   which keep their native rounding so avatars stay circular. */
+*:not(svg, circle, [class*="avatar" i], [class*="mask" i], [class*="icon" i]) {
+  border-radius: var(--onyx-radius-default) !important;
+}
+
+/* ---------- typography: one font, smaller, everywhere ---------- */
+#app-mount,
+#app-mount [class*=markup],
+#app-mount [class*=markup] *,
+#app-mount [class*=messageContent],
+#app-mount [class*=messageContent] *,
+[role=textbox],
+[role=textbox] *,
+[data-slate-editor],
+[data-slate-editor] *,
+div[class*=accountProfileCard_] *,
+div[class*=nameTag_] *,
+div[class*=customStatus_] * {
+  font-family: var(--onyx-font) !important;
+  letter-spacing: 0 !important;
+}
+
+/* code keeps the same unified font, borderless */
+code,
+pre,
+#app-mount [class*=markup] code,
+#app-mount [class*=markup] pre {
+  font-family: var(--onyx-font) !important;
+  background-color: var(--onyx-bg-elevated-1) !important;
+  border: none !important;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--onyx-border-primary) !important;
+  border-radius: var(--onyx-radius-sm) !important;
+}
+
+::-webkit-scrollbar-track {
+  background-color: transparent !important;
+}
+
+/* keep Discord's native circular status badges - no square clipping */
+div[class*=speaking_] {
+  box-shadow: inset 0 0 0 2px var(--onyx-success) !important;
+}
+
+section[class*=panels_] {
+  flex-shrink: 0 !important;
+  min-height: 52px !important;
+  background-color: var(--onyx-bg) !important;
+}
+
+[class^=privateChannels_] [class^=buttonChildrenWrapper_],
+[class^=privateChannels_] [class^=buttonChildren_],
+[class^=privateChannels_] button:has([class^=buttonChildrenWrapper_]) {
+  background-color: var(--onyx-bg) !important;
+}
+
+div[class*=listItemWrapper_],
+li[class*=listItem_] {
+  overflow: visible !important;
+}
+
+/* ---------- no boxes: differentiate with elevation, not borders ---------- */
+div[class*=embed_],
+div[class*=embedWrapper_] {
+  background-color: var(--onyx-bg-elevated-3) !important;
+  border: none !important;
+}
+
+div[class*=reaction_] {
+  background-color: var(--onyx-bg-elevated-3) !important;
+  border: none !important;
+}
+
+div[class*=reactionMe_] {
+  background-color: rgba({{accent_rgb}}, 0.15) !important;
+  border: none !important;
+}
+
+div[class*=mentioned_] {
+  background-color: rgba({{accent_rgb}}, 0.07) !important;
+}
+div[class*=mentioned_]::before {
+  background-color: var(--onyx-accent) !important;
+}
+
+:is(.visual-refresh.theme-dark, .visual-refresh .theme-dark) button[class*=button_][class*=lookFilled_][class*=colorRed_] {
+  background-color: {{red_dark}} !important;
+}
+:is(.visual-refresh.theme-dark, .visual-refresh .theme-dark) button[class*=button_][class*=lookFilled_][class*=colorRed_]:hover {
+  background-color: {{red}} !important;
+}
+:is(.visual-refresh.theme-dark, .visual-refresh .theme-dark) button[class*=button_][class*=lookFilled_][class*=colorGrey_] {
+  background-color: {{bg3}} !important;
+  color: {{fg}} !important;
+}
+:is(.visual-refresh.theme-dark, .visual-refresh .theme-dark) button[class*=button_][class*=lookFilled_][class*=colorGrey_]:hover {
+  background-color: {{line}} !important;
+}
+:is(.visual-refresh.theme-dark, .visual-refresh .theme-dark) button[class*=button_][class*=lookFilled_][class*=colorBrand_] {
+  background-color: {{accent}} !important;
+  color: {{fg}} !important;
+}
+:is(.visual-refresh.theme-dark, .visual-refresh .theme-dark) button[class*=button_][class*=lookFilled_][class*=colorBrand_]:hover {
+  background-color: {{accent}} !important;
+}
+:is(.visual-refresh.theme-dark, .visual-refresh .theme-dark) button[class*=button_][class*=active_] {
+  color: {{fg}} !important;
+}
+:is(.visual-refresh.theme-dark, .visual-refresh .theme-dark) div[class*=winButtonClose_]:hover {
+  color: {{fg}} !important;
+}
+
+div[class*=overlay_] {
+  background-color: {{bg1}} !important;
+}
+
+div[class*=newMessagesBar_] {
+  background-color: {{accent}} !important;
+}
+
+.bd-addon-list .bd-addon-card {
+  border: none;
+  background-color: var(--onyx-bg-elevated-2);
+  margin-bottom: 18px;
+}

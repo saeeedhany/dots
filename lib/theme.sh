@@ -119,3 +119,22 @@ theme_check() {
     exit 1
   )
 }
+
+# theme_fill <template> <out>: replaces {{key}}, {{key_rgb}} and {{name}}
+# with the loaded theme. Fails, writing nothing, if a placeholder is left.
+theme_fill() {
+  local template="$1" out="$2" k script=() tmp
+  for k in "${THEME_KEYS[@]}"; do
+    script+=(-e "s/{{${k}_rgb}}/$(hex_rgb "${!k}")/g" -e "s/{{${k}}}/${!k}/g")
+  done
+  script+=(-e "s/{{name}}/${THEME:-theme}/g")
+  tmp="$(mktemp)"
+  sed "${script[@]}" "$template" > "$tmp"
+  if grep -q '{{' "$tmp"; then
+    warn "$template: unfilled $(grep -o '{{[^}]*}}' "$tmp" | sort -u | paste -sd' ')"
+    rm -f "$tmp"
+    return 1
+  fi
+  mkdir -p "$(dirname "$out")"
+  mv "$tmp" "$out"
+}
