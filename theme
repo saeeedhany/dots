@@ -1,0 +1,69 @@
+#!/usr/bin/env bash
+# Repaint the whole machine in one theme.
+#   theme          list themes, * marks the current one
+#   theme <name>   apply themes/<name> everywhere
+set -euo pipefail
+
+REPO_ROOT="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")" && pwd)"
+export REPO_ROOT
+# shellcheck source=lib/log.sh
+. "$REPO_ROOT/lib/log.sh"
+# shellcheck source=lib/theme.sh
+. "$REPO_ROOT/lib/theme.sh"
+
+TARGETS=(wallpaper xresources dunst tmux bash zathura nvim vesktop firefox)
+for t in "${TARGETS[@]}"; do
+  # shellcheck source=/dev/null
+  [[ -f "$REPO_ROOT/lib/targets/$t.sh" ]] && . "$REPO_ROOT/lib/targets/$t.sh"
+done
+
+STATE="$HOME/.config/theme"
+CACHE="$HOME/.cache/theme"
+
+usage() {
+  cat <<'USAGE'
+usage: theme            list themes
+       theme <name>     apply a theme
+USAGE
+}
+
+list() {
+  local current n
+  current="$(cat "$STATE" 2>/dev/null || true)"
+  while read -r n; do
+    if [[ "$n" == "$current" ]]; then printf '* %s\n' "$n"; else printf '  %s\n' "$n"; fi
+  done < <(theme_names)
+}
+
+# write_colors: the loaded theme as plain assignments, for bash and others
+write_colors() {
+  local k
+  {
+    for k in "${THEME_KEYS[@]}"; do printf '%s=%s\n' "$k" "${!k}"; done
+    printf 'THEME=%s\n' "$THEME"
+  } > "$CACHE/colors.sh"
+}
+
+apply() {
+  theme_load "$1" || exit 1
+  mkdir -p "$CACHE" "$(dirname "$STATE")"
+  write_colors
+  local t
+  for t in "${TARGETS[@]}"; do
+    if declare -F "render_$t" >/dev/null; then "render_$t"; fi
+  done
+  if [[ -z "${DISPLAY:-}" ]]; then
+    info "no X session: skipping wallpaper and X reloads"
+  fi
+  for t in "${TARGETS[@]}"; do
+    if declare -F "reload_$t" >/dev/null; then "reload_$t"; fi
+  done
+  printf '%s\n' "$THEME" > "$STATE"
+  ok "theme: $THEME"
+}
+
+case "${1:-}" in
+  "")        list ;;
+  -h|--help) usage ;;
+  *)         apply "$1" ;;
+esac
