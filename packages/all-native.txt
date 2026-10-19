@@ -1,4 +1,4 @@
-# Every explicitly installed package on the origin machine.
+# Every explicitly installed native package on the origin machine.
 # Regenerate with ./sync.sh --apply. Used by ./install.sh --all
 
 acpi
@@ -13,17 +13,16 @@ awww
 base
 base-devel
 bat
+bats
 bemenu
 bind
 blender
-bochs
 breeze-gtk
 brightnessctl
 btop
 calf
 capitaine-cursors
 cava
-cbonsai
 chafa
 chaotic-keyring
 chaotic-mirrorlist
@@ -32,9 +31,7 @@ cloc
 cmake
 composer
 cpufetch
-cursor-bin
 dart
-davinci-resolve
 debtap
 dhcp
 dmidecode
@@ -46,13 +43,12 @@ dpkg
 droidcam
 dunst
 dust
-dwl-debug
 easyeffects
 efibootmgr
 emacs
 espeak-ng
-ex-vi-compat
 expac
+ex-vi-compat
 fd
 feh
 firefox
@@ -67,7 +63,6 @@ gimp
 gimp-plugin-gmic
 git
 github-cli
-glava
 gmic
 godot
 gradle
@@ -86,6 +81,7 @@ inxi
 iptables-legacy
 iwd
 jdk17-openjdk
+jq
 jupyter-notebook
 kdeconnect
 kdenlive
@@ -96,8 +92,6 @@ linux
 linux-firmware
 linux-headers
 lolcat
-lotion-bin
-lotion-bin-debug
 lsp-plugins
 lua53
 lxappearance
@@ -107,14 +101,11 @@ mangohud
 mariadb
 mesa
 mesa-utils
-miniconda3
 mpd
-mpvpaper-git
 mtpaint
 mypaint
 nano
 nasm
-neofetch
 neovim
 networkmanager
 ngrok
@@ -127,13 +118,12 @@ nvidia-prime
 nvidia-settings
 nvidia-utils
 nvme-cli
-obs-studio
 obsidian
+obs-studio
 pacman-contrib
 pamixer
 papirus-icon-theme
 paru
-paru-debug
 patchelf
 pavucontrol
 peek
@@ -144,12 +134,9 @@ pipewire-alsa
 pipewire-pulse
 postgresql
 postgresql-libs
-proton-ge-custom-bin
 pyenv
 python-pip
-python-pywal
 python-virtualenv
-python311
 qemu-full
 qemu-system-x86
 qview
@@ -162,6 +149,7 @@ rsync
 scid
 scrcpy
 scrot
+shellcheck
 slurp
 smartmontools
 speech-dispatcher
@@ -176,7 +164,6 @@ swaybg
 sxhkd
 tmux
 tree-sitter-cli
-ttf-arabeyes-fonts
 ttf-jetbrains-mono
 ttyper
 ueberzugpp
@@ -186,7 +173,6 @@ unzip
 valgrind
 vcpkg
 ventoy-bin
-vesktop-bin
 vifm
 vim
 volk
@@ -219,6 +205,7 @@ xorg-iceauth
 xorg-mkfontscale
 xorg-server
 xorg-server-xephyr
+xorg-server-xvfb
 xorg-sessreg
 xorg-setxkbmap
 xorg-smproxy
@@ -254,9 +241,7 @@ xorg-xwininfo
 xorg-xwud
 xournalpp
 xterm
-xwinwrap-git
 yay
-yay-debug
 yt-dlp
 zathura
 zathura-pdf-poppler

@@ -32,7 +32,7 @@ usage: ./install.sh [options]
   --theme <name>   theme to apply (default: grey)
   --only a,b       run only these steps
   --skip a,b       run every step except these
-  --all            install packages/all.txt instead of the curated lists
+  --all            install the full snapshot (packages/all-*.txt) instead of the curated lists
   --dry-run        print what would happen, change nothing
   --yes            don't ask for confirmation
 steps: ${STEPS[*]}
@@ -51,7 +51,7 @@ step_check() {
 
 step_packages() {
   if [[ "$ALL" -eq 1 ]]; then
-    pkg_install_native <(pkg_list "$REPO_ROOT/packages/all.txt" | grep -vxFf <(pacman -Qqm 2>/dev/null || true))
+    pkg_install_native "$REPO_ROOT/packages/all-native.txt"
   else
     pkg_install_native "$REPO_ROOT/packages/pacman.txt"
   fi
@@ -60,7 +60,7 @@ step_packages() {
 step_aur() {
   pkg_ensure_yay
   if [[ "$ALL" -eq 1 ]]; then
-    pkg_install_aur <(pkg_list "$REPO_ROOT/packages/all.txt" | grep -xFf <(pacman -Qqm 2>/dev/null || true))
+    pkg_install_aur "$REPO_ROOT/packages/all-aur.txt"
   else
     pkg_install_aur "$REPO_ROOT/packages/aur.txt"
   fi

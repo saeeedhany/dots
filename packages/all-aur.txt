@@ -1,0 +1,22 @@
+# Every explicitly installed AUR package on the origin machine.
+# Regenerate with ./sync.sh --apply. Used by ./install.sh --all
+
+bochs
+cbonsai
+cursor-bin
+davinci-resolve
+dwl-debug
+glava
+lotion-bin
+lotion-bin-debug
+miniconda3
+mpvpaper-git
+neofetch
+paru-debug
+proton-ge-custom-bin
+python311
+python-pywal
+ttf-arabeyes-fonts
+vesktop-bin
+xwinwrap-git
+yay-debug
