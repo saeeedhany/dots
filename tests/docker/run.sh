@@ -20,7 +20,7 @@ docker run --rm --network host dots-clean-machine bash -c '
   set -euo pipefail
   export SUCKLESS_URL=/home/tester/suckless-src
   ./dots/install.sh --yes --skip aur
-  ./dots/install.sh --only verify
+  ./dots/install.sh --only verify --yes
   ~/.local/bin/theme white
   for f in ~/.cache/theme/Xresources ~/Pictures/Wallpapers/white.png \
            ~/.config/vesktop/themes/white.theme.css ~/.config/theme; do
