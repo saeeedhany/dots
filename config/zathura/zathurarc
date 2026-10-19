@@ -1,40 +1,8 @@
-# Gruvbox Dark Theme for Zathura
-# Save this file as ~/.config/zathura/zathurarc
-
-# Gruvbox color scheme
-set notification-error-bg       "#cc241d" # red
-set notification-error-fg       "#fbf1c7" # fg
-set notification-warning-bg     "#d79921" # yellow
-set notification-warning-fg     "#3c3836" # bg1
-set notification-bg             "#3c3836" # bg1
-set notification-fg             "#fbf1c7" # fg
-
-set completion-bg               "#3c3836" # bg1
-set completion-fg               "#ebdbb2" # fg0
-set completion-group-bg         "#282828" # bg0
-set completion-group-fg         "#928374" # gray
-set completion-highlight-bg     "#83a598" # blue
-set completion-highlight-fg     "#282828" # bg0
-
-set inputbar-bg                 "#282828" # bg0
-set inputbar-fg                 "#fbf1c7" # fg
-
-set statusbar-bg                "#3c3836" # bg1
-set statusbar-fg                "#ebdbb2" # fg0
-
-set highlight-color             "#d79921" # yellow
-set highlight-active-color      "#fe8019" # orange
-
-set default-bg                  "#282828" # bg0
-set default-fg                  "#ebdbb2" # fg0
+# ~/.config/zathura/zathurarc
 
 set render-loading              true
-set render-loading-fg           "#282828" # bg0
-set render-loading-bg           "#ebdbb2" # fg0
 
 # Recolor mode settings
-set recolor-lightcolor          "#282828" # bg0
-set recolor-darkcolor           "#ebdbb2" # fg0
 set recolor                     true
 set recolor-keephue             false
 
@@ -64,8 +32,6 @@ set incremental-search          true
 set abort-clear-search          true
 
 # Performance
-set render-loading-fg           "#ebdbb2"
-set render-loading-bg           "#282828"
 
 # Additional settings
 set first-page-column           1:1
@@ -114,3 +80,6 @@ map [fullscreen] f toggle_fullscreen
 # Index mode
 map <Tab> toggle_index
 map [index] <Tab> toggle_index
+
+# Colors come from the active theme (run: theme <name>)
+include theme

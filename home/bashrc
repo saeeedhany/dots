@@ -3,30 +3,34 @@
 #
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# COLOR PALETTE - Gruvbox
+# COLOR PALETTE - from the active theme (run: theme <name>)
 # ═══════════════════════════════════════════════════════════════════════════════
 
 RESET="\[\e[0m\]"
 BOLD="\[\e[1m\]"
 DIM="\[\e[2m\]"
 
-# Custom Palette
-CREAM="\[\e[38;2;204;195;184m\]"        # CCC3B8 - Warm cream
-TAUPE="\[\e[38;2;147;135;124m\]"        # 93877C - Sophisticated taupe
-CHARCOAL="\[\e[38;2;80;79;80m\]"        # 504F50 - Deep charcoal
-STONE="\[\e[38;2;122;115;115m\]"        # 7A7373 - Warm stone
-OBSIDIAN="\[\e[38;2;15;18;14m\]"        # 0F120E - Deep obsidian
+# _theme_rgb <key> <fallback>: "r;g;b" of a theme color, or of the fallback
+_theme_rgb() {
+    local h
+    h="$(sed -n "s/^$1=#//p" ~/.cache/theme/colors.sh 2>/dev/null)"
+    h="${h:-${2#\#}}"
+    printf '%d;%d;%d' "0x${h:0:2}" "0x${h:2:2}" "0x${h:4:2}"
+}
 
-# Additions for Visual Hierarchy
-SAGE="\[\e[38;2;168;180;158m\]"         # Soft sage green
-ROSE="\[\e[38;2;188;158;158m\]"         # Muted rose
-GOLD="\[\e[38;2;218;188;148m\]"         # Warm gold accent
-SLATE="\[\e[38;2;108;114;118m\]"        # Cool slate
+CREAM="\[\e[38;2;$(_theme_rgb fg '#ccc3b8')m\]"        # main text
+TAUPE="\[\e[38;2;$(_theme_rgb fg1 '#93877c')m\]"       # dim text
+CHARCOAL="\[\e[38;2;$(_theme_rgb line '#504f50')m\]"   # lines
+STONE="\[\e[38;2;$(_theme_rgb fg2 '#7a7373')m\]"       # muted text
+OBSIDIAN="\[\e[38;2;$(_theme_rgb bg '#0f120e')m\]"     # background
+SAGE="\[\e[38;2;$(_theme_rgb green '#a8b49e')m\]"
+ROSE="\[\e[38;2;$(_theme_rgb red '#bc9e9e')m\]"
+GOLD="\[\e[38;2;$(_theme_rgb accent '#dabc94')m\]"
+SLATE="\[\e[38;2;$(_theme_rgb blue '#6c7276')m\]"
 
-# Background Colors
-BG_CHARCOAL="\[\e[48;2;80;79;80m\]"
-BG_STONE="\[\e[48;2;122;115;115m\]"
-BG_OBSIDIAN="\[\e[48;2;15;18;14m\]"
+BG_CHARCOAL="\[\e[48;2;$(_theme_rgb line '#504f50')m\]"
+BG_STONE="\[\e[48;2;$(_theme_rgb fg2 '#7a7373')m\]"
+BG_OBSIDIAN="\[\e[48;2;$(_theme_rgb bg '#0f120e')m\]"
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # PATH CONFIGURATION

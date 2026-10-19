@@ -2,3 +2,4 @@
 docs/
 *.bak.*
 config/dunst/dunstrc.d/
+config/zathura/theme
