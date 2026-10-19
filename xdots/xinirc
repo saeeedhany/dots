@@ -1,6 +1,0 @@
-dwmblocks &
-dunst &
-sxhkd &
-feh --bg-fill ~/Pictures/Wallpapers/cyberpunk.jpg &
-picom &
-exec dwm
