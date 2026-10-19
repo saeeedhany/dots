@@ -1,0 +1,21 @@
+/* Firefox's own pages (new tab, home, about:*) in the {{name}} theme. Websites are never touched. */
+@-moz-document url-prefix("about:"), url("about:home"), url("about:newtab"), url("about:blank") {
+  :root {
+    --newtab-background-color: {{bg}} !important;
+    --newtab-background-color-secondary: {{bg1}} !important;
+    --newtab-text-primary-color: {{fg}} !important;
+    --newtab-text-secondary-color: {{fg1}} !important;
+    --in-content-page-background: {{bg}} !important;
+    --in-content-page-color: {{fg}} !important;
+    --in-content-box-background: {{bg1}} !important;
+    --in-content-border-color: {{line}} !important;
+    --in-content-primary-button-background: {{accent}} !important;
+    --in-content-primary-button-text-color: {{bg}} !important;
+    --color-accent-primary: {{accent}} !important;
+    --link-color: {{accent}} !important;
+  }
+  body {
+    background-color: {{bg}} !important;
+    color: {{fg}} !important;
+  }
+}
