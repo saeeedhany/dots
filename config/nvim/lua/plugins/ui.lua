@@ -6,7 +6,7 @@ return {
         config = function()
             require("lualine").setup({
                 options = {
-                    theme = "gruvbox",
+                    theme = vim.g.colors_name == "gruvbox" and "gruvbox" or "auto",
                     section_separators = { left = "", right = "" },
                     component_separators = { left = "", right = "" },
                 },

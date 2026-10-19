@@ -20,7 +20,7 @@ return {
                 contrast = "hard",
                 transparent_mode = true,
             })
-            vim.cmd("colorscheme gruvbox")
+            require("core.apply_theme")()
         end,
     },
     {
