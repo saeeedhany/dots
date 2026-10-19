@@ -75,3 +75,8 @@ teardown() { teardown_fake_home; }
   grep -qx newpkg "$BATS_TEST_TMPDIR/all.txt"
   grep -qx oldpkg "$BATS_TEST_TMPDIR/all.txt" && return 1; true
 }
+
+@test "install puts ~/.local/bin on PATH for its own steps" {
+  PATH="/usr/local/bin:/usr/bin:/bin" run "$REPO_ROOT/install.sh" --only links,verify --yes
+  [[ "$output" != *"not on PATH: theme"* ]]
+}

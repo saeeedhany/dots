@@ -56,3 +56,11 @@ teardown() { teardown_fake_home; }
   run theme_fill "$BATS_TEST_TMPDIR/t" "$BATS_TEST_TMPDIR/out"
   [ "$status" -eq 1 ]
 }
+
+@test "a command line that merely mentions vesktop is not Vesktop running" {
+  source "$REPO_ROOT/lib/log.sh"; source "$REPO_ROOT/lib/targets/vesktop.sh"
+  bash -c 'sleep 5 # vesktop/themes' & p=$!
+  run reload_vesktop
+  kill "$p"
+  [[ "$output" != *"Ctrl+R"* ]]
+}

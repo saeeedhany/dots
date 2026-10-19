@@ -12,6 +12,10 @@ export REPO_ROOT
 # shellcheck source=lib/pkg.sh
 . "$REPO_ROOT/lib/pkg.sh"
 
+# On a fresh machine ~/.local/bin is only added to PATH by bashrc, which has
+# not run yet; theme and the linked tools live there.
+export PATH="$HOME/.local/bin:$PATH"
+
 STEPS=(check packages aur suckless links wallpapers fonts theme verify)
 SUCKLESS_URL="${SUCKLESS_URL:-https://github.com/saeeedhany/suckless}"
 SUCKLESS_DIR="$HOME/.config/suckless"

@@ -11,6 +11,6 @@ render_vesktop() {
 }
 
 reload_vesktop() {
-  pgrep -f vesktop >/dev/null || return 0
+  pgrep -x vesktop >/dev/null || return 0
   info "vesktop: if the theme didn't switch, press Ctrl+R in Vesktop"
 }
