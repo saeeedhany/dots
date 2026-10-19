@@ -1,1 +1,4 @@
+.remember/
 docs/
+*.bak.*
+config/dunst/dunstrc.d/
