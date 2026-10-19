@@ -1,0 +1,2 @@
+# AUR packages this desktop needs
+ttf-arabeyes-fonts
