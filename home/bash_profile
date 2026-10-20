@@ -7,8 +7,3 @@ if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
 	exec startx
 fi
 
-## [Completion]
-## Completion scripts setup. Remove the following line to uninstall
-[ -f /home/saeed/.dart-cli-completion/bash-config.bash ] && . /home/saeed/.dart-cli-completion/bash-config.bash || true
-## [/Completion]
-

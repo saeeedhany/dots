@@ -58,7 +58,6 @@ X-related startup and environment configuration scripts:
 
 - **[home](home)**
   - `xinitrc`
-  - `xprofile`
   - `bash_profile`
 
 These files define session startup behavior, environment variables, and display initialization.

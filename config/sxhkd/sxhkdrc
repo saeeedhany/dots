@@ -36,22 +36,6 @@ super + c
     c=$(xcolor) && printf '%s' "$c" | xclip -selection clipboard && notify-send -u low "color" "$c"
 
 #
-# Study Tracker (yduts) Keybindings
-#
-
-# Quick status notification
-super + shift + y
-    notify-send -u low "📚 Study Status" "$(study status 2>&1 | head -8 || echo 'No active session\n\nPress Super+Y to start')"
-
-# Quick stop
-super + ctrl + y
-    study stop && notify-send "Study Session Stopped"
-
-# Quick pause
-super + alt + y
-    study pause && notify-send "Session Paused"
-
-#
 # Notification Control System (dunst)
 #
 

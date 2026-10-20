@@ -41,17 +41,6 @@ if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
     export PATH="$HOME/.local/bin:$PATH"
 fi
 
-# Pyenv
-if [[ ":$PATH:" != *":$HOME/.pyenv/bin:"* ]]; then
-    export PYENV_ROOT="$HOME/.pyenv"
-    export PATH="$PYENV_ROOT/bin:$PATH"
-fi
-
-# Ruby gems (single entry, version-specific)
-if [[ ":$PATH:" != *":$HOME/.local/share/gem/ruby/3.4.0/bin:"* ]]; then
-    export PATH="$HOME/.local/share/gem/ruby/3.4.0/bin:$PATH"
-fi
-
 # ═══════════════════════════════════════════════════════════════════════════════
 # Sets
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -237,18 +226,7 @@ alias ...="cd ../.."
 alias ....="cd ../../.."
 alias .....="cd ../../../.."
 alias e="exit"
-
-# Navigation typo fixes
-alias cdc="cd"
 alias c="cd"
-
-# Clear command typo fixes
-alias claer="clear"
-alias clewar="clear"
-alias clwear="clear"
-alias clea="clear"
-alias clae="clear"
-alias clar="clear"
 
 # Enhanced ls with custom colors
 export LS_COLORS="di=1;38;2;168;180;158:fi=0;38;2;204;195;184:ln=0;38;2;188;158;158:ex=1;38;2;218;188;148"
@@ -291,11 +269,6 @@ alias remove="sudo pacman -Rns"
 alias search="pacman -Ss"
 alias orphans="sudo pacman -Rns \$(pacman -Qtdq)"
 
-# Shutdown aliases
-alias shutup="shutdown now"
-alias calmdown="shutdown now"
-alias takeiteasy="shutdown now"
-
 # Background
 alias f="feh --bg-fill"
 
@@ -306,20 +279,10 @@ alias du="du -h"
 alias ps="ps aux"
 
 # Other
-alias nv="watch -n 1 nvidia-smi"
 alias open="xdg-open"
-
-# Applications
-alias unity="~/Scripts/unity-cli.sh"
 alias n='nnn -de'
-alias resolve='export _JAVA_AWT_WM_NONREPARENTING=1 && prime-run davinci-resolve'
-
-# Download Settings
-alias ddtf="yt-dlp -S 'ext:mp4:m4a' --recode mp4"
-alias dl='aria2c -x 16 -s 16 -c'
 
 # Quick utilities
-alias myip="curl -s ifconfig.me"
 alias ports="netstat -tulanp"
 alias watch="watch -c"  # Color support for watch
 
@@ -393,11 +356,6 @@ fi
 # APPS CONFIGURATIONS
 # ═══════════════════════════════════════════════════════════════════════════════
 
-# Pyenv initialization (if installed)
-if command -v pyenv &> /dev/null; then
-    eval "$(pyenv init -)"
-fi
-
 # nnn file manager
 export NNN_OPTS="eH"
 export NNN_FIFO="/tmp/nnn.fifo"
@@ -468,14 +426,3 @@ fi
 # FZF key bindings if available
 [ -f /usr/share/fzf/key-bindings.bash ] && source /usr/share/fzf/key-bindings.bash
 [ -f /usr/share/fzf/completion.bash ] && source /usr/share/fzf/completion.bash
-[ -f /opt/miniconda3/etc/profile.d/conda.sh ] && source /opt/miniconda3/etc/profile.d/conda.sh
-
-
-# Personal Uses
-
-export ANDROID_HOME=$HOME/Android/Sdk
-export PATH=$PATH:$ANDROID_HOME/emulator
-export PATH=$PATH:$ANDROID_HOME/platform-tools
-
-# opencode
-export PATH=/home/saeed/.opencode/bin:$PATH

@@ -18,7 +18,6 @@ link_map() {
     name="$(basename "$p")"
     printf 'bin/%s\t%s\n' "$name" "$HOME/.local/bin/$name"
   done
-  printf 'bin/study/bin/study\t%s\n' "$HOME/.local/bin/study"
   printf 'theme\t%s\n' "$HOME/.local/bin/theme"
 }
 

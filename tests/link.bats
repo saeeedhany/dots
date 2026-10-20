@@ -17,15 +17,13 @@ setup() {
 
 teardown() { teardown_fake_home; }
 
-@test "link_map covers config, home, bin, study and theme" {
+@test "link_map covers config, home, bin and theme" {
   run link_map
   [ "$status" -eq 0 ]
   [[ "$output" == *$'config/nvim\t'"$HOME/.config/nvim"* ]]
   [[ "$output" == *$'home/bashrc\t'"$HOME/.bashrc"* ]]
-  [[ "$output" == *$'bin/deasy\t'"$HOME/.local/bin/deasy"* ]]
-  [[ "$output" == *$'bin/study/bin/study\t'"$HOME/.local/bin/study"* ]]
+  [[ "$output" == *$'bin/battery-monitor.sh\t'"$HOME/.local/bin/battery-monitor.sh"* ]]
   [[ "$output" == *$'theme\t'"$HOME/.local/bin/theme"* ]]
-  printf '%s\n' "$output" | grep -q $'^bin/study\t' && return 1; true
 }
 
 @test "link_all links every target to its repo path" {

@@ -135,8 +135,7 @@ zi project          # Filter to directories containing "project"
 ....        # Go up three directories
 .....       # Go up four directories
 
-c           # Alias for cd (typo fix)
-cdc         # Alias for cd (typo fix)
+c           # Alias for cd
 ```
 
 ### mkcd - Create and Enter Directory
@@ -251,7 +250,6 @@ orphans     # Remove orphaned packages
 df          # df -h (disk usage)
 free        # free -h (memory usage)
 du          # du -h (directory size)
-myip        # curl -s ifconfig.me (external IP)
 ports       # netstat -tulanp (open ports)
 ```
 
@@ -260,29 +258,7 @@ ports       # netstat -tulanp (open ports)
 ```bash
 e           # exit
 open        # xdg-open (open files with default app)
-nv          # watch -n 1 nvidia-smi (monitor GPU)
 f           # feh --bg-fill (set wallpaper)
-```
-
-### Typo Fixes
-
-All these work as shortcuts to avoid common typos:
-
-```bash
-# Clear variants
-claer, clewar, clwear, clea, clae, clar  # All execute: clear
-
-# CD variants
-c, cdc                                    # Both execute: cd
-```
-
-### Shutdown Aliases
-
-```bash
-shutup
-calmdown
-takeiteasy
-# All execute: shutdown now
 ```
 
 ---
@@ -586,7 +562,7 @@ ${CREAM}╰─${RESET} ${TAUPE}❯${RESET} "
 
 The configuration organizes PATH to avoid duplicates.
 
-**Location:** Lines 29-49
+**Location:** Lines 36-42
 
 **Structure:**
 ```bash

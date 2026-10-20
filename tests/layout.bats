@@ -26,11 +26,6 @@ setup() { setup_repo_root; }
   done < <(grep 'xrandr --output' "$f")
 }
 
-@test "xprofile runs no xrandr" {
-  [ -f "$REPO_ROOT/home/xprofile" ]
-  grep -q xrandr "$REPO_ROOT/home/xprofile" && return 1; true
-}
-
 @test "xinitrc sources local.sh, applies the theme, restores the wallpaper, then execs dwm last" {
   f="$REPO_ROOT/home/xinitrc"
   local_n=$(grep -nF '[ -f ~/.config/local.sh ] && . ~/.config/local.sh' "$f" | cut -d: -f1)
@@ -46,7 +41,4 @@ setup() { setup_repo_root; }
 
 @test "local tools are vendored" {
   [ -x "$REPO_ROOT/bin/battery-monitor.sh" ]
-  [ -x "$REPO_ROOT/bin/deasy" ]
-  [ -x "$REPO_ROOT/bin/study/bin/study" ]
-  [ ! -e "$REPO_ROOT/bin/study/logs/log.csv" ]
 }
