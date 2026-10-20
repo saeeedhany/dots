@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>saeeedhany — dotfiles & themes</title>
+<title>saeeedhany: dots & themes</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap" rel="stylesheet">
 <style>
@@ -129,7 +129,7 @@
   .hero-half.warm { background: var(--p-bg1); }
   .hero-half.cool { background: var(--o-bg1); }
 
-  /* mouse-follow radial glow — injected by JS via CSS custom props */
+  /* mouse-follow radial glow, injected by JS via CSS custom props */
   .hero-half::before {
     content: '';
     position: absolute;
@@ -667,7 +667,7 @@
         <span class="nvim-bar-pos">3:1</span>
       </div>
       <div class="nvim-body">
-        <div class="nvim-line"><span class="nvim-ln cool">1</span><span class="nvim-code"><span class="ok-cmt">/* overcast — dwm colors */</span></span></div>
+        <div class="nvim-line"><span class="nvim-ln cool">1</span><span class="nvim-code"><span class="ok-cmt">/* overcast: dwm colors */</span></span></div>
         <div class="nvim-line"><span class="nvim-ln cool">2</span><span class="nvim-code"></span></div>
         <div class="nvim-line nvim-cur-line"><span class="nvim-ln cool cur">3</span><span class="nvim-code"><span class="ok-kw">static</span> <span class="ok-type">const</span> <span class="ok-type">char</span> <span class="ok-op">*</span><span class="ok-var">colors</span><span class="ok-punc">[][</span><span class="ok-num">3</span><span class="ok-punc">]</span> <span class="ok-op">=</span> <span class="ok-punc">{</span></span></div>
         <div class="nvim-line"><span class="nvim-ln cool">4</span><span class="nvim-code">&nbsp;&nbsp;<span class="ok-punc">[</span><span class="ok-var">SchemeNorm</span><span class="ok-punc">]</span> <span class="ok-op">=</span> <span class="ok-punc">{</span> <span class="ok-str">"#bbbbbb"</span><span class="ok-punc">,</span> <span class="ok-str">"#222424"</span> <span class="ok-punc">},</span></span></div>
@@ -698,7 +698,7 @@
     <h2 class="section-title">the full environment</h2>
     <p class="section-desc">
       every tool chosen for weight and control.
-      no electron, no bloat — just the unix stack.
+      no electron, no bloat, just the unix stack.
     </p>
   </div>
 
@@ -739,7 +739,7 @@
         overcast's background color is the exact dwm bar background.
       </p>
       <div class="term-block">
-        <div><span class="cmt">/* config.h — colors match overcast */</span></div>
+        <div><span class="cmt">/* config.h: colors match overcast */</span></div>
         <div><span class="c-kw">static</span> <span class="c-type">const</span> <span class="c-type">char</span> *colors[][<span class="num">3</span>] = {</div>
         <div>&nbsp;&nbsp;<span class="cmt">/*          fg        bg        border */</span></div>
         <div>&nbsp;&nbsp;[SchemeNorm] = { <span class="c-str">"#bbbbbb"</span>, <span class="c-str">"#222424"</span>, <span class="c-str">"#3a3d3d"</span> },</div>
@@ -747,7 +747,7 @@
         <div>};</div>
       </div>
       <div class="tool-detail" style="color:var(--dim)">
-        tiling &nbsp;·&nbsp; patched from source &nbsp;·&nbsp; dmenu &nbsp;·&nbsp; slstatus
+        tiling &nbsp;·&nbsp; patched from source &nbsp;·&nbsp; dmenu &nbsp;·&nbsp; dwmblocks
       </div>
     </div>
 
@@ -762,7 +762,7 @@
         colors pulled directly from the active theme's 16-color palette.
       </p>
       <div class="term-block">
-        <div><span class="cmt">/* config.h — parchment palette */</span></div>
+        <div><span class="cmt">/* config.h: parchment palette */</span></div>
         <div><span class="c-kw">static</span> <span class="c-type">const</span> <span class="c-type">char</span> *colorname[] = {</div>
         <div>&nbsp;&nbsp;<span class="c-str">"#141312"</span>, <span class="cmt">/* black   */</span></div>
         <div>&nbsp;&nbsp;<span class="c-str">"#cc3a3a"</span>, <span class="cmt">/* red     */</span></div>
@@ -787,7 +787,7 @@
         and a few scripts that handle the tedious parts.
       </p>
       <div class="term-block">
-        <div><span class="cmt"># .bashrc — prompt</span></div>
+        <div><span class="cmt"># .bashrc: prompt</span></div>
         <div><span class="kw">PS1</span>=<span class="str">'\[\e[0;33m\]\u\[\e[0m\]</span></div>
         <div><span class="str">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\[\e[0;90m\]@\h \[\e[0;34m\]\w</span></div>
         <div><span class="str">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;\[\e[0m\]\$ '</span></div>
@@ -872,8 +872,8 @@
     <div class="section-label">new machine</div>
     <h2 class="section-title">one line. full environment.</h2>
     <p class="section-desc">
-      fresh machine to complete setup. clones dotfiles, builds suckless tools from source,
-      configures neovim, bash, x11, fonts, and scripts. supports arch and minimal distros.
+      fresh arch install to the full desktop. installs packages, builds the suckless tools from source,
+      links every config into place, applies a theme, then checks that everything landed.
     </p>
   </div>
 
@@ -882,7 +882,7 @@
     <div class="oneliner-block" id="oneliner-block">
       <div class="oneliner-content">
         <span class="prompt-sym">$</span>
-        <span class="oneliner-cmd" id="oneliner-text">bash &lt;(curl -fsSL https://saeeedhany.github.io/dotfiles/install.sh)</span>
+        <span class="oneliner-cmd" id="oneliner-text">git clone https://github.com/saeeedhany/dots &amp;&amp; ./dots/install.sh</span>
       </div>
       <button class="copy-btn" id="copy-btn" onclick="copyOneliner()" title="copy to clipboard">
         <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
@@ -899,48 +899,40 @@
       <div class="bootstrap-step">
         <div class="step-dot dot-green"></div>
         <div class="step-body">
-          <div class="step-name">dotfiles</div>
-          <div class="step-desc">clones github.com/saeeedhany/dotfiles &rarr; <span class="mono">~/.dotfiles</span></div>
-        </div>
-      </div>
-
-      <div class="bootstrap-step">
-        <div class="step-dot dot-blue"></div>
-        <div class="step-body">
-          <div class="step-name">neovim</div>
-          <div class="step-desc">latest build + symlinks <span class="mono">~/.config/nvim</span>. lazy.nvim auto-installs plugins on first launch.</div>
+          <div class="step-name">packages</div>
+          <div class="step-desc">a curated list through pacman and yay. <span class="mono">--all</span> installs the full snapshot of the origin machine instead.</div>
         </div>
       </div>
 
       <div class="bootstrap-step">
         <div class="step-dot dot-orange"></div>
         <div class="step-body">
-          <div class="step-name">suckless suite</div>
-          <div class="step-desc">dwm &middot; st &middot; dmenu &middot; slstatus &mdash; all compiled from source with your patched <span class="mono">config.h</span></div>
+          <div class="step-name">suckless</div>
+          <div class="step-desc">dwm &middot; st &middot; dmenu &middot; dwmblocks, cloned from <span class="mono">saeeedhany/suckless</span> into <span class="mono">~/.config/suckless</span> and compiled from source</div>
+        </div>
+      </div>
+
+      <div class="bootstrap-step">
+        <div class="step-dot dot-blue"></div>
+        <div class="step-body">
+          <div class="step-name">configs</div>
+          <div class="step-desc">nvim, tmux, dunst, picom, sxhkd, zathura, bash and x11 are symlinked, so editing a config edits the repo. anything already there is kept as <span class="mono">.bak</span></div>
         </div>
       </div>
 
       <div class="bootstrap-step">
         <div class="step-dot dot-purple"></div>
         <div class="step-body">
-          <div class="step-name">bash</div>
-          <div class="step-desc">symlinks <span class="mono">.bashrc</span> and <span class="mono">.bash_profile</span> &mdash; prompt, aliases, utility scripts</div>
-        </div>
-      </div>
-
-      <div class="bootstrap-step">
-        <div class="step-dot dot-cyan"></div>
-        <div class="step-body">
-          <div class="step-name">fonts &amp; x11</div>
-          <div class="step-desc">JetBrainsMono Nerd Font, <span class="mono">.xinitrc</span>, <span class="mono">.Xresources</span> merged via xrdb</div>
+          <div class="step-name">themes</div>
+          <div class="step-desc"><span class="mono">theme grey</span> by default. <span class="mono">theme &lt;name&gt;</span> repaints wallpaper, bar, terminal, editor and apps in one go</div>
         </div>
       </div>
 
       <div class="bootstrap-step">
         <div class="step-dot dot-dim"></div>
         <div class="step-body">
-          <div class="step-name">scripts + misc</div>
-          <div class="step-desc">dotfiles/bin &rarr; <span class="mono">~/bin</span> &nbsp;&middot;&nbsp; feh &middot; picom &middot; dunst &middot; maim &middot; xdotool</div>
+          <div class="step-name">verify</div>
+          <div class="step-desc">every link, binary and font is checked at the end. a missing piece fails loudly instead of printing done</div>
         </div>
       </div>
     </div>
@@ -951,25 +943,9 @@
       <div class="distro-block">
         <div class="distro-row">
           <div class="distro-name"><span class="distro-dot dot-green"></span>arch linux</div>
-          <div class="distro-badge badge-primary">primary</div>
+          <div class="distro-badge badge-primary">only</div>
         </div>
-        <div class="distro-note">pacman + yay. everything native. suckless patches preserved.</div>
-      </div>
-
-      <div class="distro-block">
-        <div class="distro-row">
-          <div class="distro-name"><span class="distro-dot dot-yellow"></span>debian / ubuntu</div>
-          <div class="distro-badge badge-secondary">supported</div>
-        </div>
-        <div class="distro-note">apt-based. neovim via appimage. suckless compiled from source.</div>
-      </div>
-
-      <div class="distro-block">
-        <div class="distro-row">
-          <div class="distro-name"><span class="distro-dot dot-yellow"></span>fedora</div>
-          <div class="distro-badge badge-secondary">supported</div>
-        </div>
-        <div class="distro-note">dnf-based. same suckless source path.</div>
+        <div class="distro-note">pacman + yay. tested end to end on a clean arch container.</div>
       </div>
 
       <div class="distro-block">
@@ -977,17 +953,18 @@
           <div class="distro-name"><span class="distro-dot dot-dim"></span>others</div>
           <div class="distro-badge badge-dim">manual</div>
         </div>
-        <div class="distro-note">script exits early &mdash; clone dotfiles manually and adapt.</div>
+        <div class="distro-note">the installer stops early. clone the repos and copy what you need.</div>
       </div>
 
       <div class="bootstrap-col-label" style="margin-top:2.5rem">inspect before running</div>
       <div class="term-block" style="margin-top:0.75rem">
-        <div><span class="cmt"># view the script first</span></div>
-        <div><span class="prompt">$</span> <span class="cmd">curl -fsSL https://saeeedhany.github.io/dotfiles/install.sh | less</span></div>
+        <div><span class="cmt"># see every step without changing anything</span></div>
+        <div><span class="prompt">$</span> <span class="cmd">git clone https://github.com/saeeedhany/dots</span></div>
+        <div><span class="prompt">$</span> <span class="cmd">./dots/install.sh --dry-run</span></div>
         <div></div>
-        <div><span class="cmt"># or clone and run locally</span></div>
-        <div><span class="prompt">$</span> <span class="cmd">git clone --depth=1 https://github.com/saeeedhany/dotfiles.git</span></div>
-        <div><span class="prompt">$</span> <span class="cmd">bash dotfiles/install.sh</span></div>
+        <div><span class="cmt"># then switch themes any time</span></div>
+        <div><span class="prompt">$</span> <span class="cmd">theme black</span></div>
+        <div><span class="prompt">$</span> <span class="cmd">theme new 2b2f2a</span></div>
       </div>
     </div>
 
@@ -1006,7 +983,7 @@
   </div>
   <div class="footer-right">
     <a href="https://github.com/saeeedhany" target="_blank">github</a>
-    <a href="https://github.com/saeeedhany/dotfiles" target="_blank">dotfiles</a>
+    <a href="https://github.com/saeeedhany/dots" target="_blank">dots</a>
   </div>
 </footer>
 
@@ -1033,7 +1010,7 @@
 
   // ── copy one-liner ──
   function copyOneliner() {
-    const raw = 'bash <(curl -fsSL https://saeeedhany.github.io/dotfiles/install.sh)';
+    const raw = 'git clone https://github.com/saeeedhany/dots && ./dots/install.sh';
     navigator.clipboard.writeText(raw).then(() => {
       const btn   = document.getElementById('copy-btn');
       const label = document.getElementById('copy-label');
