@@ -31,6 +31,10 @@ super + s
 super + shift + s
     scrot -s ~/Pictures/screenshot_%Y-%m-%d-%H%M%S.png
 
+# Pick a color anywhere on screen; its hex goes to the clipboard
+super + c
+    c=$(xcolor) && printf '%s' "$c" | xclip -selection clipboard && notify-send -u low "color" "$c"
+
 #
 # Study Tracker (yduts) Keybindings
 #

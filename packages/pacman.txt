@@ -29,6 +29,7 @@ feh
 scrot
 xdotool
 xclip
+xcolor
 brightnessctl
 pamixer
 libnotify

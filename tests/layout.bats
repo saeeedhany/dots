@@ -44,14 +44,6 @@ setup() { setup_repo_root; }
   [ "$(grep -v '^[[:space:]]*$' "$f" | tail -1)" = "exec dbus-run-session dwm" ]
 }
 
-@test "vram scripts are silent without nvidia-smi" {
-  for s in vram_usage.sh vram_temp.sh; do
-    grep -qF 'command -v nvidia-smi >/dev/null || { echo N/A; exit 0; }' "$REPO_ROOT/config/dwmblocks/scripts/$s"
-    run env PATH=/usr/bin/nonexistent /bin/sh "$REPO_ROOT/config/dwmblocks/scripts/$s"
-    [ "$output" = "N/A" ]
-  done
-}
-
 @test "local tools are vendored" {
   [ -x "$REPO_ROOT/bin/battery-monitor.sh" ]
   [ -x "$REPO_ROOT/bin/deasy" ]

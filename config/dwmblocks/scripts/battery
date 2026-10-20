@@ -1,2 +1,11 @@
 #!/bin/bash
-cat /sys/class/power_supply/BAT*/capacity 2>/dev/null 
+for b in /sys/class/power_supply/BAT*; do
+  [[ -r $b/capacity ]] || continue
+  cap=$(<"$b/capacity")
+  case $(<"$b/status") in
+    Charging) echo "$cap% chg" ;;
+    *) echo "$cap%" ;;
+  esac
+  exit 0
+done
+echo "n/a"

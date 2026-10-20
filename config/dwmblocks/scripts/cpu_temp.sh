@@ -1,2 +1,2 @@
 #!/bin/sh
-sensors | awk '/Tctl:/ { print " " $2 }'
+sensors | awk '/Tctl:/ { gsub(/\+/, "", $2); sub(/\.[0-9]+/, "", $2); print $2 }'

@@ -195,6 +195,7 @@ wireshark-cli
 wl-clipboard
 wmenu
 xclip
+xcolor
 xdg-desktop-portal-gtk
 xdg-desktop-portal-kde
 xdg-desktop-portal-wlr
