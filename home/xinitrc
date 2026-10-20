@@ -1,11 +1,11 @@
 setxkbmap -option caps:swapescape
+xrandr --query | grep -q '^HDMI-1-0 connected' && xrandr --output HDMI-1-0 --mode 2560x1440 --rate 144 --right-of eDP
 [ -f ~/.config/local.sh ] && . ~/.config/local.sh
 theme "$(cat ~/.config/theme 2>/dev/null || echo grey)"
 dwmblocks &
 dunst &
 sxhkd &
 [ -x ~/.fehbg ] && ~/.fehbg &
-xrandr --query | grep -q '^HDMI-1-0 connected' && xrandr --output HDMI-1-0 --mode 2560x1440 --rate 144 --right-of eDP
 picom &
 /usr/lib/xdg-desktop-portal-gtk &
 /usr/lib/xdg-desktop-portal &
