@@ -145,11 +145,18 @@ ini_set() {
   touch "$f"
   tmp="$(mktemp)"
   awk -v sec="[$section]" -v key="$key" -v val="$value" '
+    function flush() { printf "%s", blank; blank = "" }
     $0 == sec { print; insec = 1; seen = 1; next }
-    /^\[/ { if (insec && !done) { print key "=" val; done = 1 } insec = 0; print; next }
-    insec && index($0, key "=") == 1 { if (!done) { print key "=" val; done = 1 } next }
+    /^\[/ { if (insec && !done) { print key "=" val; done = 1 } flush(); insec = 0; print; next }
+    insec && /^[[:space:]]*$/ { blank = blank $0 "\n"; next }
+    insec && index($0, key "=") == 1 { flush(); if (!done) { print key "=" val; done = 1 } next }
+    insec { flush(); print; next }
     { print }
-    END { if (!seen) print sec; if (!done) print key "=" val }
+    END {
+      if (insec && !done) { print key "=" val; done = 1 }
+      flush()
+      if (!seen) { if (NR) print ""; print sec; print key "=" val }
+    }
   ' "$f" > "$tmp" && mv "$tmp" "$f"
 }
 

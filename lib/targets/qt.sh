@@ -23,6 +23,8 @@ render_qt() {
     ini_set "$d/qt${v}ct.conf" Appearance custom_palette true
     ini_set "$d/qt${v}ct.conf" Appearance style Fusion
     ini_set "$d/qt${v}ct.conf" Appearance icon_theme "$icons"
+    grep -q '^general=' "$d/qt${v}ct.conf" || ini_set "$d/qt${v}ct.conf" Fonts general '"Noto Sans,10"'
+    grep -q '^fixed=' "$d/qt${v}ct.conf" || ini_set "$d/qt${v}ct.conf" Fonts fixed '"monospace,10"'
   done
 }
 

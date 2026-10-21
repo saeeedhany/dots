@@ -150,3 +150,54 @@ teardown() { teardown_fake_home; }
   "$REPO_ROOT/theme" black >/dev/null
   [ ! -e "$HOME/.config/GIMP" ]
 }
+
+@test "kdenlive gets a dots color scheme and kdenliverc selects it" {
+  mkdir -p "$HOME/.config"
+  printf '[UiSettings]\nColorScheme=KvMojave\nColorSchemePath=KvMojave.colors\n\n[misc]\nkeep=1\n' > "$HOME/.config/kdenliverc"
+  "$REPO_ROOT/theme" black >/dev/null
+  f="$HOME/.local/share/color-schemes/dots.colors"
+  grep -qx 'BackgroundNormal=22,23,23' "$f"
+  grep -qx 'Name=dots' "$f"
+  for s in Window View Button Selection Tooltip Header Complementary; do grep -qx "\[Colors:$s\]" "$f"; done
+  grep -qx 'ColorScheme=dots' "$HOME/.config/kdenliverc"
+  grep -qx 'ColorSchemePath=dots.colors' "$HOME/.config/kdenliverc"
+  grep -qx 'keep=1' "$HOME/.config/kdenliverc"
+}
+
+@test "kdenlive is left alone when it has never run" {
+  "$REPO_ROOT/theme" black >/dev/null
+  [ ! -e "$HOME/.config/kdenliverc" ]
+  [ ! -e "$HOME/.local/share/color-schemes/dots.colors" ]
+}
+
+@test "obs gets a dots variant of yami and user.ini selects it" {
+  mkdir -p "$HOME/.config/obs-studio"
+  printf '[General]\nFirstRun=true\n' > "$HOME/.config/obs-studio/user.ini"
+  "$REPO_ROOT/theme" black >/dev/null
+  t="$HOME/.config/obs-studio/themes/Yami_dots.ovt"
+  grep -q "id: 'com.obsproject.Yami.dots';" "$t"
+  grep -q "extends: 'com.obsproject.Yami';" "$t"
+  grep -q -- '--bg_window: #161717;' "$t"
+  grep -qx 'Theme=com.obsproject.Yami.dots' "$HOME/.config/obs-studio/user.ini"
+  grep -qx 'FirstRun=true' "$HOME/.config/obs-studio/user.ini"
+  "$REPO_ROOT/theme" white >/dev/null
+  grep -q "extends: 'com.obsproject.Yami.Light';" "$t"
+  grep -q "dark: 'false';" "$t"
+}
+
+@test "obs is left alone when it has never run" {
+  "$REPO_ROOT/theme" black >/dev/null
+  [ ! -e "$HOME/.config/obs-studio" ]
+}
+
+@test "qt gets a readable default font once, and keeps a font the user chose" {
+  mkdir -p "$HOME/.config/qt5ct"
+  printf '[Fonts]\nfixed="Mono,11"\n' > "$HOME/.config/qt5ct/qt5ct.conf"
+  "$REPO_ROOT/theme" black >/dev/null
+  "$REPO_ROOT/theme" white >/dev/null
+  grep -qx 'general="Noto Sans,10"' "$HOME/.config/qt5ct/qt5ct.conf"
+  grep -qx 'fixed="Mono,11"' "$HOME/.config/qt5ct/qt5ct.conf"
+  grep -qx 'general="Noto Sans,10"' "$HOME/.config/qt6ct/qt6ct.conf"
+  grep -qx 'fixed="monospace,10"' "$HOME/.config/qt6ct/qt6ct.conf"
+  [ "$(grep -c '^general=' "$HOME/.config/qt6ct/qt6ct.conf")" -eq 1 ]
+}
