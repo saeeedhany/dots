@@ -1,9 +1,18 @@
-#
-# ~/.bash_profile
-#
+case ":$PATH:" in
+  *":$HOME/.local/bin:"*) ;;
+  *) export PATH="$HOME/.local/bin:$PATH" ;;
+esac
+
+export EDITOR=nvim
+export VISUAL=nvim
+export PAGER=less
+export LESS='-R -S -M -I -J'
+export NNN_OPTS=eH
+export NNN_FIFO=/tmp/nnn.fifo
+export NNN_PLUG='p:preview-tui;o:fzopen;t:trash;d:diffs;g:gitroot'
 
 [[ -f ~/.bashrc ]] && . ~/.bashrc
-if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ]; then
-	exec startx
-fi
 
+if [[ -z $DISPLAY && ${XDG_VTNR:-0} -eq 1 ]]; then
+  exec startx
+fi

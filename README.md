@@ -59,10 +59,11 @@ X-related startup and environment configuration scripts:
 - **[home](home)**
   - `xinitrc`
   - `bash_profile`
+  - `inputrc`
 
 These files define session startup behavior, environment variables, and display initialization.
 
-Anything only one machine needs goes in `~/.config/local.sh`, which `xinitrc` loads at login and which is never committed.
+Anything only one machine needs goes in `~/.config/local.sh`, which `xinitrc` loads at login, or in `~/.config/local.bash`, which every shell loads. Neither is ever committed.
 
 > [!NOTE]
 > If you use **X11 (X Server)**, you will likely need the **[picom](config/picom)** configuration.

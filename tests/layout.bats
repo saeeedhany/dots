@@ -42,3 +42,8 @@ setup() { setup_repo_root; }
 @test "local tools are vendored" {
   [ -x "$REPO_ROOT/bin/battery-monitor.sh" ]
 }
+
+@test "bashrc loads ~/.config/local.bash last, for what only one machine needs" {
+  f="$REPO_ROOT/home/bashrc"
+  [ "$(grep -v '^[[:space:]]*$' "$f" | tail -1)" = '[[ -r ~/.config/local.bash ]] && . ~/.config/local.bash' ]
+}
