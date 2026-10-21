@@ -55,8 +55,8 @@ setup() { setup_repo_root; }
   [ "$output" = "$HOME/.local/bin:$HOME/.cargo/bin:/usr/bin" ]
 }
 
-@test "xinitrc sets English and Arabic, switched with Alt+Shift, caps and escape swapped" {
-  grep -qx "setxkbmap -layout us,ara -option '' -option caps:swapescape,grp:alt_shift_toggle" "$REPO_ROOT/home/xinitrc"
+@test "xinitrc sets English and Arabic, switched with Alt+Shift from either side, caps and escape swapped" {
+  grep -qx "setxkbmap -layout us,ara -option '' -option caps:swapescape,grp:alt_shift_toggle,lv3:ralt_alt" "$REPO_ROOT/home/xinitrc"
 }
 
 @test "the keyboard block says en or ar from the xkb group led" {
