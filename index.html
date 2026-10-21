@@ -72,10 +72,10 @@
   section + section { border-top: 1px solid var(--line); }
 
   .prompt { color: var(--fg); white-space: pre; overflow-x: auto; }
-  .prompt .u { color: var(--accent); font-weight: 700; }
-  .prompt .d { color: var(--fg2); }
-  .prompt .p { color: var(--green); font-weight: 700; }
-  .prompt .c { color: var(--fg1); }
+  .prompt .p { color: var(--fg); }
+  .prompt .b { color: var(--fg2); }
+  .prompt .a { color: var(--accent); }
+  .prompt .c { color: var(--fg); }
   .prompt + h1 { margin-top: 28px; }
   .prompt + h2 { margin-top: 30px; }
 
@@ -111,6 +111,7 @@
   .win .m { color: var(--magenta); }
   .win .f { color: var(--fg); }
   .win .n { color: var(--fg3); }
+  .win .d { color: var(--fg2); }
   .cursor { display: inline-block; width: .6em; height: 1.1em; background: var(--accent); vertical-align: text-bottom; animation: blink 1.1s steps(1) infinite; }
   @keyframes blink { 50% { opacity: 0; } }
   .notif {
@@ -223,8 +224,7 @@
 <main>
 
 <section id="dots">
-  <div class="prompt">╭─ <span class="u">saeed</span> <span class="d">in</span> <span class="p">~/gits/dots</span>
-╰─ <span class="c">❯ cat README</span></div>
+  <div class="prompt"><span class="p">~/gits/dots</span><span class="b"> main</span> <span class="a">❯</span> <span class="c">cat README</span></div>
 
   <h1>dots<span>.</span></h1>
   <p class="lead">my arch linux desktop, written down. small tools built from source, one flat color across the whole screen, and plain text where most setups put icons.</p>
@@ -233,18 +233,15 @@
   <div class="screen" aria-label="a sketch of the desktop: the dwm bar on top and three tiled terminals">
     <div class="sbar"><span><span class="t sel">1</span><span class="t">2</span><span class="t">3</span><span class="t">4</span><span class="t">[]=</span></span><span>cpu 48°C | mem 5.5/15G | vol 100% | bat 98% | <span class="sclock">Tue 20 Oct 10:12 PM</span></span></div>
     <div class="tiles">
-      <div class="win master">╭─ <span class="u">saeed</span> <span class="n">in</span> <span class="g">~</span>
-╰─ ❯ <span class="f">theme</span>
+      <div class="win master"><span class="f">~</span> <span class="u">❯</span> <span class="f">theme</span>
 <span class="screen-themes"></span>
 
-╭─ <span class="u">saeed</span> <span class="n">in</span> <span class="g">~/gits/dots</span><span class="n">  main</span>
-╰─ ❯ <span class="f">git log --oneline</span>
+<span class="f">~/gits/dots</span><span class="d"> main</span> <span class="u">❯</span> <span class="f">git log --oneline</span>
 <span class="r">b98096c</span> chore: drop personal tools
 <span class="r">c4f32bc</span> feat: plain text status bar
 <span class="r">7204ef4</span> fix: monitor before wallpaper
 
-╭─ <span class="u">saeed</span> <span class="n">in</span> <span class="g">~</span>
-╰─ ❯ <span class="cursor"></span></div>
+<span class="f">~</span> <span class="u">❯</span> <span class="cursor"></span></div>
       <div class="win"><span class="n">  1 </span><span class="m">#!/bin/bash</span>
 <span class="n">  2 </span><span class="b">for</span> b <span class="b">in</span> /sys/class/power_supply/BAT*; <span class="b">do</span>
 <span class="n">  3 </span>  cap=<span class="g">$(&lt;"$b/capacity")</span>
@@ -276,7 +273,7 @@
     <dt><a href="https://github.com/saeeedhany/dots/tree/main/config/tmux">tmux</a></dt><dd>sessions that outlive the terminal.</dd>
     <dt><a href="https://github.com/saeeedhany/dots/tree/main/config/nvim">neovim</a></dt><dd>the editor, keyboard first.</dd>
     <dt><a href="https://github.com/saeeedhany/dots/tree/main/config/zathura">zathura</a></dt><dd>documents and pdfs.</dd>
-    <dt><a href="https://github.com/saeeedhany/dots/blob/main/home/bashrc">bash</a></dt><dd>vi mode, a two line prompt, fzf history, frecent jumps with z.</dd>
+    <dt><a href="https://github.com/saeeedhany/dots/blob/main/home/bashrc">bash</a></dt><dd>vi mode, a one line prompt, fzf history, recent folder jumps with z.</dd>
   </dl>
 
   <h3>keys</h3>
@@ -294,8 +291,7 @@
 </section>
 
 <section id="design">
-  <div class="prompt">╭─ <span class="u">saeed</span> <span class="d">in</span> <span class="p">~/gits/dots</span>
-╰─ <span class="c">❯ cat design</span></div>
+  <div class="prompt"><span class="p">~/gits/dots</span><span class="b"> main</span> <span class="a">❯</span> <span class="c">cat design</span></div>
   <h2><b>2</b> design</h2>
   <p class="lead">the screen should get out of the way. every rule below removes something.</p>
 
@@ -306,7 +302,7 @@
     <li><span><b>keyboard first</b>every action has a key. the mouse is optional.</span></li>
     <li><span><b>built from source</b>dwm, st and dmenu are compiled with their patches. changing them means changing a header and running make.</span></li>
     <li><span><b>linked, not copied</b>editing ~/.config/nvim or ~/.bashrc edits the repo. the machine and the repo cannot drift apart.</span></li>
-    <li><span><b>one place per machine</b>anything only one computer needs goes in ~/.config/local.sh, which is never committed.</span></li>
+    <li><span><b>one place per machine</b>anything only one computer needs goes in ~/.config/local.sh for the session or ~/.config/local.bash for the shell. neither is ever committed.</span></li>
   </ol>
 
   <h3>palette <span class="dim">· <span class="pal-name">black</span>, click a color to copy it</span></h3>
@@ -314,8 +310,7 @@
 </section>
 
 <section id="themes">
-  <div class="prompt">╭─ <span class="u">saeed</span> <span class="d">in</span> <span class="p">~</span>
-╰─ <span class="c">❯ <span id="theme-cmd">theme</span></span></div>
+  <div class="prompt"><span class="p">~</span> <span class="a">❯</span> <span class="c" id="theme-cmd">theme</span></div>
   <h2><b>3</b> themes</h2>
   <p class="lead">one command repaints the whole machine.</p>
   <p>wallpaper, dwm, st, dmenu, tmux, the prompt, fzf, dunst, zathura, neovim, opencode, btop, rmpc, gtk and qt apps, gimp, vesktop, firefox and zen all change together. htop, nnn, ranger and cava follow the terminal on their own. pick one to repaint this page the same way.</p>
@@ -330,8 +325,7 @@
 </section>
 
 <section id="install">
-  <div class="prompt">╭─ <span class="u">saeed</span> <span class="d">in</span> <span class="p">~</span>
-╰─ <span class="c">❯ ./dots/install.sh</span></div>
+  <div class="prompt"><span class="p">~</span> <span class="a">❯</span> <span class="c">./dots/install.sh</span></div>
   <h2><b>4</b> install</h2>
   <p class="lead">on a fresh arch machine, as your normal user:</p>
 
