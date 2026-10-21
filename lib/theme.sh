@@ -138,3 +138,19 @@ theme_fill() {
   mkdir -p "$(dirname "$out")"
   mv "$tmp" "$out"
 }
+
+ini_set() {
+  local f="$1" section="$2" key="$3" value="$4" tmp
+  mkdir -p "$(dirname "$f")"
+  touch "$f"
+  tmp="$(mktemp)"
+  awk -v sec="[$section]" -v key="$key" -v val="$value" '
+    $0 == sec { print; insec = 1; seen = 1; next }
+    /^\[/ { if (insec && !done) { print key "=" val; done = 1 } insec = 0; print; next }
+    insec && index($0, key "=") == 1 { if (!done) { print key "=" val; done = 1 } next }
+    { print }
+    END { if (!seen) print sec; if (!done) print key "=" val }
+  ' "$f" > "$tmp" && mv "$tmp" "$f"
+}
+
+theme_dark() { awk -v l="$(luminance "$bg")" 'BEGIN { exit !(l < 0.18) }'; }

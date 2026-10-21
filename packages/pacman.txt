@@ -30,6 +30,8 @@ scrot
 xdotool
 xclip
 xcolor
+qt5ct
+qt6ct
 brightnessctl
 pamixer
 libnotify

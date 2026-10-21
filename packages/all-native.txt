@@ -139,6 +139,8 @@ python-pip
 python-virtualenv
 qemu-full
 qemu-system-x86
+qt5ct
+qt6ct
 qview
 ranger
 raylib

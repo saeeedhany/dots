@@ -1,0 +1,179 @@
+@define-color theme_bg_color {{bg}};
+@define-color theme_fg_color {{fg}};
+@define-color theme_base_color {{bg}};
+@define-color theme_text_color {{fg}};
+@define-color theme_selected_bg_color {{accent}};
+@define-color theme_selected_fg_color {{bg}};
+@define-color insensitive_bg_color {{bg1}};
+@define-color insensitive_fg_color {{fg3}};
+@define-color insensitive_base_color {{bg1}};
+@define-color theme_unfocused_bg_color {{bg}};
+@define-color theme_unfocused_fg_color {{fg1}};
+@define-color theme_unfocused_base_color {{bg}};
+@define-color theme_unfocused_text_color {{fg1}};
+@define-color theme_unfocused_selected_bg_color {{accent}};
+@define-color theme_unfocused_selected_fg_color {{bg}};
+@define-color borders {{line}};
+@define-color unfocused_borders {{line}};
+@define-color warning_color {{color3}};
+@define-color error_color {{red}};
+@define-color success_color {{green}};
+
+window, .background, dialog, messagedialog, assistant {
+  background-color: {{bg}};
+  color: {{fg}};
+}
+
+headerbar, .titlebar, headerbar:backdrop, .titlebar:backdrop {
+  background-image: none;
+  background-color: {{bg}};
+  color: {{fg}};
+  border-color: {{line}};
+  box-shadow: none;
+}
+
+.view, iconview, textview text, treeview.view, list, row, entry, spinbutton, .sidebar, placessidebar, stacksidebar {
+  background-color: {{bg}};
+  color: {{fg}};
+}
+
+.sidebar, placessidebar, stacksidebar, paned > separator {
+  background-color: {{bg1}};
+}
+
+treeview.view header button {
+  background-image: none;
+  background-color: {{bg1}};
+  color: {{fg1}};
+  border-color: {{line}};
+}
+
+*:selected, .view:selected, row:selected, treeview.view:selected, entry selection, textview text selection {
+  background-color: {{accent}};
+  color: {{bg}};
+}
+
+entry, spinbutton, textview {
+  border-color: {{line}};
+  box-shadow: none;
+}
+
+entry:focus, spinbutton:focus {
+  border-color: {{accent}};
+}
+
+button, combobox button, .linked > button {
+  background-image: none;
+  background-color: {{bg2}};
+  color: {{fg}};
+  border-color: {{line}};
+  box-shadow: none;
+  text-shadow: none;
+}
+
+button:hover {
+  background-color: {{bg3}};
+}
+
+button:checked, button:active {
+  background-color: {{line}};
+  color: {{fg}};
+}
+
+button.suggested-action {
+  background-color: {{accent}};
+  color: {{bg}};
+}
+
+button.destructive-action {
+  background-color: {{red}};
+  color: {{bg}};
+}
+
+menubar, menu, .menu, .context-menu, popover, popover.background, tooltip, tooltip.background {
+  background-image: none;
+  background-color: {{bg1}};
+  color: {{fg}};
+  border-color: {{line}};
+  box-shadow: none;
+}
+
+menuitem:hover, menu menuitem:hover, modelbutton:hover {
+  background-color: {{bg3}};
+  color: {{fg}};
+}
+
+notebook, notebook > header, notebook > stack:not(:only-child) {
+  background-color: {{bg}};
+  border-color: {{line}};
+}
+
+notebook > header tab {
+  color: {{fg2}};
+}
+
+notebook > header tab:checked {
+  color: {{fg}};
+  box-shadow: inset 0 -2px {{accent}};
+}
+
+scrollbar, scrollbar trough {
+  background-color: {{bg}};
+  border-color: {{bg}};
+}
+
+scrollbar slider {
+  background-color: {{line2}};
+}
+
+scrollbar slider:hover {
+  background-color: {{fg3}};
+}
+
+separator {
+  background-color: {{line}};
+}
+
+progressbar progress, scale highlight, levelbar block.filled {
+  background-image: none;
+  background-color: {{accent}};
+  border-color: {{accent}};
+}
+
+progressbar trough, scale trough, levelbar trough {
+  background-image: none;
+  background-color: {{line}};
+  border-color: {{line}};
+}
+
+switch {
+  background-image: none;
+  background-color: {{line}};
+  border-color: {{line}};
+}
+
+switch:checked {
+  background-color: {{accent}};
+}
+
+switch slider {
+  background-image: none;
+  background-color: {{fg1}};
+  border-color: {{line}};
+}
+
+check, radio {
+  background-image: none;
+  background-color: {{bg2}};
+  border-color: {{line2}};
+  color: {{bg}};
+}
+
+check:checked, radio:checked {
+  background-color: {{accent}};
+  border-color: {{accent}};
+}
+
+*:disabled {
+  color: {{fg3}};
+}

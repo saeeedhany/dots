@@ -7,18 +7,20 @@ FIREFOX_PREF='user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", t
 # firefox_profiles: absolute path of every profile: those in profiles.ini
 # plus any folder with a prefs.js (profile groups are not listed there)
 firefox_profiles() {
-  local root="$HOME/.mozilla/firefox" p
+  local root p
   {
-    if [[ -f "$root/profiles.ini" ]]; then
-      awk -F= -v root="$root" '
-        /^\[/ { if (path != "") print (rel ? root "/" path : path); path = ""; rel = 1; next }
-        $1 == "Path" { path = substr($0, 6) }
-        $1 == "IsRelative" { rel = ($2 == 1) }
-        END { if (path != "") print (rel ? root "/" path : path) }
-      ' "$root/profiles.ini"
-    fi
-    for p in "$root"/*/prefs.js; do
-      [[ -f "$p" ]] && dirname "$p"
+    for root in "$HOME/.mozilla/firefox" "$HOME/.config/zen" "$HOME/.zen"; do
+      if [[ -f "$root/profiles.ini" ]]; then
+        awk -F= -v root="$root" '
+          /^\[/ { if (path != "") print (rel ? root "/" path : path); path = ""; rel = 1; next }
+          $1 == "Path" { path = substr($0, 6) }
+          $1 == "IsRelative" { rel = ($2 == 1) }
+          END { if (path != "") print (rel ? root "/" path : path) }
+        ' "$root/profiles.ini"
+      fi
+      for p in "$root"/*/prefs.js; do
+        [[ -f "$p" ]] && dirname "$p"
+      done
     done
   } | awk '!seen[$0]++'
 }
@@ -36,7 +38,7 @@ render_firefox() {
 reload_firefox() {
   if [[ -z "$(firefox_profiles)" ]]; then
     info "firefox: no profile yet; the theme applies after its first launch and your next login"
-  elif pgrep -x firefox >/dev/null; then
-    info "firefox: restart it to see the new theme"
+  elif pgrep -x firefox >/dev/null || pgrep -x zen >/dev/null || pgrep -x zen-bin >/dev/null; then
+    info "firefox: restart it, and zen, to see the new theme"
   fi
 }

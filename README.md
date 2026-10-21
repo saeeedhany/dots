@@ -72,7 +72,7 @@ Anything only one machine needs goes in `~/.config/local.sh`, which `xinitrc` lo
 While functionality comes first, visual consistency still matters:
 
 - One flat color across the whole screen. The wallpaper, the dwm bar and the terminal share the same background.
-- **[Themes](themes)** that repaint everything at once: wallpaper, dwm, st, dmenu, tmux, the prompt, dunst, zathura, neovim, Vesktop and Firefox.
+- **[Themes](themes)** that repaint everything at once: wallpaper, dwm, st, dmenu, tmux, the prompt, fzf, ls, dunst, zathura, neovim, opencode, btop, rmpc, GTK and Qt apps, GIMP, Vesktop, Firefox and Zen. Terminal programs like htop, nnn, ranger, vifm and cava follow st's colors on their own.
   - `grey` the Onyx look, cream text and a gold accent (default)
   - `gruvbox` gruvbox dark, hard
   - `black` near black and muted

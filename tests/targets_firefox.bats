@@ -79,3 +79,12 @@ teardown() { teardown_fake_home; }
   "$REPO_ROOT/theme" blue >/dev/null
   grep -q '#1b1f27' "$FF/xyz.Profile 5/chrome/userChrome.css"
 }
+
+@test "zen profiles get the same files as firefox" {
+  Z="$HOME/.config/zen"
+  mkdir -p "$Z/z1.Default (release)"
+  printf '[Profile0]\nName=Default (release)\nIsRelative=1\nPath=z1.Default (release)\n' > "$Z/profiles.ini"
+  "$REPO_ROOT/theme" blue >/dev/null
+  grep -q '#1b1f27' "$Z/z1.Default (release)/chrome/userChrome.css"
+  grep -qF 'user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);' "$Z/z1.Default (release)/user.js"
+}
