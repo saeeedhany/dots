@@ -1,7 +1,11 @@
-case ":$PATH:" in
-  *":$HOME/.local/bin:"*) ;;
-  *) export PATH="$HOME/.local/bin:$PATH" ;;
-esac
+for dir in "$HOME/.cargo/bin" "$HOME/.local/bin"; do
+  case ":$PATH:" in
+    *":$dir:"*) ;;
+    *) PATH="$dir:$PATH" ;;
+  esac
+done
+unset dir
+export PATH
 
 export EDITOR=nvim
 export VISUAL=nvim

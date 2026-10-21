@@ -2,7 +2,7 @@
 
 The shell is three small files, each with one job:
 
-1. `home/bash_profile` runs once at login. It sets the environment (PATH, editor, pager, nnn) and starts X on tty1.
+1. `home/bash_profile` runs once at login. It puts `~/.local/bin` and `~/.cargo/bin` on PATH, sets the editor, pager and nnn, and starts X on tty1.
 2. `home/bashrc` runs in every interactive shell. It sets the prompt, colors, history, `z`, aliases and functions.
 3. `home/inputrc` configures readline, so vi mode and the completion keys also work in every program that uses readline.
 

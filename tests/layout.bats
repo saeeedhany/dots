@@ -47,3 +47,10 @@ setup() { setup_repo_root; }
   f="$REPO_ROOT/home/bashrc"
   [ "$(grep -v '^[[:space:]]*$' "$f" | tail -1)" = '[[ -r ~/.config/local.bash ]] && . ~/.config/local.bash' ]
 }
+
+@test "bash_profile puts ~/.local/bin and ~/.cargo/bin on PATH once, local first" {
+  export HOME="$BATS_TEST_TMPDIR/home"
+  mkdir -p "$HOME"
+  run env -i HOME="$HOME" PATH=/usr/bin DISPLAY=:0 bash -c ". '$REPO_ROOT/home/bash_profile'; . '$REPO_ROOT/home/bash_profile'; printf %s \"\$PATH\""
+  [ "$output" = "$HOME/.local/bin:$HOME/.cargo/bin:/usr/bin" ]
+}
