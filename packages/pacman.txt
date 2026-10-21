@@ -13,6 +13,7 @@ fribidi
 xorg-server
 xorg-xinit
 xorg-xrandr
+xorg-xset
 xorg-xsetroot
 xorg-setxkbmap
 xorg-xkill

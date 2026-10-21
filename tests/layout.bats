@@ -54,3 +54,18 @@ setup() { setup_repo_root; }
   run env -i HOME="$HOME" PATH=/usr/bin DISPLAY=:0 bash -c ". '$REPO_ROOT/home/bash_profile'; . '$REPO_ROOT/home/bash_profile'; printf %s \"\$PATH\""
   [ "$output" = "$HOME/.local/bin:$HOME/.cargo/bin:/usr/bin" ]
 }
+
+@test "xinitrc sets English and Arabic, switched with Alt+Shift, caps and escape swapped" {
+  grep -qx "setxkbmap -layout us,ara -option '' -option caps:swapescape,grp:alt_shift_toggle" "$REPO_ROOT/home/xinitrc"
+}
+
+@test "the keyboard block says en or ar from the xkb group led" {
+  stub="$BATS_TEST_TMPDIR/bin"
+  mkdir -p "$stub"
+  for mask in 00000000:en 00001000:ar 00001002:ar 00000002:en; do
+    printf '#!/bin/sh\necho "  auto repeat:  on    key click percent:  0    LED mask:  %s"\n' "${mask%%:*}" > "$stub/xset"
+    chmod +x "$stub/xset"
+    run env PATH="$stub:/usr/bin:/bin" sh "$REPO_ROOT/config/dwmblocks/scripts/keyboard"
+    [ "$output" = "${mask##*:}" ]
+  done
+}

@@ -1,4 +1,4 @@
-setxkbmap -option caps:swapescape
+setxkbmap -layout us,ara -option '' -option caps:swapescape,grp:alt_shift_toggle
 export QT_QPA_PLATFORMTHEME=qt5ct
 xrandr --query | grep -q '^HDMI-1-0 connected' && xrandr --output HDMI-1-0 --mode 2560x1440 --rate 144 --right-of eDP
 [ -f ~/.config/local.sh ] && . ~/.config/local.sh
