@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="black">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>dots: blog</title>
+<meta name="description" content="guides to saeeedhany's dots, with the thinking behind each setup.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../site.css">
+<script src="../site.js"></script>
+</head>
+<body>
+
+<header class="bar">
+  <nav class="tags" aria-label="sections">
+    <a class="tag sel" href="#posts">1</a>
+    <span class="layout hide">[]=</span>
+  </nav>
+  <div class="status"><a href="../">home</a> <span class="sep">|</span> <a href="../design.html">design</a> <span class="sep">|</span> <span class="here">blog</span><span class="hide"> <span class="sep">|</span> <span id="clock">Fri 23 Oct 04:30 AM</span></span></div>
+</header>
+
+<main>
+
+<section id="posts">
+  <div class="prompt"><span class="p">~/gits/dots</span><span class="b"> main</span> <span class="a">❯</span> <span class="c">ls -t posts</span></div>
+  <h1>blog<span>.</span></h1>
+  <p class="lead">only things that need explaining. each post is a guide, with the theory behind it.</p>
+
+  <div class="posts">
+    <a class="post" href="one-machine.html"><span class="date">23 oct</span><span class="title">one machine, many programs</span><span class="time">8 min</span></a>
+    <div class="post soon"><span class="date">soon</span><span class="title">plain emacs, built in first</span><span class="time"></span></div>
+    <div class="post soon"><span class="date">soon</span><span class="title">neovim, keyboard first</span><span class="time"></span></div>
+  </div>
+  <p style="margin-top:28px">for the colors themselves, every token and rule is on the <a href="../design.html">design page</a>.</p>
+</section>
+
+</main>
+<footer>
+  <span>made by <a href="https://github.com/saeeedhany">saeeedhany</a> on arch, btw</span>
+  <nav>
+    <a href="../">home</a>
+    <a href="../design.html">design</a>
+    <a href="https://github.com/saeeedhany/dots">dots</a>
+    <a href="https://github.com/saeeedhany/suckless">suckless</a>
+  </nav>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"><b id="toast-title"></b><span id="toast-body"></span></div>
+</body>
+</html>

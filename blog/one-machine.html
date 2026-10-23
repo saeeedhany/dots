@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="black">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>one machine, many programs</title>
+<meta name="description" content="why nvim, emacs, tmux and bash are set up the way they are on saeeedhany's dots, and the ideas they share.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../site.css">
+<script src="../site.js"></script>
+</head>
+<body>
+
+<header class="bar">
+  <nav class="tags" aria-label="sections">
+    <a class="tag sel" href="#roles">1</a>
+    <a class="tag" href="#nvim">2</a>
+    <a class="tag" href="#emacs">3</a>
+    <a class="tag" href="#shell">4</a>
+    <a class="tag" href="#agree">5</a>
+    <a class="tag" href="#yours">6</a>
+    <span class="layout hide">[]=</span>
+  </nav>
+  <div class="status"><a href="../">home</a> <span class="sep">|</span> <a href="./">blog</a><span class="hide"> <span class="sep">|</span> <span id="clock">Fri 23 Oct 04:30 AM</span></span></div>
+</header>
+
+<main class="article">
+
+<section id="roles">
+  <div class="prompt"><span class="p">~/gits/dots</span><span class="b"> main</span> <span class="a">❯</span> <span class="c">cat posts/one-machine.md</span></div>
+  <h1>one machine, many programs<span>.</span></h1>
+  <p class="meta">23 oct 2026 <span class="sep">·</span> <span class="read">8 min</span></p>
+
+  <p class="lead">most setups are a pile of programs that each look good alone. this one tries to be one program with many windows. this post walks through how nvim, emacs, tmux and bash are set up, and the few ideas that make them feel like the same thing.</p>
+
+  <h2><b>1</b> roles, not colors</h2>
+  <p>the first idea is borrowed from the web. a stylesheet that says <code>color: #c2a46a</code> in forty places is a stylesheet you will never change. one that says <code>color: var(--accent)</code> changes in one line. the value is chosen once; everything else asks for the name.</p>
+  <p>the same trick works for a whole desktop if every program agrees on the names. here the names are jobs: <code>bg</code> is the surface, <code>fg2</code> is text you can skip, <code>accent</code> is where you are. a program is never told "yellow". it is told what the thing on screen is for, and the theme decides the color.</p>
+  <p>the shell is the smallest example. bash reads the current theme from a plain file, with a fallback for every color so a fresh machine still has a prompt:</p>
+  <pre class="block">_theme_hex() { printf '%s' "${_theme[$1]:-$2}"; }
+
+PS1="...\w...\$(_git_branch) \[\e[38;2;$(_theme_rgb accent '#c8a46b')m\]❯\[\e[0m\] "</pre>
+  <p class="src">home/bashrc, the prompt trimmed to its colors</p>
+  <p>the prompt asks for <code>accent</code>, never for gold. when the theme changes, the arrow changes with the cursor in nvim and the current tag in dwm, because all three asked for the same job.</p>
+  <p>the theory behind this has a name in design systems: <b>design tokens</b>. the point is not reuse. the point is that a name carries intent, and intent survives a change of value. if the arrow were simply gold, nobody would know it is supposed to match the cursor.</p>
+</section>
+
+<section id="nvim">
+  <h2><b>2</b> nvim: what it shows, what it hides, why</h2>
+  <p>nvim is the daily editor, so it is the most configured program here. it carries a real plugin set: telescope to find files, completion, tree sitter, language servers, git signs, surround. but the settings around those plugins are mostly about two things: keeping the text still, and removing what is not used.</p>
+
+  <h3>it keeps the text still</h3>
+  <pre class="block">vim.opt.signcolumn = "yes"
+vim.opt.colorcolumn = "80"
+vim.opt.cursorline = true
+vim.opt.scrolloff = 8</pre>
+  <p class="src">config/nvim/lua/core/options.lua</p>
+  <p>the sign column is always on, even when there is nothing to show. without it, the first git change or diagnostic pushes every line two columns to the right, and your eye has to find its place again. a column that never moves is a small thing you stop noticing, which is the goal. the same goes for <code>scrolloff</code>: the cursor never touches the edge, so you always see where you are going.</p>
+
+  <h3>it dims instead of hiding</h3>
+  <p>the numbers are both absolute and relative, so <code>12j</code> is readable at a glance, but they sit at <code>fg3</code>, the dimmest text level. only the current line number gets the accent. you can always read them; you never have to.</p>
+
+  <h3>it hides what nobody uses</h3>
+  <pre class="block">local disabled_built_ins = {
+  "2html_plugin",
+  "getscript",
+  "gzip",
+  "tar",
+  "zip",
+  "tutor",
+  ...
+}</pre>
+  <p class="src">config/nvim/lua/core/options.lua, trimmed</p>
+  <p>vim ships with plugins for reading zip files and converting buffers to html. they load on every start. turning them off is free speed and one less thing to surprise you. the netrw banner goes too.</p>
+
+  <h3>it keeps the keys stock</h3>
+  <pre class="block">map({ 'i', 'v', 's' }, 'kj', '&lt;Esc&gt;', { desc = 'Exit to Normal mode' })
+map('t', 'kj', [[&lt;C-\&gt;&lt;C-n&gt;]], { desc = 'Exit terminal mode' })
+map('n', '&lt;C-p&gt;', '&lt;cmd&gt;Telescope find_files&lt;cr&gt;', { desc = 'Find files' })</pre>
+  <p class="src">config/nvim/lua/core/keymaps.lua, all of it</p>
+  <p>that is the whole keymap file. everything else is what nvim already does: <code>gd</code> for definition, <code>K</code> for docs, <code>grn</code> to rename, all built into nvim 0.11. the reason is simple. a stock key is documented in <code>:help</code>, works on every machine you sit at, and is what every answer online assumes. a custom key is a private language you have to keep translating.</p>
+
+  <h3>it fixes friction where it happens</h3>
+  <p>a few autocommands do the boring work: trailing whitespace is removed on save, missing folders are created when you save into them, and the cursor goes back to where you left it when you reopen a file. each one exists because something annoyed the same way twice.</p>
+
+  <h3>it does not paint the background</h3>
+  <pre class="block">Normal = { fg = c.fg },
+NormalFloat = { fg = c.fg, bg = c.bg1 },
+CursorLineNr = { fg = c.accent, bold = true },</pre>
+  <p class="src">config/nvim/colors/theme.lua</p>
+  <p><code>Normal</code> has no background at all, so the terminal's shows through. nvim is not a window on the surface; it is part of the surface. floating windows get <code>bg1</code>, one lift up, which is how you know they are on top.</p>
+</section>
+
+<section id="emacs">
+  <h2><b>3</b> emacs: built in first, packages only from friction</h2>
+  <p>emacs is the opposite case. it is new here, it is being learned, and it is kept close to what ships. emacs 31 already has a vertical completion menu, a key hint popup, a language server client, tree sitter modes and a markdown mode. so the config mostly turns those on.</p>
+  <pre class="block">(fido-vertical-mode 1)
+(global-completion-preview-mode 1)
+(which-key-mode 1)</pre>
+  <p class="src">config/emacs/init.el</p>
+
+  <h3>why built in first</h3>
+  <p>every package you add is a small debt. it has its own keys to learn, its own updates that can break, and its own way of doing what emacs already does. when you are learning an editor, a package also hides the editor from you: you learn the package instead. built in tools are documented in the manual you already have, under <code>C-h</code>.</p>
+  <p>packages come in only when something real hurts, and each one is the best answer to one need: magit for git, denote for notes, auctex for latex, vterm for a real terminal. if you cannot name the friction a package fixes, it does not go in.</p>
+
+  <h3>let it do the boring setup</h3>
+  <pre class="block">(setq treesit-auto-install-grammar 'always)
+(setopt treesit-enabled-modes t)</pre>
+  <p>older setups carried a list of grammar urls and a command to install them. emacs 31 knows where its grammars live and can fetch one the first time you open a file that needs it. two lines replace a page. note <code>setopt</code> on the second line: that option runs code when it is set, which a plain <code>setq</code> skips.</p>
+
+  <h3>keep the machine out of the repo</h3>
+  <pre class="block">(setq user-emacs-directory (expand-file-name "~/.local/share/emacs/")
+      package-user-dir (expand-file-name "elpa" user-emacs-directory)
+      custom-file (expand-file-name "custom.el" user-emacs-directory))</pre>
+  <p class="src">config/emacs/early-init.el</p>
+  <p>the config folder is a link into the repo. emacs, left alone, writes history, caches and installed packages into that same folder. the first line moves all of that to <code>~/.local/share/emacs</code>, so the repo holds only what a person wrote. the same rule is why theme files land in <code>~/.cache</code>.</p>
+</section>
+
+<section id="shell">
+  <h2><b>4</b> tmux and bash: the bar and the one line prompt</h2>
+
+  <h3>the tmux bar is part of the floor</h3>
+  <pre class="block">set -g status-style "bg=$bg,fg=$fg1"
+set -g window-status-format " #[fg=$fg2]#I:#W "
+set -g window-status-current-format " #[fg=$fg,bold]#I:#W#[nobold] "</pre>
+  <p class="src">lib/targets/tmux.sh, the generated part</p>
+  <p>the bar has the surface color, not a colored strip. windows you are not in are <code>fg2</code>; the one you are in is <code>fg</code>. there is no box and no powerline arrow, because nothing on the bar needs to look more important than the text you are working on.</p>
+  <p>splits open in the folder you are already in, panes move with <code>h j k l</code>, and sessions are saved every fifteen minutes and restored when tmux starts. a session should outlive the terminal, a reboot, and you.</p>
+
+  <h3>one line, same column</h3>
+  <div class="block">~/gits/dots<span style="color:var(--fg2)"> main</span> <span style="color:var(--accent)">❯</span> theme black</div>
+  <p>the prompt is one line: the folder, the branch dimmed, and an arrow. no user, no host, no clock. those answer questions you are not asking while typing a command. keeping it on one line also means the arrow and the command move only as far as the path is long, and nothing above it jumps around when the branch changes.</p>
+  <p>the arrow is the only accent on the line, for the same reason the current line number is: it is where you are. bash also runs in vi mode (<code>set editing-mode vi</code> in inputrc), so the motions from nvim work on the command line, and <code>z</code> jumps to recent folders in plain bash, without installing anything.</p>
+</section>
+
+<section id="agree">
+  <h2><b>5</b> what they all agree on</h2>
+  <p>once the programs share colors, it becomes easy to notice where they disagree on anything else, and to fix it. a few agreements came out of that.</p>
+  <ol class="rules">
+    <li><span><b>the same keys mean the same thing</b><code>h j k l</code> move between panes in tmux, between lines in nvim and bash, and <code>j k</code> between windows in dwm. <code>b</code> hides the bar in dwm (super b), in tmux (prefix b), and on this site.</span></li>
+    <li><span><b>quiet</b>no bells anywhere: tmux has visual and audible bells off, emacs rings nothing, and notifications come from one place, dunst, in the same flat color.</span></li>
+    <li><span><b>still</b>columns that never jump, prompts that never wrap, bars that never resize. movement is reserved for things that actually changed.</span></li>
+    <li><span><b>flat</b>lifts instead of boxes, one 1px line where a border is needed, and bold only where you must not miss something.</span></li>
+    <li><span><b>linked, not copied</b>every config is a link into one repo. editing a setting on the machine is editing the repo.</span></li>
+  </ol>
+  <p>none of these is clever. the value is in having all of them at once, because then nothing on the screen surprises you, and the screen stops asking for attention.</p>
+</section>
+
+<section id="yours">
+  <h2><b>6</b> how to take the idea into your own setup</h2>
+  <p>you do not need this repo for any of it. the idea works with whatever you already run.</p>
+  <ol class="rules">
+    <li><span><b>name your jobs first</b>before picking a single color, write down what things on your screen are for: the surface, a lifted surface, a border, text at three or four levels of importance, "you are here", added, removed. that list is your theme's shape.</span></li>
+    <li><span><b>write one file</b>put the values in one plain file. everything else should read from it, never contain a hex value of its own.</span></li>
+    <li><span><b>teach each program to read it</b>a small script per program that writes the file it understands: a lua table, an elisp list, a conf file. this is the only place a program's quirks live.</span></li>
+    <li><span><b>reload, don't restart</b>most programs can be told to reread their colors: a socket, a signal, a command. finding that hook is what makes a switch feel instant.</span></li>
+    <li><span><b>start from the defaults</b>for keys and behavior, change something only after it bothered you twice. keep the reason next to the change, even if only in your head.</span></li>
+  </ol>
+  <p>the full system, with every token and the code behind it, is on the <a href="../design.html">design page</a>. the configs themselves are in the <a href="https://github.com/saeeedhany/dots">repo</a>.</p>
+  <p class="back"><a href="./">❮ all posts</a></p>
+</section>
+
+</main>
+<footer>
+  <span>made by <a href="https://github.com/saeeedhany">saeeedhany</a> on arch, btw</span>
+  <nav>
+    <a href="../">home</a>
+    <a href="../design.html">design</a>
+    <a href="./">blog</a>
+    <a href="https://github.com/saeeedhany/dots">dots</a>
+  </nav>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"><b id="toast-title"></b><span id="toast-body"></span></div>
+</body>
+</html>

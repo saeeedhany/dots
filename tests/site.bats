@@ -69,3 +69,16 @@ theme_block() {
   done
   grep -qF 'href="./"' "$f"
 }
+
+@test "the blog index links every post and home" {
+  local f="$REPO_ROOT/blog/index.html" p n=0
+  [ -f "$f" ]
+  grep -qF 'href="../"' "$f"
+  for p in "$REPO_ROOT"/blog/*.html; do
+    [[ "$(basename "$p")" == index.html ]] && continue
+    n=$((n + 1))
+    grep -qF "href=\"$(basename "$p")\"" "$f" || { echo "not linked: $p"; return 1; }
+    grep -qF 'href="./"' "$p" || { echo "no link to the index: $p"; return 1; }
+  done
+  [ "$n" -ge 1 ]
+}
