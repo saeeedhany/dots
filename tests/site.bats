@@ -53,3 +53,19 @@ theme_block() {
   grep -q "localStorage.getItem('dots-theme')" "$REPO_ROOT/site.js"
   grep -q "localStorage.setItem('dots-theme'" "$REPO_ROOT/site.js"
 }
+
+@test "the design page shows every token with its live value" {
+  local f="$REPO_ROOT/design.html" key
+  [ -f "$f" ]
+  for key in "${THEME_KEYS[@]}"; do
+    grep -qF "data-hex=\"$key\"" "$f" || { echo "no token: $key"; return 1; }
+  done
+}
+
+@test "the design page has every section and links home" {
+  local f="$REPO_ROOT/design.html" id
+  for id in idea tokens rules syntax connect tricks yours; do
+    grep -qF "id=\"$id\"" "$f" || { echo "no section: $id"; return 1; }
+  done
+  grep -qF 'href="./"' "$f"
+}

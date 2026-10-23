@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="black">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>dots: design</title>
+<meta name="description" content="the design system behind saeeedhany's dots: one surface, colors named by their job, and one command that repaints every program.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="site.css">
+<script src="site.js"></script>
+</head>
+<body>
+
+<header class="bar">
+  <nav class="tags" aria-label="sections">
+    <a class="tag sel" href="#idea">1</a>
+    <a class="tag" href="#tokens">2</a>
+    <a class="tag" href="#rules">3</a>
+    <a class="tag" href="#syntax">4</a>
+    <a class="tag" href="#connect">5</a>
+    <a class="tag" href="#tricks">6</a>
+    <a class="tag" href="#yours">7</a>
+    <span class="layout hide">[]=</span>
+  </nav>
+  <div class="status"><a href="./">home</a> <span class="sep">|</span> <span class="hide"><span class="here">design</span> <span class="sep">|</span> </span><a href="blog/">blog</a><span class="hide"> <span class="sep">|</span> <span id="clock">Fri 23 Oct 04:20 AM</span></span></div>
+</header>
+
+<main>
+
+<section id="idea">
+  <div class="prompt"><span class="p">~/gits/dots</span><span class="b"> main</span> <span class="a">❯</span> <span class="c">cat design</span></div>
+  <h1>design<span>.</span></h1>
+  <p class="lead">the system behind every color on this machine. how it is named, where each color is allowed, how one file reaches twenty programs, and the small tricks that hold it together.</p>
+  <p>the idea fits in three lines. the screen is one surface. a color is named for the job it does, never for its hue. a program asks for a job, and the theme answers with a color.</p>
+  <p>so nvim never asks for yellow. it asks for <code>accent</code>, and accent means one thing everywhere: you are here. switch the theme and the hue changes, but the cursor, the current line number and the current tag still share it, because they share the job.</p>
+  <p>this is the same idea as css variables, applied to a whole desktop. this page uses the exact palettes the machine uses. pick a theme on the <a href="./#themes">home page</a> and this page repaints with it.</p>
+</section>
+
+<section id="tokens">
+  <div class="prompt"><span class="p">~/gits/dots</span><span class="b"> main</span> <span class="a">❯</span> <span class="c">cat themes/<span class="pal-name">black</span></span></div>
+  <h2><b>2</b> tokens</h2>
+  <p class="lead">a theme is a plain file of 39 colors. every one has a single job. click one to copy it.</p>
+
+  <h3>surfaces <span class="dim">· one color, then small lifts</span></h3>
+  <p>the background never changes hue. it only gets a little lighter, a step at a time, for things that sit on top. on the generated themes each step is 1.5, 3 and 5 points of lightness. you feel the lift more than you see it.</p>
+  <div class="tokens">
+    <button class="tok" data-copy-var="bg"><i style="background:var(--bg)"></i><b>bg</b><span class="hex" data-hex="bg"></span><span class="job">the one surface: wallpaper, bar, terminal, editor, menus</span></button>
+    <button class="tok" data-copy-var="bg1"><i style="background:var(--bg1)"></i><b>bg1</b><span class="hex" data-hex="bg1"></span><span class="job">first lift: status lines, popups, the current line, code blocks</span></button>
+    <button class="tok" data-copy-var="bg2"><i style="background:var(--bg2)"></i><b>bg2</b><span class="hex" data-hex="bg2"></span><span class="job">second lift: hover, the word under the cursor, menu tracks</span></button>
+    <button class="tok" data-copy-var="bg3"><i style="background:var(--bg3)"></i><b>bg3</b><span class="hex" data-hex="bg3"></span><span class="job">third lift: selections, the picked item in a list</span></button>
+    <button class="tok" data-copy-var="line"><i style="background:var(--line)"></i><b>line</b><span class="hex" data-hex="line"></span><span class="job">the only border: window dividers, pane edges, rules</span></button>
+    <button class="tok" data-copy-var="line2"><i style="background:var(--line2)"></i><b>line2</b><span class="hex" data-hex="line2"></span><span class="job">a border that must be seen: focused frames, the master window</span></button>
+  </div>
+
+  <h3>text <span class="dim">· four levels of attention</span></h3>
+  <p>text is never colored to look nice. it is dimmed by how little you need it. every level is the background's own hue, so text never fights the surface.</p>
+  <div class="tokens">
+    <button class="tok" data-copy-var="fg"><i style="background:var(--fg)"></i><b>fg</b><span class="hex" data-hex="fg"></span><span class="job">text you read</span></button>
+    <button class="tok" data-copy-var="fg1"><i style="background:var(--fg1)"></i><b>fg1</b><span class="hex" data-hex="fg1"></span><span class="job">text you scan: status text, operators, punctuation</span></button>
+    <button class="tok" data-copy-var="fg2"><i style="background:var(--fg2)"></i><b>fg2</b><span class="hex" data-hex="fg2"></span><span class="job">text you skip: comments, hints, inactive windows</span></button>
+    <button class="tok" data-copy-var="fg3"><i style="background:var(--fg3)"></i><b>fg3</b><span class="hex" data-hex="fg3"></span><span class="job">text that is barely there: line numbers, completion previews</span></button>
+  </div>
+
+  <h3>accent <span class="dim">· you are here</span></h3>
+  <p>one color carries position. the lighter steps are the accent while it moves (a search as you type). the darker steps are the accent fading into the background, for apps that need softer versions of the same mark.</p>
+  <div class="tokens">
+    <button class="tok" data-copy-var="accent"><i style="background:var(--accent)"></i><b>accent</b><span class="hex" data-hex="accent"></span><span class="job">cursor, current line number, current tag, prompt arrow, search hits</span></button>
+    <button class="tok" data-copy-var="accent_light1"><i style="background:var(--accent_light1)"></i><b>accent_light1</b><span class="hex" data-hex="accent_light1"></span><span class="job">the live search match, the heading you are on</span></button>
+    <button class="tok" data-copy-var="accent_light2"><i style="background:var(--accent_light2)"></i><b>accent_light2</b><span class="hex" data-hex="accent_light2"></span><span class="job">a second step for apps with layered states</span></button>
+    <button class="tok" data-copy-var="accent_dark1"><i style="background:var(--accent_dark1)"></i><b>accent_dark1</b><span class="hex" data-hex="accent_dark1"></span><span class="job">20% of the way to the background</span></button>
+    <button class="tok" data-copy-var="accent_dark2"><i style="background:var(--accent_dark2)"></i><b>accent_dark2</b><span class="hex" data-hex="accent_dark2"></span><span class="job">35%</span></button>
+    <button class="tok" data-copy-var="accent_dark3"><i style="background:var(--accent_dark3)"></i><b>accent_dark3</b><span class="hex" data-hex="accent_dark3"></span><span class="job">50%</span></button>
+    <button class="tok" data-copy-var="accent_dark4"><i style="background:var(--accent_dark4)"></i><b>accent_dark4</b><span class="hex" data-hex="accent_dark4"></span><span class="job">62%, almost gone</span></button>
+    <button class="tok" data-copy-var="cursor"><i style="background:var(--cursor)"></i><b>cursor</b><span class="hex" data-hex="cursor"></span><span class="job">the terminal and editor cursor, usually the accent itself</span></button>
+  </div>
+
+  <h3>meaning <span class="dim">· only when something happened</span></h3>
+  <p>green and red are not decoration. they appear only when something was added, passed, removed or broke. blue marks places you can go: links, folders, branches.</p>
+  <div class="tokens">
+    <button class="tok" data-copy-var="green"><i style="background:var(--green)"></i><b>green</b><span class="hex" data-hex="green"></span><span class="job">added, ok, done</span></button>
+    <button class="tok" data-copy-var="green_light"><i style="background:var(--green_light)"></i><b>green_light</b><span class="hex" data-hex="green_light"></span><span class="job">the added line you are standing on</span></button>
+    <button class="tok" data-copy-var="red"><i style="background:var(--red)"></i><b>red</b><span class="hex" data-hex="red"></span><span class="job">removed, error, failed</span></button>
+    <button class="tok" data-copy-var="red_dark"><i style="background:var(--red_dark)"></i><b>red_dark</b><span class="hex" data-hex="red_dark"></span><span class="job">a quiet red: trailing whitespace, urgent but small</span></button>
+    <button class="tok" data-copy-var="blue"><i style="background:var(--blue)"></i><b>blue</b><span class="hex" data-hex="blue"></span><span class="job">places: links, directories, branches</span></button>
+  </div>
+
+  <h3>terminal <span class="dim">· the sixteen colors programs already know</span></h3>
+  <p>programs that never heard of this system still speak the sixteen terminal colors. htop, nnn, ranger and cava follow the theme only because these are set. they are tuned to the same roles: color1 is the keyword red, color2 the string green, and so on.</p>
+  <div class="ansi">
+    <button class="sw" data-copy-var="color0"><i style="background:var(--color0)"></i><span><b>color0</b><span data-hex="color0"></span></span></button>
+    <button class="sw" data-copy-var="color1"><i style="background:var(--color1)"></i><span><b>color1</b><span data-hex="color1"></span></span></button>
+    <button class="sw" data-copy-var="color2"><i style="background:var(--color2)"></i><span><b>color2</b><span data-hex="color2"></span></span></button>
+    <button class="sw" data-copy-var="color3"><i style="background:var(--color3)"></i><span><b>color3</b><span data-hex="color3"></span></span></button>
+    <button class="sw" data-copy-var="color4"><i style="background:var(--color4)"></i><span><b>color4</b><span data-hex="color4"></span></span></button>
+    <button class="sw" data-copy-var="color5"><i style="background:var(--color5)"></i><span><b>color5</b><span data-hex="color5"></span></span></button>
+    <button class="sw" data-copy-var="color6"><i style="background:var(--color6)"></i><span><b>color6</b><span data-hex="color6"></span></span></button>
+    <button class="sw" data-copy-var="color7"><i style="background:var(--color7)"></i><span><b>color7</b><span data-hex="color7"></span></span></button>
+    <button class="sw" data-copy-var="color8"><i style="background:var(--color8)"></i><span><b>color8</b><span data-hex="color8"></span></span></button>
+    <button class="sw" data-copy-var="color9"><i style="background:var(--color9)"></i><span><b>color9</b><span data-hex="color9"></span></span></button>
+    <button class="sw" data-copy-var="color10"><i style="background:var(--color10)"></i><span><b>color10</b><span data-hex="color10"></span></span></button>
+    <button class="sw" data-copy-var="color11"><i style="background:var(--color11)"></i><span><b>color11</b><span data-hex="color11"></span></span></button>
+    <button class="sw" data-copy-var="color12"><i style="background:var(--color12)"></i><span><b>color12</b><span data-hex="color12"></span></span></button>
+    <button class="sw" data-copy-var="color13"><i style="background:var(--color13)"></i><span><b>color13</b><span data-hex="color13"></span></span></button>
+    <button class="sw" data-copy-var="color14"><i style="background:var(--color14)"></i><span><b>color14</b><span data-hex="color14"></span></span></button>
+    <button class="sw" data-copy-var="color15"><i style="background:var(--color15)"></i><span><b>color15</b><span data-hex="color15"></span></span></button>
+  </div>
+</section>
+
+<section id="rules">
+  <div class="prompt"><span class="p">~/gits/dots</span><span class="b"> main</span> <span class="a">❯</span> <span class="c">cat rules</span></div>
+  <h2><b>3</b> rules of use</h2>
+  <p class="lead">tokens say what a color is. rules say where it may go. every rule removes something.</p>
+  <ol class="rules">
+    <li><span><b>one accent per region</b>a window shows the accent in one or two places at most: where the cursor is and which line it is on. if three things are accent, none of them is.</span></li>
+    <li><span><b>lifts, not boxes</b>a bar or a popup is separated from the surface by being one step lighter, not by a frame. the emacs mode line even draws its padding as a box in its own background color, so the box exists for spacing and is never seen.</span></li>
+    <li><span><b>one border, one pixel</b>when two things must be divided, a single line of <code>line</code> divides them. no double borders, no shadows, no rounded corners.</span></li>
+    <li><span><b>color means something</b>green and red never appear because a design wanted warmth. if you see red, something is wrong or was removed.</span></li>
+    <li><span><b>bold almost never</b>bold is kept for the one heading or match you must not miss. section headings in emacs and magit are plain accent text, not bold.</span></li>
+    <li><span><b>dim instead of hide</b>comments, line numbers and hints stay on screen at fg2 and fg3. you can always read them, you never have to.</span></li>
+    <li><span><b>readable or refused</b>a generated theme whose text cannot reach 4.5:1 contrast on its background is never saved, and the test suite fails if any theme in themes/ breaks the rule.</span></li>
+    <li><span><b>the same text everywhere</b>one monospace face per screen: 0xProto in the terminal and emacs, JetBrains Mono on this site. no second font for headings.</span></li>
+  </ol>
+</section>
+
+<section id="syntax">
+  <div class="prompt"><span class="p">~/gits/dots</span><span class="b"> main</span> <span class="a">❯</span> <span class="c">nvim main.c</span></div>
+  <h2><b>4</b> syntax</h2>
+  <p class="lead">code is colored by one mapping, shared by nvim and emacs. the same line of c looks the same in both.</p>
+  <div class="block sx"><span class="ln">  1 </span><span class="pp">#include</span> <span class="st">&lt;stdio.h&gt;</span>
+<span class="ln">  2 </span>
+<span class="ln">  3 </span><span class="cm">/* count to forty two */</span>
+<span class="ln">  4 </span><span class="ty">int</span> <span class="fn">main</span><span class="pu">(</span><span class="ty">void</span><span class="pu">)</span>
+<span class="ln">  5 </span><span class="pu">{</span>
+<span class="hl"><span class="lc">  6 </span>    <span class="kw">for</span> <span class="pu">(</span><span class="ty">int</span> i <span class="pu">=</span> <span class="cn">0</span><span class="pu">;</span> i <span class="pu">&lt;</span> <span class="cn">42</span><span class="pu">;</span> i<span class="pu">++)</span></span>
+<span class="ln">  7 </span>        <span class="fn">printf</span><span class="pu">(</span><span class="st">"%d\n"</span><span class="pu">,</span> i<span class="pu">);</span>
+<span class="ln">  8 </span>    <span class="kw">return</span> <span class="cn">0</span><span class="pu">;</span>
+<span class="ln">  9 </span><span class="pu">}</span></div>
+  <dl class="list">
+    <dt>color1</dt><dd>keywords: <span class="sx"><span class="kw">for</span>, <span class="kw">return</span>, <span class="kw">if</span></span>. the words that change the flow.</dd>
+    <dt>color2</dt><dd>strings. text inside the program.</dd>
+    <dt>color3</dt><dd>types. what a thing is.</dd>
+    <dt>color4</dt><dd>functions, defined and called. what a thing does.</dd>
+    <dt>color5</dt><dd>constants and numbers. values that never change.</dd>
+    <dt>color6</dt><dd>the preprocessor. text that runs before the code does.</dd>
+    <dt>fg</dt><dd>variables and properties. most of the code is plain, on purpose.</dd>
+    <dt>fg1</dt><dd>operators and punctuation, one step quieter than names.</dd>
+    <dt>fg2</dt><dd>comments, in italic. present, never loud.</dd>
+    <dt>fg3</dt><dd>line numbers. the current one is the accent.</dd>
+  </dl>
+  <p>the mapping lives in two files written for two different engines: a lua table in <a href="https://github.com/saeeedhany/dots/blob/main/config/nvim/colors/theme.lua">config/nvim/colors/theme.lua</a> and an elisp theme in <a href="https://github.com/saeeedhany/dots/blob/main/config/emacs/dots-theme.el">config/emacs/dots-theme.el</a>. what keeps them in step is that both read roles, never hex values. opencode's json theme follows the same idea more loosely: keywords red, strings green, numbers magenta, and functions in the accent.</p>
+</section>
+
+<section id="connect">
+  <div class="prompt"><span class="p">~</span> <span class="a">❯</span> <span class="c">theme <span class="pal-name">black</span></span></div>
+  <h2><b>5</b> how it connects</h2>
+  <p class="lead">one command, one file in, twenty programs out. every program gets its colors in its own language and is told to reload in its own way.</p>
+
+  <div class="flow">
+    <div class="node"><b>themes/&lt;name&gt;</b><span>39 lines of <code>key=#rrggbb</code>. the only place a hex value is written by hand.</span></div>
+    <div class="arrow">↓</div>
+    <div class="node"><b>theme &lt;name&gt;</b><span>parses the file, refuses it if a key is missing or a value is not <code>#rrggbb</code>, and writes <code>~/.cache/theme/colors.sh</code> for anything that wants plain shell variables.</span></div>
+    <div class="arrow">↓ for every target in TARGETS</div>
+    <div class="node"><b>render_&lt;target&gt;</b><span>writes the colors in that program's own format: a lua table for nvim, an elisp alist for emacs, a conf file for tmux, json for opencode, css for gtk, firefox and vesktop, ini for qt and obs, Xresources for st and dwm.</span></div>
+    <div class="arrow">↓ the choice is saved to ~/.config/theme before any reload can fail</div>
+    <div class="node"><b>reload_&lt;target&gt;</b><span>tells the running program, if there is one:</span></div>
+  </div>
+  <div class="fan">
+    <div class="node"><b>nvim</b><span>every server socket gets a remote command that reloads the scheme</span></div>
+    <div class="node"><b>emacs</b><span>every server socket gets <code>(dots-theme-reload)</code> through emacsclient</span></div>
+    <div class="node"><b>tmux</b><span><code>tmux source-file</code> on the cached conf</span></div>
+    <div class="node"><b>st</b><span>xrdb merges the colors, then <code>SIGUSR1</code> makes st read them</span></div>
+    <div class="node"><b>dwm</b><span><code>SIGHUP</code>, then the bar name is set again to wake it</span></div>
+    <div class="node"><b>dunst</b><span><code>dunstctl reload</code> over D-Bus</span></div>
+    <div class="node"><b>gtk</b><span>gsettings flips the light or dark preference</span></div>
+    <div class="node"><b>wallpaper</b><span>feh paints the flat color</span></div>
+    <div class="node"><b>the rest</b><span>firefox, gimp, obs, btop and friends read the files on their next start</span></div>
+  </div>
+  <p style="margin-top:18px">two more things make it hold. configs are symlinked from the repo, never copied, so editing <code>~/.config/nvim</code> edits the repo and the two cannot drift. and the generated files land in the cache or in paths git ignores, so switching themes never makes the repo dirty.</p>
+</section>
+
+<section id="tricks">
+  <div class="prompt"><span class="p">~/gits/dots</span><span class="b"> main</span> <span class="a">❯</span> <span class="c">grep -r tricks lib</span></div>
+  <h2><b>6</b> code tricks</h2>
+  <p class="lead">the parts worth stealing. every excerpt is the real code.</p>
+
+  <h3>a theme file is parsed, never run</h3>
+  <p>a theme looks like shell, so the lazy way is <code>source themes/black</code>. that would run anything a theme file contained. instead one sed pulls out <code>key value</code> pairs and ignores every other line, then each value must be exactly <code>#rrggbb</code>.</p>
+  <div class="block">_theme_parse() {
+  sed -n -E 's/^[[:space:]]*([a-z0-9_]+)=([^[:space:]#]*([#][0-9a-fA-F]*)?)[[:space:]]*(#.*)?$/\1 \2/p' "$1"
+}</div>
+  <p><span class="dim">lib/theme.sh</span></p>
+
+  <h3>a whole palette from one color</h3>
+  <p><code>theme new 2b2f2a</code> builds all 39 colors from a single background. the math is plain awk, inside <a href="https://github.com/saeeedhany/dots/blob/main/lib/generate.sh">lib/generate.sh</a>. the lifts are the background with a little more lightness, the borders a lot more, and on a light theme the sign flips so lifts get darker:</p>
+  <div class="block">t["bg1"] = shift(bg, sg * 0.015); t["bg2"] = shift(bg, sg * 0.03); t["bg3"] = shift(bg, sg * 0.05)
+t["line"] = shift(bg, sg * 0.15); t["line2"] = shift(bg, sg * 0.20)</div>
+  <p>the six terminal hues sit at fixed angles on the color wheel, all at one saturation and lightness, so none of them shouts louder than another. the accent is the background's opposite hue, or a warm gold when the background has no hue at all:</p>
+  <div class="block">split("0 95 40 210 320 175", hues, " ")
+ah = neutral(bg) ? 38 : B["h"] + 180</div>
+  <p><span class="dim">the awk as it runs, without the shell quoting around it</span></p>
+
+  <h3>readable by force</h3>
+  <p>every generated text color goes through <code>fix</code>. it measures the WCAG contrast against the background and, while the ratio is under the minimum, moves lightness away from the background two points at a time. the hue stays, only the brightness gives way.</p>
+  <div class="block">function fix(c, bg, min,   o, step) {
+  hsl(c, o); step = isdark(bg) ? 0.02 : -0.02
+  while (cr(c, bg) &lt; min &amp;&amp; o["l"] &gt;= 0 &amp;&amp; o["l"] &lt;= 1) { o["l"] += step; c = hslhex(o["h"], o["s"], o["l"]) }
+  return c
+}</div>
+  <p>the same rules, as <code>theme_check</code>, run over every file in themes/ in the test suite: fg and the terminal colors need 4.5:1, color8 needs 3:1, and on a light theme each bright color must be darker than its normal one. gruvbox is marked <code>canonical</code> and skips the rule, so it stays true to the original.</p>
+
+  <h3>the order that never loses a choice</h3>
+  <p>all files are written first, then the choice is saved, then programs are told. if a reload fails, the machine still knows the theme and the program picks it up on its next start.</p>
+  <div class="block">for t in "${TARGETS[@]}"; do
+  if declare -F "render_$t" &gt;/dev/null; then
+    "render_$t" || { warn "$t: could not write its theme files"; failed=1; }
+  fi
+done
+# The files are written: record the theme before any reload can fail.
+printf '%s\n' "$THEME" &gt; "$STATE"</div>
+  <p><span class="dim">theme</span></p>
+
+  <h3>only signal what can listen</h3>
+  <p>st and dwm are patched to recolor on a signal. but an st built before the patch treats <code>SIGUSR1</code> as a reason to quit, and you would lose your terminals. so before sending, the tool looks for the patch's own string inside the running binary.</p>
+  <div class="block">for pid in $(pgrep -x "$name"); do
+  if grep -qa "$marker" "/proc/$pid/exe" 2&gt;/dev/null; then
+    kill "-$sig" "$pid" &amp;&amp; printf '%s\n' "$pid"
+  else
+    info "$name ($pid): built before the xresources patch, log out and back in to recolor it" &gt;&amp;2
+  fi
+done</div>
+  <p><span class="dim">lib/targets/xresources.sh</span></p>
+
+  <h3>templates with holes</h3>
+  <p>css themes for gtk, firefox and vesktop are templates with <code>{{accent}}</code> style holes. one sed fills them. <code>{{line_rgb}}</code> gives <code>59, 62, 62</code> for css <code>rgba()</code>. if any hole is left, nothing is written, so a half themed app is impossible.</p>
+  <div class="block">--background-modifier-hover: rgba({{line_rgb}}, 0.3);</div>
+  <p><span class="dim">templates/vesktop.css</span></p>
+
+  <h3>no white flash in emacs</h3>
+  <p>emacs paints its first frame before the theme loads, so most themes flash white for an instant. here the palette is read in <code>early-init.el</code>, before any frame exists, and its background goes straight into the frame settings.</p>
+  <div class="block">(defvar dots-palette-file (expand-file-name "~/.cache/theme/emacs.el"))
+(defvar dots-palette nil)
+(load dots-palette-file t t)</div>
+  <p>the theme itself then reads the palette with <code>let-alist</code>, so every color is a short dotted name, close to how css reads:</p>
+  <div class="block">(let-alist dots-palette
+  (custom-theme-set-faces
+   'dots
+   `(default ((t (:background ,.bg :foreground ,.fg))))
+   `(mode-line ((t (:background ,.bg1 :foreground ,.fg1 :box (:line-width 4 :color ,.bg1)))))</div>
+  <p><span class="dim">config/emacs</span></p>
+
+  <h3>a program in two functions</h3>
+  <p>adding a program means writing one file with two functions, <code>render_</code> and <code>reload_</code>, and adding its name to the list. this is the whole of emacs:</p>
+  <div class="block">render_emacs() {
+  local k
+  {
+    printf ';;; -*- lexical-binding: t -*-\n(setq dots-palette\n      (quote ((name . "%s")\n' "$THEME"
+    for k in "${THEME_KEYS[@]}"; do printf '              (%s . "%s")\n' "$k" "${!k}"; done
+    printf '              (add_bg . "%s")\n' "$(mix "$bg" "$green" 15)"
+    printf '              (del_bg . "%s")\n' "$(mix "$bg" "$red" 15)"
+    printf '              (add_bg2 . "%s")\n' "$(mix "$bg" "$green" 30)"
+    printf '              (del_bg2 . "%s"))))\n' "$(mix "$bg" "$red" 30)"
+  } &gt; "$HOME/.cache/theme/emacs.el"
+}
+
+reload_emacs() {
+  local sock
+  command -v emacsclient &gt;/dev/null || return 0
+  for sock in "${XDG_RUNTIME_DIR:-/run/user/$UID}"/emacs/*; do
+    [[ -S "$sock" ]] || continue
+    emacsclient -s "$sock" --eval '(dots-theme-reload)' &gt;/dev/null 2&gt;&amp;1 || true
+  done
+}</div>
+  <p>note the diff backgrounds: they are not in the theme at all. they are mixed on the fly, 15% of green into the background, so every theme gets added and removed lines that sit quietly on its own surface.</p>
+
+  <h3>tests that cannot touch the desktop</h3>
+  <p>a theme test that reached the live tmux or dwm would repaint the machine while it ran. every test gets its own home, its own runtime folder for sockets, no X display and no D-Bus, so every reload finds nothing to talk to.</p>
+  <div class="block">FAKE_HOME="$(mktemp -d)"
+export HOME="$FAKE_HOME"
+export TMUX_TMPDIR="$FAKE_SESSION/tmux"
+export XDG_RUNTIME_DIR="$FAKE_SESSION/run"
+unset DBUS_SESSION_BUS_ADDRESS TMUX
+unset DISPLAY</div>
+  <p><span class="dim">tests/test_helper.bash, trimmed</span></p>
+</section>
+
+<section id="yours">
+  <div class="prompt"><span class="p">~</span> <span class="a">❯</span> <span class="c">theme new</span></div>
+  <h2><b>7</b> make your own</h2>
+  <p class="lead">three ways in, from easiest to deepest.</p>
+
+  <h3>from one color</h3>
+  <div class="block"><span class="dim">❯</span> theme new 2b2f2a       <span class="dim">a whole theme, named after the color</span>
+<span class="dim">❯</span> theme new 2b2f2a moss  <span class="dim">same, with your own name</span></div>
+  <p>if the color cannot make readable text, nothing is saved and the tool says why.</p>
+
+  <h3>by hand</h3>
+  <p>copy a file in <a href="https://github.com/saeeedhany/dots/tree/main/themes">themes/</a>, change its values, run <code>theme &lt;name&gt;</code>. a missing key or a malformed value stops it and names the key. run <code>bats tests/theme.bats</code> to hold it to the contrast rules too.</p>
+
+  <h3>a new program</h3>
+  <ol class="rules">
+    <li><span><b>write lib/targets/&lt;name&gt;.sh</b>a <code>render_&lt;name&gt;</code> that writes the colors where the program reads them, and a <code>reload_&lt;name&gt;</code> that tells a running one, or does nothing.</span></li>
+    <li><span><b>add it to TARGETS</b>one word in the <code>theme</code> script.</span></li>
+    <li><span><b>map roles, not colors</b>ask what each part of the program is for, then pick the token with that job. if nothing fits, the program is probably showing something it does not need.</span></li>
+    <li><span><b>test it in a fake home</b>copy one of the target tests in <a href="https://github.com/saeeedhany/dots/tree/main/tests">tests/</a>: apply a theme, read the color the program ended up with, compare it to the theme file.</span></li>
+  </ol>
+  <p>the reasons behind each program's setup, not only its colors, are in the <a href="blog/">blog</a>.</p>
+</section>
+
+</main>
+<footer>
+  <span>made by <a href="https://github.com/saeeedhany">saeeedhany</a> on arch, btw</span>
+  <nav>
+    <a href="./">home</a>
+    <a href="blog/">blog</a>
+    <a href="https://github.com/saeeedhany/dots">dots</a>
+    <a href="https://github.com/saeeedhany/suckless">suckless</a>
+  </nav>
+</footer>
+<div class="toast" id="toast" role="status" aria-live="polite"><b id="toast-title"></b><span id="toast-body"></span></div>
+</body>
+</html>
