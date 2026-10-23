@@ -53,6 +53,8 @@ This repository contains configuration files for the following tools:
 - **[dwmblocks](config/dwmblocks/scripts)**
   The scripts behind the status bar
 
+The design system behind the colors is explained on [dots.saeed.cool/design](https://dots.saeed.cool/design.html), and the reasons behind each setup in the [blog](https://dots.saeed.cool/blog/).
+
 Configs are linked, not copied: editing `~/.config/nvim` or `~/.bashrc` edits this repo.
 
 ## X Server Configuration

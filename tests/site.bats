@@ -82,3 +82,9 @@ theme_block() {
   done
   [ "$n" -ge 1 ]
 }
+
+@test "home links the design page and the blog from the bar and the design section" {
+  local f="$REPO_ROOT/index.html"
+  [ "$(grep -cF 'href="design.html"' "$f")" -ge 2 ]
+  grep -qF 'href="blog/"' "$f"
+}
