@@ -2,9 +2,59 @@
 
 (load custom-file t t)
 
+(require 'package)
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(setq package-archive-priorities '(("gnu" . 3) ("nongnu" . 2) ("melpa" . 1))
+      native-comp-async-report-warnings-errors 'silent)
+
 (use-package magit
   :ensure t
   :defer t)
+
+(use-package vundo
+  :ensure t
+  :bind ("C-x u" . vundo))
+
+(use-package avy
+  :ensure t
+  :bind ("M-j" . avy-goto-char-timer))
+
+(use-package apheleia
+  :ensure t
+  :hook (prog-mode . apheleia-mode))
+
+(use-package emmet-mode
+  :ensure t
+  :hook ((html-ts-mode mhtml-ts-mode css-ts-mode tsx-ts-mode) . emmet-mode))
+
+(use-package vterm
+  :ensure t
+  :bind ("C-c t" . vterm)
+  :custom (vterm-always-compile-module t))
+
+(use-package denote
+  :ensure t
+  :bind (("C-c n n" . denote)
+         ("C-c n f" . denote-open-or-create)
+         ("C-c n l" . denote-link)
+         ("C-c n d" . denote-dired))
+  :custom
+  (denote-directory (expand-file-name "~/notes"))
+  (denote-file-type 'markdown-yaml))
+
+(use-package auctex
+  :ensure t
+  :defer t
+  :hook (LaTeX-mode . eglot-ensure)
+  :custom
+  (TeX-auto-save t)
+  (TeX-parse-self t)
+  (TeX-PDF-mode t)
+  (TeX-source-correlate-mode t)
+  (TeX-source-correlate-start-server t)
+  (TeX-view-program-selection '((output-pdf "Zathura")))
+  (font-latex-fontify-script nil)
+  (font-latex-fontify-sectioning 1.0))
 
 (setq-default indent-tabs-mode nil
               tab-width 4
@@ -75,8 +125,12 @@
 (autoload 'markdown-ts-mode "markdown-ts-mode" nil t)
 (add-to-list 'auto-mode-alist '("\\.md\\'" . markdown-ts-mode))
 
+(with-eval-after-load 'eglot
+  (add-to-list 'eglot-server-programs '(markdown-ts-mode "marksman")))
+
 (dolist (hook '(c-ts-mode-hook c++-ts-mode-hook html-ts-mode-hook css-ts-mode-hook
-                js-ts-mode-hook typescript-ts-mode-hook tsx-ts-mode-hook))
+                js-ts-mode-hook typescript-ts-mode-hook tsx-ts-mode-hook
+                markdown-ts-mode-hook))
   (add-hook hook #'eglot-ensure))
 
 (keymap-global-set "C-x C-b" #'ibuffer)

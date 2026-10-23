@@ -39,6 +39,23 @@ libnotify
 acpi
 lm_sensors
 
+# emacs, its language servers, formatters and LaTeX
+emacs
+cmake
+clang
+marksman
+texlab
+typescript-language-server
+vscode-html-languageserver
+vscode-css-languageserver
+prettier
+texlive-basic
+texlive-latex
+texlive-latexrecommended
+texlive-latexextra
+texlive-fontsrecommended
+texlive-binextra
+
 # shell and terminal tools
 tmux
 neovim
