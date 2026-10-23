@@ -2,7 +2,8 @@
 
 (setq user-emacs-directory (expand-file-name "~/.local/share/emacs/")
       package-user-dir (expand-file-name "elpa" user-emacs-directory)
-      custom-file (expand-file-name "custom.el" user-emacs-directory))
+      custom-file (expand-file-name "custom.el" user-emacs-directory)
+      auto-save-list-file-prefix (expand-file-name "auto-save-list/.saves-" user-emacs-directory))
 (startup-redirect-eln-cache (expand-file-name "eln-cache" user-emacs-directory))
 
 (setq gc-cons-threshold (* 64 1024 1024)

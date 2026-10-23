@@ -88,3 +88,37 @@ theme_block() {
   [ "$(grep -cF 'href="design.html"' "$f")" -ge 2 ]
   grep -qF 'href="blog/"' "$f"
 }
+
+@test "the pages make no claims the code contradicts" {
+  cd "$REPO_ROOT"
+  ! grep -qi 'current tag' design.html blog/one-machine.html
+  ! grep -q 'the master window' design.html
+  ! grep -q '<code>gd</code> for definition' blog/one-machine.html
+  ! grep -q 'only place a hex value' design.html
+  ! grep -q 'htop' design.html index.html
+  ! grep -q 'powerline arrow' blog/one-machine.html
+  ! grep -q 'every generated text color' design.html
+  ! grep -q 'skips the rule' design.html
+  ! grep -q 'plain accent text, not bold' design.html
+  ! grep -q 'the repo holds only what a person wrote' blog/one-machine.html
+  ! grep -q 'refuses a theme with a missing color or text that is hard to read' index.html
+  grep -q 'gruvbox.nvim' design.html
+  grep -q 'gruvbox.nvim' blog/one-machine.html
+  grep -q 'LS_COLORS\|<code>ls</code>' design.html
+}
+
+@test "every page can switch the theme and follows other tabs" {
+  local p
+  for p in $(pages); do
+    grep -qE 'id="(themelist|picker)"' "$p" || { echo "no picker: $p"; return 1; }
+  done
+  grep -q "addEventListener('storage'" "$REPO_ROOT/site.js"
+}
+
+@test "diagram labels are not the dimmest text" {
+  ! grep -qE '^\.arrow \{[^}]*var\(--fg3\)' "$REPO_ROOT/site.css"
+}
+
+@test "packages.txt gains no new comments for emacs" {
+  ! grep -q 'emacs, its language servers' "$REPO_ROOT/packages/pacman.txt"
+}

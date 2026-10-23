@@ -238,7 +238,7 @@ ol.rules span { color: var(--fg1); }
 .node b { display: block; color: var(--fg); font-weight: 500; }
 .node span { color: var(--fg1); }
 .node code { color: var(--accent); }
-.arrow { color: var(--fg3); padding: 2px 0 2px 18px; }
+.arrow { color: var(--fg2); padding: 2px 0 2px 18px; }
 .fan { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 6px; }
 .fan .node { padding: 8px 12px; font-size: 13px; }
 
@@ -269,6 +269,10 @@ footer { max-width: 860px; margin: 0 auto; padding: 24px 20px 48px; border-top: 
 footer a { text-decoration: none; }
 footer a:hover { color: var(--fg); }
 footer nav { display: flex; gap: 18px; }
+.picker { flex-basis: 100%; display: flex; flex-wrap: wrap; gap: 4px 16px; }
+.picker button { background: none; border: 0; color: var(--fg2); font: inherit; cursor: pointer; padding: 0; }
+.picker button:hover { color: var(--fg); }
+.picker button.cur { color: var(--accent); }
 
 .toast {
   position: fixed; top: 34px; right: 14px; z-index: 20; min-width: 220px; max-width: 320px;

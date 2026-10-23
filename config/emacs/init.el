@@ -21,7 +21,14 @@
 
 (use-package apheleia
   :ensure t
-  :hook (prog-mode . apheleia-mode))
+  :defer t)
+
+(defun dots-format-on-save ()
+  (when (seq-some (lambda (f) (locate-dominating-file default-directory f))
+                  '(".clang-format" ".prettierrc" ".prettierrc.json" "prettier.config.js"))
+    (apheleia-mode 1)))
+
+(add-hook 'prog-mode-hook #'dots-format-on-save)
 
 (use-package emmet-mode
   :ensure t

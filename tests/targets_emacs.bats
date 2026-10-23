@@ -48,3 +48,15 @@ em() {
 @test "no theme applied yet: emacs starts without a palette" {
   [ "$(em 'dots-palette')" = "nil" ]
 }
+
+@test "emacs only formats c on save when the project asks for it" {
+  ! grep -qF '(prog-mode . apheleia-mode)' "$REPO_ROOT/config/emacs/init.el"
+  grep -qF '.clang-format' "$REPO_ROOT/config/emacs/init.el"
+}
+
+@test "emacs keeps its auto save list out of the repo" {
+  case "$(em 'auto-save-list-file-prefix')" in
+    "$HOME/.local/share/emacs/"*) ;;
+    *) return 1 ;;
+  esac
+}

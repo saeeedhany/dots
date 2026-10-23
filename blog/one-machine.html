@@ -43,7 +43,7 @@
 
 PS1="...\w...\$(_git_branch) \[\e[38;2;$(_theme_rgb accent '#c8a46b')m\]❯\[\e[0m\] "</pre>
   <p class="src">home/bashrc, the prompt trimmed to its colors</p>
-  <p>the prompt asks for <code>accent</code>, never for gold. when the theme changes, the arrow changes with the cursor in nvim and the current tag in dwm, because all three asked for the same job.</p>
+  <p>the prompt asks for <code>accent</code>, never for gold. when the theme changes, the arrow changes with the cursor in nvim and emacs and the session name in tmux, because they all asked for the same job.</p>
   <p>the theory behind this has a name in design systems: <b>design tokens</b>. the point is not reuse. the point is that a name carries intent, and intent survives a change of value. if the arrow were simply gold, nobody would know it is supposed to match the cursor.</p>
 </section>
 
@@ -60,7 +60,7 @@ vim.opt.scrolloff = 8</pre>
   <p>the sign column is always on, even when there is nothing to show. without it, the first git change or diagnostic pushes every line two columns to the right, and your eye has to find its place again. a column that never moves is a small thing you stop noticing, which is the goal. the same goes for <code>scrolloff</code>: the cursor never touches the edge, so you always see where you are going.</p>
 
   <h3>it dims instead of hiding</h3>
-  <p>the numbers are both absolute and relative, so <code>12j</code> is readable at a glance, but they sit at <code>fg3</code>, the dimmest text level. only the current line number gets the accent. you can always read them; you never have to.</p>
+  <p>the numbers are both absolute and relative, so <code>12j</code> is readable at a glance, but they sit at <code>fg3</code>, the dimmest text level. only the current line number gets the accent. you can always read them; you never have to. (on the gruvbox theme nvim loads gruvbox.nvim instead, so the original stays untouched; everything in this section about colors is the scheme every other theme uses.)</p>
 
   <h3>it hides what nobody uses</h3>
   <pre class="block">local disabled_built_ins = {
@@ -80,7 +80,7 @@ vim.opt.scrolloff = 8</pre>
 map('t', 'kj', [[&lt;C-\&gt;&lt;C-n&gt;]], { desc = 'Exit terminal mode' })
 map('n', '&lt;C-p&gt;', '&lt;cmd&gt;Telescope find_files&lt;cr&gt;', { desc = 'Find files' })</pre>
   <p class="src">config/nvim/lua/core/keymaps.lua, all of it</p>
-  <p>that is the whole keymap file. everything else is what nvim already does: <code>gd</code> for definition, <code>K</code> for docs, <code>grn</code> to rename, all built into nvim 0.11. the reason is simple. a stock key is documented in <code>:help</code>, works on every machine you sit at, and is what every answer online assumes. a custom key is a private language you have to keep translating.</p>
+  <p>that is the whole keymap file. everything else is what nvim already does: <code>K</code> for docs, <code>grn</code> to rename, <code>gra</code> for code actions, <code>grr</code> for references, all built into nvim 0.11, and <code>CTRL-]</code> jumps to a definition through the language server. the reason is simple. a stock key is documented in <code>:help</code>, works on every machine you sit at, and is what every answer online assumes. a custom key is a private language you have to keep translating.</p>
 
   <h3>it fixes friction where it happens</h3>
   <p>a few autocommands do the boring work: trailing whitespace is removed on save, missing folders are created when you save into them, and the cursor goes back to where you left it when you reopen a file. each one exists because something annoyed the same way twice.</p>
@@ -115,7 +115,7 @@ CursorLineNr = { fg = c.accent, bold = true },</pre>
       package-user-dir (expand-file-name "elpa" user-emacs-directory)
       custom-file (expand-file-name "custom.el" user-emacs-directory))</pre>
   <p class="src">config/emacs/early-init.el</p>
-  <p>the config folder is a link into the repo. emacs, left alone, writes history, caches and installed packages into that same folder. the first line moves all of that to <code>~/.local/share/emacs</code>, so the repo holds only what a person wrote. the same rule is why theme files land in <code>~/.cache</code>.</p>
+  <p>the config folder is a link into the repo. emacs, left alone, writes history, caches and installed packages into that same folder. the first line moves all of that to <code>~/.local/share/emacs</code>, so the folder holds only what a person wrote. the same rule is why generated theme files land in <code>~/.cache</code> or in paths git ignores.</p>
 </section>
 
 <section id="shell">
@@ -126,7 +126,7 @@ CursorLineNr = { fg = c.accent, bold = true },</pre>
 set -g window-status-format " #[fg=$fg2]#I:#W "
 set -g window-status-current-format " #[fg=$fg,bold]#I:#W#[nobold] "</pre>
   <p class="src">lib/targets/tmux.sh, the generated part</p>
-  <p>the bar has the surface color, not a colored strip. windows you are not in are <code>fg2</code>; the one you are in is <code>fg</code>. there is no box and no powerline arrow, because nothing on the bar needs to look more important than the text you are working on.</p>
+  <p>the bar has the surface color, not a colored strip. windows you are not in are <code>fg2</code>; the one you are in is <code>fg</code>. there is no box and no colored powerline blocks. the session name on the left is the one accent, because it is where you are, and nothing else on the bar needs to look more important than the text you are working on.</p>
   <p>splits open in the folder you are already in, panes move with <code>h j k l</code>, and sessions are saved every fifteen minutes and restored when tmux starts. a session should outlive the terminal, a reboot, and you.</p>
 
   <h3>one line, same column</h3>
@@ -164,6 +164,7 @@ set -g window-status-current-format " #[fg=$fg,bold]#I:#W#[nobold] "</pre>
 
 </main>
 <footer>
+  <div class="picker" id="picker"></div>
   <span>made by <a href="https://github.com/saeeedhany">saeeedhany</a> on arch, btw</span>
   <nav>
     <a href="../">home</a>

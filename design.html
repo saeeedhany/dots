@@ -34,8 +34,9 @@
   <h1>design<span>.</span></h1>
   <p class="lead">the system behind every color on this machine. how it is named, where each color is allowed, how one file reaches twenty programs, and the small tricks that hold it together.</p>
   <p>the idea fits in three lines. the screen is one surface. a color is named for the job it does, never for its hue. a program asks for a job, and the theme answers with a color.</p>
-  <p>so nvim never asks for yellow. it asks for <code>accent</code>, and accent means one thing everywhere: you are here. switch the theme and the hue changes, but the cursor, the current line number and the current tag still share it, because they share the job.</p>
-  <p>this is the same idea as css variables, applied to a whole desktop. this page uses the exact palettes the machine uses. pick a theme on the <a href="./#themes">home page</a> and this page repaints with it.</p>
+  <p>so nvim never asks for yellow. it asks for <code>accent</code>, and accent means one thing everywhere: you are here. switch the theme and the hue changes, but the cursor, the current line number and the prompt arrow still share it, because they share the job.</p>
+  <p>this is the same idea as css variables, applied to a whole desktop. this page uses the exact palettes the machine uses. pick one and the page repaints, along with every other page of this site you have open.</p>
+  <div class="themes" id="themelist"></div>
 </section>
 
 <section id="tokens">
@@ -51,7 +52,7 @@
     <button class="tok" data-copy-var="bg2"><i style="background:var(--bg2)"></i><b>bg2</b><span class="hex" data-hex="bg2"></span><span class="job">second lift: hover, the word under the cursor, menu tracks</span></button>
     <button class="tok" data-copy-var="bg3"><i style="background:var(--bg3)"></i><b>bg3</b><span class="hex" data-hex="bg3"></span><span class="job">third lift: selections, the picked item in a list</span></button>
     <button class="tok" data-copy-var="line"><i style="background:var(--line)"></i><b>line</b><span class="hex" data-hex="line"></span><span class="job">the only border: window dividers, pane edges, rules</span></button>
-    <button class="tok" data-copy-var="line2"><i style="background:var(--line2)"></i><b>line2</b><span class="hex" data-hex="line2"></span><span class="job">a border that must be seen: focused frames, the master window</span></button>
+    <button class="tok" data-copy-var="line2"><i style="background:var(--line2)"></i><b>line2</b><span class="hex" data-hex="line2"></span><span class="job">a second, stronger border, for apps with nested frames: qt, gimp, obs, kdenlive</span></button>
   </div>
 
   <h3>text <span class="dim">· four levels of attention</span></h3>
@@ -66,7 +67,7 @@
   <h3>accent <span class="dim">· you are here</span></h3>
   <p>one color carries position. the lighter steps are the accent while it moves (a search as you type). the darker steps are the accent fading into the background, for apps that need softer versions of the same mark.</p>
   <div class="tokens">
-    <button class="tok" data-copy-var="accent"><i style="background:var(--accent)"></i><b>accent</b><span class="hex" data-hex="accent"></span><span class="job">cursor, current line number, current tag, prompt arrow, search hits</span></button>
+    <button class="tok" data-copy-var="accent"><i style="background:var(--accent)"></i><b>accent</b><span class="hex" data-hex="accent"></span><span class="job">cursor, current line number, prompt arrow, tmux session, search hits</span></button>
     <button class="tok" data-copy-var="accent_light1"><i style="background:var(--accent_light1)"></i><b>accent_light1</b><span class="hex" data-hex="accent_light1"></span><span class="job">the live search match, the heading you are on</span></button>
     <button class="tok" data-copy-var="accent_light2"><i style="background:var(--accent_light2)"></i><b>accent_light2</b><span class="hex" data-hex="accent_light2"></span><span class="job">a second step for apps with layered states</span></button>
     <button class="tok" data-copy-var="accent_dark1"><i style="background:var(--accent_dark1)"></i><b>accent_dark1</b><span class="hex" data-hex="accent_dark1"></span><span class="job">20% of the way to the background</span></button>
@@ -77,7 +78,7 @@
   </div>
 
   <h3>meaning <span class="dim">· only when something happened</span></h3>
-  <p>green and red are not decoration. they appear only when something was added, passed, removed or broke. blue marks places you can go: links, folders, branches.</p>
+  <p>green and red are not decoration. they appear only when something was added, passed, removed or broke. blue marks places you can go: links, folders in editors, branches. the one exception is <code>ls</code>: its colors in <code>LS_COLORS</code> are older than this system, with folders green and links red.</p>
   <div class="tokens">
     <button class="tok" data-copy-var="green"><i style="background:var(--green)"></i><b>green</b><span class="hex" data-hex="green"></span><span class="job">added, ok, done</span></button>
     <button class="tok" data-copy-var="green_light"><i style="background:var(--green_light)"></i><b>green_light</b><span class="hex" data-hex="green_light"></span><span class="job">the added line you are standing on</span></button>
@@ -87,7 +88,7 @@
   </div>
 
   <h3>terminal <span class="dim">· the sixteen colors programs already know</span></h3>
-  <p>programs that never heard of this system still speak the sixteen terminal colors. htop, nnn, ranger and cava follow the theme only because these are set. they are tuned to the same roles: color1 is the keyword red, color2 the string green, and so on.</p>
+  <p>programs that never heard of this system still speak the sixteen terminal colors. nnn, ranger and cava follow the theme only because these are set. they are tuned to the same roles: color1 is the keyword red, color2 the string green, and so on.</p>
   <div class="ansi">
     <button class="sw" data-copy-var="color0"><i style="background:var(--color0)"></i><span><b>color0</b><span data-hex="color0"></span></span></button>
     <button class="sw" data-copy-var="color1"><i style="background:var(--color1)"></i><span><b>color1</b><span data-hex="color1"></span></span></button>
@@ -116,8 +117,8 @@
     <li><span><b>one accent per region</b>a window shows the accent in one or two places at most: where the cursor is and which line it is on. if three things are accent, none of them is.</span></li>
     <li><span><b>lifts, not boxes</b>a bar or a popup is separated from the surface by being one step lighter, not by a frame. the emacs mode line even draws its padding as a box in its own background color, so the box exists for spacing and is never seen.</span></li>
     <li><span><b>one border, one pixel</b>when two things must be divided, a single line of <code>line</code> divides them. no double borders, no shadows, no rounded corners.</span></li>
-    <li><span><b>color means something</b>green and red never appear because a design wanted warmth. if you see red, something is wrong or was removed.</span></li>
-    <li><span><b>bold almost never</b>bold is kept for the one heading or match you must not miss. section headings in emacs and magit are plain accent text, not bold.</span></li>
+    <li><span><b>color means something</b>green and red never appear because a design wanted warmth. if you see red in an editor, a diff or a bar, something is wrong or was removed. (<code>ls</code> is the old exception, see meaning above.)</span></li>
+    <li><span><b>bold almost never</b>bold is kept for the one heading or match you must not miss. magit's section headings are plain accent text; only the top two heading levels of a markdown note are bold.</span></li>
     <li><span><b>dim instead of hide</b>comments, line numbers and hints stay on screen at fg2 and fg3. you can always read them, you never have to.</span></li>
     <li><span><b>readable or refused</b>a generated theme whose text cannot reach 4.5:1 contrast on its background is never saved, and the test suite fails if any theme in themes/ breaks the rule.</span></li>
     <li><span><b>the same text everywhere</b>one monospace face per screen: 0xProto in the terminal and emacs, JetBrains Mono on this site. no second font for headings.</span></li>
@@ -127,7 +128,7 @@
 <section id="syntax">
   <div class="prompt"><span class="p">~/gits/dots</span><span class="b"> main</span> <span class="a">❯</span> <span class="c">nvim main.c</span></div>
   <h2><b>4</b> syntax</h2>
-  <p class="lead">code is colored by one mapping, shared by nvim and emacs. the same line of c looks the same in both.</p>
+  <p class="lead">code is colored by one mapping, shared by nvim and emacs. the same line of c looks the same in both, on every theme but gruvbox, where nvim loads gruvbox.nvim to keep the original untouched.</p>
   <div class="block sx"><span class="ln">  1 </span><span class="pp">#include</span> <span class="st">&lt;stdio.h&gt;</span>
 <span class="ln">  2 </span>
 <span class="ln">  3 </span><span class="cm">/* count to forty two */</span>
@@ -158,7 +159,7 @@
   <p class="lead">one command, one file in, twenty programs out. every program gets its colors in its own language and is told to reload in its own way.</p>
 
   <div class="flow">
-    <div class="node"><b>themes/&lt;name&gt;</b><span>39 lines of <code>key=#rrggbb</code>. the only place a hex value is written by hand.</span></div>
+    <div class="node"><b>themes/&lt;name&gt;</b><span>39 lines of <code>key=#rrggbb</code>. the one place a theme's colors are written. (bash keeps fallbacks, and dwm and dmenu compile in defaults, for a machine with no theme yet.)</span></div>
     <div class="arrow">↓</div>
     <div class="node"><b>theme &lt;name&gt;</b><span>parses the file, refuses it if a key is missing or a value is not <code>#rrggbb</code>, and writes <code>~/.cache/theme/colors.sh</code> for anything that wants plain shell variables.</span></div>
     <div class="arrow">↓ for every target in TARGETS</div>
@@ -202,13 +203,13 @@ ah = neutral(bg) ? 38 : B["h"] + 180</div>
   <p><span class="dim">the awk as it runs, without the shell quoting around it</span></p>
 
   <h3>readable by force</h3>
-  <p>every generated text color goes through <code>fix</code>. it measures the WCAG contrast against the background and, while the ratio is under the minimum, moves lightness away from the background two points at a time. the hue stays, only the brightness gives way.</p>
+  <p>fg, fg1, fg2 and every terminal color go through <code>fix</code>. it measures the WCAG contrast against the background and, while the ratio is under the minimum, moves lightness away from the background two points at a time. the hue stays, only the brightness gives way. fg and fg1 must reach 4.5:1, fg2 3:1, and fg3 is left dim on purpose.</p>
   <div class="block">function fix(c, bg, min,   o, step) {
   hsl(c, o); step = isdark(bg) ? 0.02 : -0.02
   while (cr(c, bg) &lt; min &amp;&amp; o["l"] &gt;= 0 &amp;&amp; o["l"] &lt;= 1) { o["l"] += step; c = hslhex(o["h"], o["s"], o["l"]) }
   return c
 }</div>
-  <p>the same rules, as <code>theme_check</code>, run over every file in themes/ in the test suite: fg and the terminal colors need 4.5:1, color8 needs 3:1, and on a light theme each bright color must be darker than its normal one. gruvbox is marked <code>canonical</code> and skips the rule, so it stays true to the original.</p>
+  <p>the same rules, as <code>theme_check</code>, run over every file in themes/ in the test suite: fg and the terminal colors need 4.5:1, color8 needs 3:1, and on a light theme each bright color must be darker than its normal one. gruvbox is marked <code>canonical</code>: it skips the terminal color rules so it stays true to the original, but its fg must still reach 4.5:1.</p>
 
   <h3>the order that never loses a choice</h3>
   <p>all files are written first, then the choice is saved, then programs are told. if a reload fails, the machine still knows the theme and the program picks it up on its next start.</p>
@@ -310,6 +311,7 @@ unset DISPLAY</div>
 
 </main>
 <footer>
+  <div class="picker" id="picker"></div>
   <span>made by <a href="https://github.com/saeeedhany">saeeedhany</a> on arch, btw</span>
   <nav>
     <a href="./">home</a>

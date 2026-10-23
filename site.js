@@ -73,12 +73,26 @@ function paintThemes(name) {
   document.querySelectorAll('.screen-themes').forEach(e => e.innerHTML = screen.trimEnd());
 }
 
+function paintPicker(name) {
+  const pick = $('#picker');
+  if (!pick) return;
+  pick.innerHTML = '<span>theme</span>';
+  Object.keys(THEMES).forEach(n => {
+    const b = document.createElement('button');
+    b.textContent = n;
+    if (n === name) b.className = 'cur';
+    b.addEventListener('click', () => applyTheme(n, true));
+    pick.appendChild(b);
+  });
+}
+
 function applyTheme(name, announce) {
   root.dataset.theme = name;
   try { localStorage.setItem('dots-theme', name); } catch (e) {}
   const cmd = $('#theme-cmd');
   if (cmd) cmd.textContent = announce ? 'theme ' + name : 'theme';
   paintThemes(name);
+  paintPicker(name);
   paintPalette(name);
   if (announce) toast('theme', name + ' applied');
 }
@@ -97,6 +111,9 @@ document.addEventListener('DOMContentLoaded', () => {
   applyTheme(savedTheme(), false);
   tick();
   setInterval(tick, 1000);
+  window.addEventListener('storage', e => {
+    if (e.key === 'dots-theme' && THEMES[e.newValue]) applyTheme(e.newValue, false);
+  });
 
   const tags = [...document.querySelectorAll('.tag[href^="#"]')];
   const sections = tags.map(t => document.querySelector(t.getAttribute('href')));
