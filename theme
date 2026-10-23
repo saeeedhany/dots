@@ -15,7 +15,7 @@ export REPO_ROOT
 # shellcheck source=lib/generate.sh
 . "$REPO_ROOT/lib/generate.sh"
 
-TARGETS=(wallpaper xresources dunst tmux bash zathura nvim vesktop firefox opencode btop rmpc gtk qt gimp kdenlive obs)
+TARGETS=(wallpaper xresources dunst tmux bash zathura nvim emacs vesktop firefox opencode btop rmpc gtk qt gimp kdenlive obs)
 for t in "${TARGETS[@]}"; do
   # shellcheck source=/dev/null
   [[ -f "$REPO_ROOT/lib/targets/$t.sh" ]] && . "$REPO_ROOT/lib/targets/$t.sh"

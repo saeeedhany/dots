@@ -35,6 +35,9 @@ This repository contains configuration files for the following tools:
 - **[Neovim](config/nvim)**
   A carefully tuned editor setup focused on speed, extensibility, and keyboard-driven workflows
 
+- **[Emacs](config/emacs)**
+  Plain Emacs with built in tools, magit for git, and the machine's theme
+
 - **[Tmux](config/tmux)**
   Terminal multiplexing optimized for long-running sessions and parallel tasks ([guide](manuals/tmux.md))
 
