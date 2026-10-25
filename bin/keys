@@ -37,7 +37,9 @@ dwm_keys() {
     function desc(f, a,   i) {
       gsub(/[ \t{}]/, "", a)
       if (f == "spawn" && a ~ /dmenucmd/) return "launcher"
+      if (f == "spawn" && a ~ /floattermcmd/) return "floating terminal"
       if (f == "spawn" && a ~ /termcmd/) return "terminal"
+      if (f == "spawnfloat" && a ~ /webcmd/) return "floating firefox, this one window"
       if (f == "togglebar") return "show or hide the bar"
       if (f == "focusstack") return a ~ /-/ ? "focus the previous window" : "focus the next window"
       if (f == "incnmaster") return a ~ /-/ ? "one fewer window in the master area" : "one more window in the master area"

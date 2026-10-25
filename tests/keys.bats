@@ -19,6 +19,8 @@ static const Layout layouts[] = {
 static const Key keys[] = {
 	{ MODKEY,                       XK_p,      spawn,          {.v = dmenucmd } },
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
+	{ MODKEY|ControlMask,           XK_Return, spawn,          {.v = floattermcmd } },
+	{ MODKEY|ControlMask,           XK_w,      spawnfloat,     {.v = webcmd } },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
@@ -40,6 +42,8 @@ key() { "$REPO_ROOT/bin/keys" | awk -v k="$1" 'BEGIN { FS = "  +" } $1 == k { pr
 @test "dwm keys are named and described in words" {
   [ "$(key 'super p')" = "launcher" ]
   [ "$(key 'super shift return')" = "terminal" ]
+  [ "$(key 'super ctrl return')" = "floating terminal" ]
+  [ "$(key 'super ctrl w')" = "floating firefox, this one window" ]
   [ "$(key 'super j')" = "focus the next window" ]
   [ "$(key 'super h')" = "shrink the master area" ]
   [ "$(key 'super m')" = "monocle layout [M]" ]
