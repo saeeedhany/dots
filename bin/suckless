@@ -31,8 +31,15 @@ build() {
 reload() {
   case "$1" in
     dwm)
-      if pgrep -x -u "$UID" dwm >/dev/null; then
-        info "dwm: press super ctrl shift q to restart into the new build; open windows move to the current tag"
+      pid="$(pgrep -x -u "$UID" dwm | head -1 || true)"
+      if [[ -z "${DISPLAY:-}" || -z "$pid" ]]; then
+        :
+      elif dwm_restartable "/proc/$pid/exe"; then
+        kill -USR1 "$pid"
+        xsetroot -name "$(xprop -root WM_NAME 2>/dev/null | sed -n 's/^WM_NAME([A-Z0-9_]*) = "\(.*\)"$/\1/p')"
+        info "dwm: restarted into the new build, every window kept its tag"
+      else
+        info "dwm: press super ctrl shift q once to restart into the new build. this one time open windows move to the current tag; from then on suckless restarts dwm for you and windows keep their tags"
       fi
       ;;
     st) info "st: new windows use the new build" ;;
@@ -56,7 +63,7 @@ old_copies() {
   warn "an old copy of ${found[*]} is still in $old/bin; remove it once with: sudo make -C $dir uninstall PREFIX=$old"
 }
 
-dir="$(suckless_dir)" || die "no suckless folder: ${SUCKLESS_DIR:-$HOME/gits/suckless or $HOME/.config/suckless}"
+dir="$(suckless_dir)" || die "no suckless folder: ${SUCKLESS_DIR:-$(dirname "$REPO_ROOT")/suckless}"
 
 if [[ $# -eq 0 ]]; then
   build "$dir" "suckless"

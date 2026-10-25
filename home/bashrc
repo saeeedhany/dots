@@ -25,7 +25,7 @@ _git_branch() {
 PS1="\[\e[38;2;$(_theme_rgb fg '#ccc3b8')m\]\w\[\e[38;2;$(_theme_rgb fg2 '#7a7373')m\]\$(_git_branch) \[\e[38;2;$(_theme_rgb accent '#c8a46b')m\]❯\[\e[0m\] "
 PS2="\[\e[38;2;$(_theme_rgb fg2 '#7a7373')m\]❯\[\e[0m\] "
 
-LS_COLORS="di=1;38;2;$(_theme_rgb green '#8aa66a'):fi=0;38;2;$(_theme_rgb fg '#ccc3b8'):ln=0;38;2;$(_theme_rgb red '#c26a6a'):ex=1;38;2;$(_theme_rgb accent '#c8a46b')"
+LS_COLORS="di=1;38;2;$(_theme_rgb blue '#7b99a8'):fi=0;38;2;$(_theme_rgb fg '#ccc3b8'):ln=0;38;2;$(_theme_rgb color6 '#7fa39a'):ex=1;38;2;$(_theme_rgb accent '#c8a46b')"
 BAT_THEME=ansi
 FZF_DEFAULT_COMMAND='fd --type f --hidden --follow --exclude .git'
 FZF_DEFAULT_OPTS="

@@ -104,7 +104,8 @@ theme_block() {
   ! grep -q 'refuses a theme with a missing color or text that is hard to read' index.html
   grep -q 'gruvbox.nvim' design.html
   grep -q 'gruvbox.nvim' blog/one-machine.html
-  grep -q 'LS_COLORS\|<code>ls</code>' design.html
+  grep -q '<code>ls</code>' design.html
+  ! grep -q 'old exception\|older than this system' design.html
 }
 
 @test "every page can switch the theme and follows other tabs" {

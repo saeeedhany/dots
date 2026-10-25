@@ -1,13 +1,8 @@
 #!/usr/bin/env bash
 
 suckless_dir() {
-  local d
-  if [[ -n "${SUCKLESS_DIR:-}" ]]; then
-    [[ -d "$SUCKLESS_DIR" ]] && printf '%s' "$SUCKLESS_DIR"
-    return
-  fi
-  for d in "$HOME/gits/suckless" "$HOME/.config/suckless"; do
-    [[ -d "$d" ]] && { printf '%s' "$d"; return 0; }
-  done
-  return 1
+  local d="${SUCKLESS_DIR:-$(dirname "$REPO_ROOT")/suckless}"
+  [[ -d "$d" ]] && printf '%s' "$d"
 }
+
+dwm_restartable() { grep -qa _NET_CLIENT_INFO "$1" 2>/dev/null; }

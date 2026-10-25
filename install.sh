@@ -18,7 +18,7 @@ export PATH="$HOME/.local/bin:$PATH"
 
 STEPS=(check packages aur suckless links wallpapers fonts theme verify)
 SUCKLESS_URL="${SUCKLESS_URL:-https://github.com/saeeedhany/suckless}"
-SUCKLESS_DIR="${SUCKLESS_DIR:-$HOME/.config/suckless}"
+SUCKLESS_DIR="${SUCKLESS_DIR:-$(dirname "$REPO_ROOT")/suckless}"
 DRY_RUN=0
 YES=0
 ALL=0

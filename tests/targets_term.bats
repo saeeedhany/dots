@@ -58,3 +58,11 @@ teardown() {
   grep -qx 'include theme' "$REPO_ROOT/config/zathura/zathurarc"
   grep -qE '#[0-9a-fA-F]{6}' "$REPO_ROOT/config/zathura/zathurarc" && return 1; true
 }
+
+@test "ls colors follow the roles: folders are places, links are color6" {
+  "$REPO_ROOT/theme" blue >/dev/null
+  rgb() { local h; h=$(sed -n "s/^$1=#//p" "$REPO_ROOT/themes/blue"); printf '%d;%d;%d' "0x${h:0:2}" "0x${h:2:2}" "0x${h:4:2}"; }
+  ls_colors=$(bash --rcfile "$REPO_ROOT/home/bashrc" -i -c 'printf %s "$LS_COLORS"' 2>/dev/null)
+  [[ "$ls_colors" == *"di=1;38;2;$(rgb blue):"* ]]
+  [[ "$ls_colors" == *"ln=0;38;2;$(rgb color6):"* ]]
+}

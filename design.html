@@ -78,7 +78,7 @@
   </div>
 
   <h3>meaning <span class="dim">· only when something happened</span></h3>
-  <p>green and red are not decoration. they appear only when something was added, passed, removed or broke. blue marks places you can go: links, folders in editors, branches. the one exception is <code>ls</code>: its colors in <code>LS_COLORS</code> are older than this system, with folders green and links red.</p>
+  <p>green and red are not decoration. they appear only when something was added, passed, removed or broke. blue marks places you can go: links, folders and branches, in the editors and in <code>ls</code> alike, where links get color6.</p>
   <div class="tokens">
     <button class="tok" data-copy-var="green"><i style="background:var(--green)"></i><b>green</b><span class="hex" data-hex="green"></span><span class="job">added, ok, done</span></button>
     <button class="tok" data-copy-var="green_light"><i style="background:var(--green_light)"></i><b>green_light</b><span class="hex" data-hex="green_light"></span><span class="job">the added line you are standing on</span></button>
@@ -117,7 +117,7 @@
     <li><span><b>one accent per region</b>a window shows the accent in one or two places at most: where the cursor is and which line it is on. if three things are accent, none of them is.</span></li>
     <li><span><b>lifts, not boxes</b>a bar or a popup is separated from the surface by being one step lighter, not by a frame. the emacs mode line even draws its padding as a box in its own background color, so the box exists for spacing and is never seen.</span></li>
     <li><span><b>one border, one pixel</b>when two things must be divided, a single line of <code>line</code> divides them. no double borders, no shadows, no rounded corners.</span></li>
-    <li><span><b>color means something</b>green and red never appear because a design wanted warmth. if you see red in an editor, a diff or a bar, something is wrong or was removed. (<code>ls</code> is the old exception, see meaning above.)</span></li>
+    <li><span><b>color means something</b>green and red never appear because a design wanted warmth. if you see red, something is wrong or was removed.</span></li>
     <li><span><b>bold almost never</b>bold is kept for the one heading or match you must not miss. magit's section headings are plain accent text; only the top two heading levels of a markdown note are bold.</span></li>
     <li><span><b>dim instead of hide</b>comments, line numbers and hints stay on screen at fg2 and fg3. you can always read them, you never have to.</span></li>
     <li><span><b>readable or refused</b>a generated theme whose text cannot reach 4.5:1 contrast on its background is never saved, and the test suite fails if any theme in themes/ breaks the rule.</span></li>

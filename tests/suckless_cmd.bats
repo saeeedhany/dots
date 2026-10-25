@@ -92,3 +92,20 @@ editor() {
   [[ "$output" == *"dwm st"* ]]
   [[ "$output" == *"uninstall PREFIX=$BATS_TEST_TMPDIR/old"* ]]
 }
+
+@test "without SUCKLESS_DIR the suckless repo is the one next to dots" {
+  mkdir -p "$BATS_TEST_TMPDIR/side/dots" "$BATS_TEST_TMPDIR/side/suckless" "$HOME/.config/suckless"
+  run env -u SUCKLESS_DIR bash -c '. "$1/lib/suckless.sh"; REPO_ROOT="$2/side/dots" suckless_dir' _ "$REPO_ROOT" "$BATS_TEST_TMPDIR"
+  [ "$output" = "$BATS_TEST_TMPDIR/side/suckless" ]
+}
+
+@test "the installer clones suckless next to dots" {
+  grep -qF 'SUCKLESS_DIR="${SUCKLESS_DIR:-$(dirname "$REPO_ROOT")/suckless}"' "$REPO_ROOT/install.sh"
+}
+
+@test "only a dwm built with the restart marker may be signalled" {
+  printf 'xx _NET_CLIENT_INFO xx' > "$BATS_TEST_TMPDIR/new"
+  printf 'xx normbgcolor xx' > "$BATS_TEST_TMPDIR/old"
+  run bash -c '. "$1/lib/suckless.sh"; dwm_restartable "$2/new" && ! dwm_restartable "$2/old"' _ "$REPO_ROOT" "$BATS_TEST_TMPDIR"
+  [ "$status" -eq 0 ]
+}

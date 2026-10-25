@@ -89,7 +89,7 @@ teardown() { teardown_fake_home; }
   ln -s "$REPO_ROOT/home/bashrc" "$HOME/.bashrc"
   run bash -ic 'printf "%s\n%s\n%s" "$FZF_DEFAULT_OPTS" "$LS_COLORS" "$BAT_THEME"' 2>/dev/null
   [[ "$output" == *"bg:#e8e6e1"* ]]
-  [[ "$output" == *"di=1;38;2;95;106;44"* ]]
+  [[ "$output" == *"di=1;38;2;63;107;138"* ]]
   [[ "$output" == *"ansi"* ]]
   grep -qE "color=.(fg|bg|hl):#" "$REPO_ROOT/home/bashrc" && return 1; true
 }

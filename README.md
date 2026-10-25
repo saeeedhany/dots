@@ -84,7 +84,7 @@ suckless dwm -n       build, install and reload it, without the editor
 keys                  every key on this machine: dwm, sxhkd and the keyboard switch
 ```
 
-`suckless` works in `~/gits/suckless`, or in `~/.config/suckless` where the installer puts it; set `SUCKLESS_DIR` to use another folder. `keys` reads every binding from the code itself, so it never goes out of date, and `super /` shows the same list in dmenu.
+`suckless` works in the suckless repo next to this one (the installer clones it there, so `~/gits/dots` pairs with `~/gits/suckless`); set `SUCKLESS_DIR` to use another folder. `keys` reads every binding from the code itself, so it never goes out of date, and `super /` shows the same list in dmenu.
 
 ## Aesthetics & Visual Consistency
 
