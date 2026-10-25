@@ -84,3 +84,4 @@ texlive-latexextra
 texlive-fontsrecommended
 texlive-binextra
 xss-lock
+clipnotify

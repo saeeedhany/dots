@@ -8,6 +8,7 @@ dwmblocks &
 kbsignal &
 xset s 600
 command -v xss-lock >/dev/null && xss-lock -- slock &
+command -v clipnotify >/dev/null && clip daemon &
 dunst &
 sxhkd &
 [ -x ~/.fehbg ] && ~/.fehbg &

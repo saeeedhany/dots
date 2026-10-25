@@ -1,0 +1,8 @@
+#!/bin/sh
+case "$(printf 'lock\nsuspend\nlogout\nreboot\nshutdown\n' | dmenu -p power)" in
+	lock) loginctl lock-session ;;
+	suspend) systemctl suspend ;;
+	logout) pkill -x dwm ;;
+	reboot) systemctl reboot ;;
+	shutdown) systemctl poweroff ;;
+esac

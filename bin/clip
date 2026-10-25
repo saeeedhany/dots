@@ -1,0 +1,51 @@
+#!/bin/sh
+dir="${XDG_RUNTIME_DIR:-/tmp/clip-$(id -u)}/clip"
+max=200
+
+mkdir -p "$dir"
+chmod 700 "$dir"
+
+entries() {
+	find "$dir" -maxdepth 1 -type f ! -name '.*' -printf '%T@ %f\n' | sort -rn | cut -d' ' -f2
+}
+
+save() {
+	targets="$(xclip -o -selection clipboard -t TARGETS 2>/dev/null)" || return 0
+	case "$targets" in *x-kde-passwordManagerHint*) return 0 ;; esac
+	case "$targets" in *UTF8_STRING*|*STRING*|*text/plain*) ;; *) return 0 ;; esac
+	tmp="$dir/.new"
+	if ! xclip -o -selection clipboard -t UTF8_STRING > "$tmp" 2>/dev/null || ! grep -q '[^[:space:]]' "$tmp"; then
+		rm -f "$tmp"
+		return 0
+	fi
+	name="$(cksum < "$tmp" | cut -d' ' -f1)"
+	mv "$tmp" "$dir/$name"
+	touch "$dir/$name"
+	entries | tail -n +$((max + 1)) | while read -r f; do rm -f "$dir/$f"; done
+}
+
+menu() {
+	list="$(entries)"
+	[ -n "$list" ] || exit 0
+	choice="$(i=0; for f in $list; do
+		i=$((i + 1))
+		n="$(awk 'END { print NR }' "$dir/$f")"
+		line="$(head -n 1 "$dir/$f" | cut -c1-80)"
+		[ "$n" -gt 1 ] && line="$line  (+$((n - 1)) lines)"
+		printf '%d  %s\n' "$i" "$line"
+	done | dmenu -l 15 -p clip)" || exit 0
+	idx="${choice%% *}"
+	case "$idx" in ''|*[!0-9]*) exit 0 ;; esac
+	f="$(printf '%s\n' "$list" | sed -n "${idx}p")"
+	[ -n "$f" ] || exit 0
+	xclip -selection clipboard -i "$dir/$f"
+	touch "$dir/$f"
+}
+
+case "${1:-}" in
+	"") menu ;;
+	save) save ;;
+	daemon) save; while clipnotify; do save; done ;;
+	clear) rm -f "$dir"/* ;;
+	*) echo "usage: clip [save|daemon|clear]" >&2; exit 2 ;;
+esac
