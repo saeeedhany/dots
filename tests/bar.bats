@@ -33,3 +33,14 @@ cpu() { HWMON="$HW" "$REPO_ROOT/config/dwmblocks/scripts/cpu_temp.sh"; }
 @test "the temperature does not call sensors" {
   ! grep -q 'sensors' "$REPO_ROOT/config/dwmblocks/scripts/cpu_temp.sh"
 }
+
+@test "the volume keys tell the bar right away" {
+  local f="$REPO_ROOT/config/sxhkd/sxhkdrc" n
+  n=$(grep -c 'pactl set-sink-volume @DEFAULT_SINK@ [+-]5% && pkill -RTMIN+10 -x dwmblocks$' "$f")
+  [ "$n" -eq 2 ]
+}
+
+@test "xinitrc starts kbsignal right after the bar" {
+  local f="$REPO_ROOT/home/xinitrc"
+  [ "$(grep -A1 -x 'dwmblocks &' "$f" | tail -1)" = "kbsignal &" ]
+}

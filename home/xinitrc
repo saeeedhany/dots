@@ -1,13 +1,17 @@
 setxkbmap -layout us,ara -option '' -option caps:swapescape,grp:alt_shift_toggle,lv3:ralt_alt
 export QT_QPA_PLATFORMTHEME=qt5ct
+dbus-update-activation-environment --systemd DISPLAY XAUTHORITY
 xrandr --query | grep -q '^HDMI-1-0 connected' && xrandr --output HDMI-1-0 --mode 2560x1440 --rate 144 --right-of eDP
 [ -f ~/.config/local.sh ] && . ~/.config/local.sh
 theme "$(cat ~/.config/theme 2>/dev/null || echo grey)"
 dwmblocks &
+kbsignal &
+xset s 600
+command -v xss-lock >/dev/null && xss-lock -- slock &
 dunst &
 sxhkd &
 [ -x ~/.fehbg ] && ~/.fehbg &
 picom &
 /usr/lib/xdg-desktop-portal-gtk &
 /usr/lib/xdg-desktop-portal &
-exec dbus-run-session dwm
+exec dwm

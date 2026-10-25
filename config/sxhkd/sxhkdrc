@@ -1,9 +1,9 @@
 # Volume controls
 super + equal
-    pactl set-sink-volume @DEFAULT_SINK@ +5%
+    pactl set-sink-volume @DEFAULT_SINK@ +5% && pkill -RTMIN+10 -x dwmblocks
 
 super + minus
-    pactl set-sink-volume @DEFAULT_SINK@ -5%
+    pactl set-sink-volume @DEFAULT_SINK@ -5% && pkill -RTMIN+10 -x dwmblocks
 
 # Brightness controls
 super + shift + equal
@@ -53,3 +53,6 @@ ctrl + shift + period
 
 super + slash
     keys --menu
+
+super + shift + l
+    loginctl lock-session

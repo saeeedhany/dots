@@ -36,7 +36,16 @@ setup() { setup_repo_root; }
   [ -n "$feh_n" ]
   [ "$local_n" -lt "$theme_n" ]
   [ "$theme_n" -lt "$feh_n" ]
-  [ "$(grep -v '^[[:space:]]*$' "$f" | tail -1)" = "exec dbus-run-session dwm" ]
+  [ "$(grep -v '^[[:space:]]*$' "$f" | tail -1)" = "exec dwm" ]
+}
+
+@test "xinitrc keeps one session bus: dwm joins the user bus, which learns DISPLAY first" {
+  f="$REPO_ROOT/home/xinitrc"
+  ! grep -q 'dbus-run-session' "$f"
+  bus_n=$(grep -nF 'dbus-update-activation-environment --systemd DISPLAY XAUTHORITY' "$f" | cut -d: -f1)
+  dunst_n=$(grep -nE '^dunst &' "$f" | cut -d: -f1)
+  [ -n "$bus_n" ]
+  [ "$bus_n" -lt "$dunst_n" ]
 }
 
 @test "local tools are vendored" {

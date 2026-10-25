@@ -109,3 +109,14 @@ editor() {
   run bash -c '. "$1/lib/suckless.sh"; dwm_restartable "$2/new" && ! dwm_restartable "$2/old"' _ "$REPO_ROOT" "$BATS_TEST_TMPDIR"
   [ "$status" -eq 0 ]
 }
+
+@test "suckless slock builds it but leaves the setuid install to sudo" {
+  mkdir -p "$SL/slock"
+  printf 'setting\n' > "$SL/slock/config.def.h"
+  printf 'all:\n\ttouch built\ninstall: all\n\tmkdir -p $(HOME)/.local/bin\n\tcp built $(HOME)/.local/bin/slock\n' > "$SL/slock/Makefile"
+  EDITOR=false run "$REPO_ROOT/bin/suckless" slock -n
+  [ "$status" -eq 0 ]
+  [ -f "$SL/slock/built" ]
+  [ ! -e "$HOME/.local/bin/slock" ]
+  [[ "$output" == *"sudo make -C $SL/slock install"* ]]
+}

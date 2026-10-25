@@ -87,6 +87,8 @@ suckless dwm -n       build, install and reload it, without the editor
 keys                  every key on this machine: dwm, sxhkd and the keyboard switch
 ```
 
+slock locks the screen on lid close, suspend, after 10 idle minutes and on `super shift l`, through xss-lock, in the theme's colors. It installs setuid root, so `suckless slock` builds it and you install it once with the sudo command it prints.
+
 `suckless` works in the suckless repo next to this one (the installer clones it there, so `~/gits/dots` pairs with `~/gits/suckless`); set `SUCKLESS_DIR` to use another folder. `keys` reads every binding from the code itself, so it never goes out of date, and `super /` shows the same list in dmenu.
 
 ## Aesthetics & Visual Consistency

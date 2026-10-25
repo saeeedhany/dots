@@ -83,3 +83,4 @@ texlive-latexrecommended
 texlive-latexextra
 texlive-fontsrecommended
 texlive-binextra
+xss-lock

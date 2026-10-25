@@ -12,7 +12,7 @@ usage() {
 usage: suckless              build and install every tool
        suckless <tool>       edit its settings, then build, install and reload it
        suckless <tool> -n    build, install and reload it, without the editor
-tools: dwm st dmenu dwmblocks
+tools: dwm st dmenu dwmblocks slock
 USAGE
 }
 
@@ -80,7 +80,7 @@ case "${2:-}" in
   -n|--no-edit) edit=0 ;;
   *) usage; exit 2 ;;
 esac
-[[ " ${TOOLS[*]} " == *" $tool "* ]] || { usage; exit 2; }
+[[ " ${TOOLS[*]} slock " == *" $tool "* ]] || { usage; exit 2; }
 
 if [[ "$edit" -eq 1 ]]; then
   file="$dir/$tool/$(settings_file "$tool")"
@@ -91,6 +91,16 @@ if [[ "$edit" -eq 1 ]]; then
     info "$tool: no change, nothing to build"
     exit 0
   fi
+fi
+
+if [[ "$tool" == slock ]]; then
+  if ! out="$(make -C "$dir/slock" 2>&1)"; then
+    printf '%s\n' "$out" >&2
+    die "slock: the build failed"
+  fi
+  ok "slock: built"
+  info "slock installs setuid root, so install it yourself: sudo make -C $dir/slock install"
+  exit 0
 fi
 
 build "$dir/$tool" "$tool"

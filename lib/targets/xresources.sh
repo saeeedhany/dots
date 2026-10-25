@@ -41,6 +41,9 @@ render_xresources() {
     printf 'dmenu.foreground: %s\n' "$fg1"
     printf 'dmenu.selbackground: %s\n' "$bg"
     printf 'dmenu.selforeground: %s\n' "$fg"
+    printf 'slock.init: %s\n' "$bg"
+    printf 'slock.input: %s\n' "$line"
+    printf 'slock.failed: %s\n' "$red_dark"
   } > "$HOME/.cache/theme/Xresources"
 }
 

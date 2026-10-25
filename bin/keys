@@ -106,7 +106,7 @@ sxhkd_keys() {
     /^[^ \t]/ {
       n = split($0, p, "+"); k = ""
       for (i = 1; i <= n; i++) { gsub(/^[ \t]+|[ \t]+$/, "", p[i]); k = k " " keyname(p[i]) }
-      getline cmd; gsub(/^[ \t]+|[ \t]+$/, "", cmd)
+      getline cmd; gsub(/^[ \t]+|[ \t]+$/, "", cmd); sub(/ && pkill .*dwmblocks$/, "", cmd)
       print substr(k, 2) "\t" ((length(cmd) > 45 && comment != "") ? comment : cmd)
       comment = ""
     }

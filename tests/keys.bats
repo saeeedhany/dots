@@ -61,6 +61,8 @@ key() { "$REPO_ROOT/bin/keys" | awk -v k="$1" 'BEGIN { FS = "  +" } $1 == k { pr
   [ "$(key 'super c')" = "pick a color anywhere on screen; its hex goes to the clipboard" ]
   [ "$(key 'super shift x')" = "xkill" ]
   [ "$(key 'super /')" = "keys --menu" ]
+  [ "$(key 'super =')" = "pactl set-sink-volume @DEFAULT_SINK@ +5%" ]
+  [ "$(key 'super -')" = "pactl set-sink-volume @DEFAULT_SINK@ -5%" ]
 }
 
 @test "the keyboard switch from xinitrc is listed" {
