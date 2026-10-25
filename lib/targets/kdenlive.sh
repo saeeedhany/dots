@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-kde_rgb() { hex_rgb "$1" | tr -d ' '; }
+kde_rgb() { local h="${1#\#}"; printf '%d,%d,%d' "0x${h:0:2}" "0x${h:2:2}" "0x${h:4:2}"; }
 
 kde_colors() {
   local name="$1" bg_normal="$2" bg_alt="$3" fg_normal="$4" fg_inactive="$5"

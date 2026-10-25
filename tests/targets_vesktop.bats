@@ -64,3 +64,14 @@ teardown() { teardown_fake_home; }
   kill "$p"
   [[ "$output" != *"Ctrl+R"* ]]
 }
+
+@test "theme_fill follows a theme switch inside one run" {
+  source "$REPO_ROOT/lib/log.sh"; source "$REPO_ROOT/lib/theme.sh"
+  printf '{{name}} {{accent}} {{accent_rgb}}\n' > "$BATS_TEST_TMPDIR/t"
+  theme_load blue
+  theme_fill "$BATS_TEST_TMPDIR/t" "$BATS_TEST_TMPDIR/a"
+  theme_load white
+  theme_fill "$BATS_TEST_TMPDIR/t" "$BATS_TEST_TMPDIR/b"
+  [ "$(cat "$BATS_TEST_TMPDIR/a")" = "blue $(sed -n 's/^accent=//p' "$REPO_ROOT/themes/blue") $(hex_rgb "$(sed -n 's/^accent=//p' "$REPO_ROOT/themes/blue")")" ]
+  [ "$(cat "$BATS_TEST_TMPDIR/b")" = "white $(sed -n 's/^accent=//p' "$REPO_ROOT/themes/white") $(hex_rgb "$(sed -n 's/^accent=//p' "$REPO_ROOT/themes/white")")" ]
+}

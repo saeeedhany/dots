@@ -122,14 +122,25 @@ theme_check() {
 
 # theme_fill <template> <out>: replaces {{key}}, {{key_rgb}} and {{name}}
 # with the loaded theme. Fails, writing nothing, if a placeholder is left.
-theme_fill() {
-  local template="$1" out="$2" k script=() tmp
+_theme_fill_script() {
+  local k h rgb sig="${THEME:-theme}"
+  for k in "${THEME_KEYS[@]}"; do sig+=":${!k}"; done
+  [[ "$sig" == "${_THEME_SED_SIG:-}" ]] && return 0
+  _THEME_SED=()
   for k in "${THEME_KEYS[@]}"; do
-    script+=(-e "s/{{${k}_rgb}}/$(hex_rgb "${!k}")/g" -e "s/{{${k}}}/${!k}/g")
+    h="${!k#\#}"
+    printf -v rgb '%d, %d, %d' "0x${h:0:2}" "0x${h:2:2}" "0x${h:4:2}"
+    _THEME_SED+=(-e "s/{{${k}_rgb}}/$rgb/g" -e "s/{{${k}}}/${!k}/g")
   done
-  script+=(-e "s/{{name}}/${THEME:-theme}/g")
+  _THEME_SED+=(-e "s/{{name}}/${THEME:-theme}/g")
+  _THEME_SED_SIG="$sig"
+}
+
+theme_fill() {
+  local template="$1" out="$2" tmp
+  _theme_fill_script
   tmp="$(mktemp)"
-  sed "${script[@]}" "$template" > "$tmp"
+  sed "${_THEME_SED[@]}" "$template" > "$tmp"
   if grep -q '{{' "$tmp"; then
     warn "$template: unfilled $(grep -o '{{[^}]*}}' "$tmp" | sort -u | paste -sd' ')"
     rm -f "$tmp"
