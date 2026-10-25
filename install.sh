@@ -18,7 +18,7 @@ export PATH="$HOME/.local/bin:$PATH"
 
 STEPS=(check packages aur suckless links wallpapers fonts theme verify)
 SUCKLESS_URL="${SUCKLESS_URL:-https://github.com/saeeedhany/suckless}"
-SUCKLESS_DIR="$HOME/.config/suckless"
+SUCKLESS_DIR="${SUCKLESS_DIR:-$HOME/.config/suckless}"
 DRY_RUN=0
 YES=0
 ALL=0
@@ -75,8 +75,7 @@ step_suckless() {
     fi
     run_cmd "clone $SUCKLESS_URL" git clone "$SUCKLESS_URL" "$SUCKLESS_DIR"
   fi
-  run_cmd "build suckless" make -C "$SUCKLESS_DIR" clean all
-  run_cmd "install suckless" sudo make -C "$SUCKLESS_DIR" install
+  run_cmd "install suckless" make -C "$SUCKLESS_DIR" install
 }
 
 step_links() { link_all; }

@@ -1,0 +1,139 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+REPO_ROOT="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/.." && pwd)"
+. "$REPO_ROOT/lib/log.sh"
+. "$REPO_ROOT/lib/suckless.sh"
+
+usage() {
+  cat <<'USAGE'
+usage: keys          every key on this machine: dwm, sxhkd and the keyboard switch
+       keys --menu   the same list in dmenu
+USAGE
+}
+
+dwm_keys() {
+  awk '
+    function keyname(k) {
+      if (k == "Return") return "return"
+      if (k == "Tab") return "tab"
+      if (k == "comma") return ","
+      if (k == "period") return "."
+      if (k == "slash") return "/"
+      if (k == "minus") return "-"
+      if (k == "equal") return "="
+      return tolower(k)
+    }
+    function mods(m,   out, n, i, p, has) {
+      n = split(m, p, "|")
+      for (i = 1; i <= n; i++) has[p[i]] = 1
+      out = ""
+      if (has["MODKEY"] || has["Mod4Mask"]) out = out " " modname
+      if (has["ControlMask"]) out = out " ctrl"
+      if (has["ShiftMask"]) out = out " shift"
+      if (has["Mod1Mask"]) out = out " alt"
+      return substr(out, 2)
+    }
+    function desc(f, a,   i) {
+      gsub(/[ \t{}]/, "", a)
+      if (f == "spawn" && a ~ /dmenucmd/) return "launcher"
+      if (f == "spawn" && a ~ /termcmd/) return "terminal"
+      if (f == "togglebar") return "show or hide the bar"
+      if (f == "focusstack") return a ~ /-/ ? "focus the previous window" : "focus the next window"
+      if (f == "incnmaster") return a ~ /-/ ? "one fewer window in the master area" : "one more window in the master area"
+      if (f == "setmfact") return a ~ /-/ ? "shrink the master area" : "grow the master area"
+      if (f == "zoom") return "swap the window into the master area"
+      if (f == "view" && a ~ /~0/) return "show every tag"
+      if (f == "view") return "go back to the last tag"
+      if (f == "killclient") return "close the window"
+      if (f == "setlayout" && match(a, /layouts\[[0-9]+\]/)) { i = substr(a, RSTART + 8, RLENGTH - 9); return lay[i] }
+      if (f == "setlayout") return "switch to the last layout"
+      if (f == "togglefloating") return "float or tile the window"
+      if (f == "tag" && a ~ /~0/) return "put the window on every tag"
+      if (f == "focusmon") return a ~ /-/ ? "focus the previous monitor" : "focus the next monitor"
+      if (f == "tagmon") return a ~ /-/ ? "send the window to the previous monitor" : "send the window to the next monitor"
+      if (f == "quit") return a ~ /1/ ? "restart dwm" : "quit dwm"
+      return f " {" a "}"
+    }
+    BEGIN { modname = "super" }
+    /^#define MODKEY/ { modname = ($3 == "Mod1Mask") ? "alt" : "super" }
+    /tags\[\] *=/ { t = $0; ntags = gsub(/"[^"]*"/, "", t) }
+    /layouts\[\] *=/ { inl = 1; nl = 0; next }
+    inl && /^};/ { inl = 0 }
+    inl && match($0, /"[^"]*"/) {
+      sym = substr($0, RSTART + 1, RLENGTH - 2)
+      fn = $0; sub(/.*",[ \t]*/, "", fn); sub(/[ \t]*}.*/, "", fn)
+      lay[nl++] = (fn == "tile" ? "tiled" : (fn == "NULL" ? "floating" : fn)) " layout " sym
+    }
+    /keys\[\] *=/ { ink = 1; next }
+    ink && /^};/ { ink = 0 }
+    ink && /TAGKEYS\(/ {
+      if (!tagdone) {
+        r = "1.." ntags
+        print modname " " r "\tswitch to a tag"
+        print modname " ctrl " r "\talso show a tag"
+        print modname " shift " r "\tmove the window to a tag"
+        print modname " ctrl shift " r "\talso put the window on a tag"
+        tagdone = 1
+      }
+      next
+    }
+    ink && match($0, /\{ *[A-Za-z0-9_|]+ *, *XK_[A-Za-z0-9_]+ *, *[a-z]+ *, *\{[^}]*\}/) {
+      s = substr($0, RSTART + 1, RLENGTH - 1)
+      n = split(s, f, ",")
+      gsub(/[ \t]/, "", f[1]); gsub(/[ \t]/, "", f[2]); gsub(/[ \t]/, "", f[3])
+      a = f[4]; for (i = 5; i <= n; i++) a = a "," f[i]
+      print mods(f[1]) " " keyname(substr(f[2], 4)) "\t" desc(f[3], a)
+    }
+  ' "$1"
+}
+
+sxhkd_keys() {
+  awk '
+    function keyname(k) {
+      if (k == "equal") return "="
+      if (k == "minus") return "-"
+      if (k == "grave") return "`"
+      if (k == "period") return "."
+      if (k == "comma") return ","
+      if (k == "slash") return "/"
+      return tolower(k)
+    }
+    /^[ \t]*#/ { c = $0; sub(/^[ \t]*#[ \t]*/, "", c); comment = tolower(c); next }
+    /^[ \t]*$/ { comment = ""; next }
+    /^[^ \t]/ {
+      n = split($0, p, "+"); k = ""
+      for (i = 1; i <= n; i++) { gsub(/^[ \t]+|[ \t]+$/, "", p[i]); k = k " " keyname(p[i]) }
+      getline cmd; gsub(/^[ \t]+|[ \t]+$/, "", cmd)
+      print substr(k, 2) "\t" ((length(cmd) > 45 && comment != "") ? comment : cmd)
+      comment = ""
+    }
+  ' "$1"
+}
+
+xkb_keys() {
+  awk '
+    /setxkbmap/ && /grp:alt_shift_toggle/ {
+      for (i = 1; i <= NF; i++) if ($i == "-layout") { l = $(i + 1); gsub(/,/, ", ", l) }
+      print "alt shift\tswitch keyboard language: " l
+    }
+  ' "$1"
+}
+
+all_keys() {
+  local dir
+  if dir="$(suckless_dir)" && [[ -f "$dir/dwm/config.def.h" ]]; then
+    dwm_keys "$dir/dwm/config.def.h"
+  else
+    warn "keys: no suckless folder, dwm keys left out"
+  fi
+  sxhkd_keys "$REPO_ROOT/config/sxhkd/sxhkdrc"
+  xkb_keys "$REPO_ROOT/home/xinitrc"
+}
+
+case "${1:-}" in
+  "") all_keys | awk -F '\t' '{ printf "%-22s  %s\n", $1, $2 }' ;;
+  --menu) all_keys | awk -F '\t' '{ printf "%-22s  %s\n", $1, $2 }' | dmenu -l 30 -p keys >/dev/null || true ;;
+  -h|--help) usage ;;
+  *) usage; exit 2 ;;
+esac

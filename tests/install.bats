@@ -111,3 +111,9 @@ STUB
   [ "$status" -eq 0 ]
   grep -qx base "$BATS_TEST_TMPDIR/empty/all-native.txt"
 }
+
+@test "suckless builds and installs without root" {
+  body=$(awk '/^step_suckless\(\)/,/^}/' "$REPO_ROOT/install.sh")
+  [[ "$body" == *'make -C "$SUCKLESS_DIR" install'* ]]
+  [[ "$body" != *sudo* ]]
+}

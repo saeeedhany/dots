@@ -50,3 +50,6 @@ ctrl + grave
 
 ctrl + shift + period
     dunstctl context
+
+super + slash
+    keys --menu

@@ -1,0 +1,92 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+REPO_ROOT="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/.." && pwd)"
+. "$REPO_ROOT/lib/log.sh"
+. "$REPO_ROOT/lib/suckless.sh"
+
+TOOLS=(dwm st dmenu dwmblocks)
+
+usage() {
+  cat <<'USAGE'
+usage: suckless              build and install every tool
+       suckless <tool>       edit its settings, then build, install and reload it
+       suckless <tool> -n    build, install and reload it, without the editor
+tools: dwm st dmenu dwmblocks
+USAGE
+}
+
+settings_file() {
+  if [[ "$1" == dwmblocks ]]; then printf 'blocks.def.h'; else printf 'config.def.h'; fi
+}
+
+build() {
+  local out
+  if ! out="$(make -C "$1" install 2>&1)"; then
+    printf '%s\n' "$out" >&2
+    die "$2: the build failed, nothing new was installed"
+  fi
+}
+
+reload() {
+  case "$1" in
+    dwm)
+      if pgrep -x -u "$UID" dwm >/dev/null; then
+        info "dwm: press super ctrl shift q to restart into the new build; open windows move to the current tag"
+      fi
+      ;;
+    st) info "st: new windows use the new build" ;;
+    dmenu) info "dmenu: the next launch uses the new build" ;;
+    dwmblocks)
+      if [[ -n "${DISPLAY:-}" ]] && pgrep -x -u "$UID" dwmblocks >/dev/null; then
+        pkill -x -u "$UID" dwmblocks
+        setsid -f dwmblocks >/dev/null 2>&1
+        info "dwmblocks: restarted"
+      fi
+      ;;
+  esac
+}
+
+old_copies() {
+  local old="${SUCKLESS_OLD_PREFIX:-/usr/local}" t found=()
+  for t in "$@"; do
+    [[ -e "$old/bin/$t" ]] && found+=("$t")
+  done
+  [[ ${#found[@]} -eq 0 ]] && return 0
+  warn "an old copy of ${found[*]} is still in $old/bin; remove it once with: sudo make -C $dir uninstall PREFIX=$old"
+}
+
+dir="$(suckless_dir)" || die "no suckless folder: ${SUCKLESS_DIR:-$HOME/gits/suckless or $HOME/.config/suckless}"
+
+if [[ $# -eq 0 ]]; then
+  build "$dir" "suckless"
+  for t in "${TOOLS[@]}"; do reload "$t"; done
+  ok "suckless: every tool installed to ~/.local/bin"
+  old_copies "${TOOLS[@]}"
+  exit 0
+fi
+
+tool="$1"
+edit=1
+case "${2:-}" in
+  "") ;;
+  -n|--no-edit) edit=0 ;;
+  *) usage; exit 2 ;;
+esac
+[[ " ${TOOLS[*]} " == *" $tool "* ]] || { usage; exit 2; }
+
+if [[ "$edit" -eq 1 ]]; then
+  file="$dir/$tool/$(settings_file "$tool")"
+  before="$(cksum < "$file")"
+  read -ra editor <<< "${VISUAL:-${EDITOR:-vi}}"
+  "${editor[@]}" "$file"
+  if [[ "$(cksum < "$file")" == "$before" ]]; then
+    info "$tool: no change, nothing to build"
+    exit 0
+  fi
+fi
+
+build "$dir/$tool" "$tool"
+ok "$tool: installed to ~/.local/bin"
+reload "$tool"
+old_copies "$tool"

@@ -73,12 +73,25 @@ Anything only one machine needs goes in `~/.config/local.sh`, which `xinitrc` lo
 > [!NOTE]
 > If you use **X11 (X Server)**, you will likely need the **[picom](config/picom)** configuration.
 
+## Suckless Tools
+
+dwm, st, dmenu and dwmblocks are built from [saeeedhany/suckless](https://github.com/saeeedhany/suckless) and installed to `~/.local/bin`, so no root is needed.
+
+```
+suckless              build and install every tool
+suckless dwm          edit dwm's settings, then build, install and reload it
+suckless dwm -n       build, install and reload it, without the editor
+keys                  every key on this machine: dwm, sxhkd and the keyboard switch
+```
+
+`suckless` works in `~/gits/suckless`, or in `~/.config/suckless` where the installer puts it; set `SUCKLESS_DIR` to use another folder. `keys` reads every binding from the code itself, so it never goes out of date, and `super /` shows the same list in dmenu.
+
 ## Aesthetics & Visual Consistency
 
 While functionality comes first, visual consistency still matters:
 
 - One flat color across the whole screen. The wallpaper, the dwm bar and the terminal share the same background.
-- **[Themes](themes)** that repaint everything at once: wallpaper, dwm, st, dmenu, tmux, the prompt, fzf, ls, dunst, zathura, neovim, opencode, btop, rmpc, GTK and Qt apps, GIMP, Kdenlive, OBS, Vesktop, Firefox and Zen. Terminal programs like htop, nnn, ranger, vifm and cava follow st's colors on their own.
+- **[Themes](themes)** that repaint everything at once: wallpaper, dwm, st, dmenu, tmux, the prompt, fzf, ls, dunst, zathura, neovim, opencode, btop, rmpc, GTK and Qt apps, GIMP, Kdenlive, OBS, Vesktop, Firefox and Zen. Terminal programs like nnn, ranger, vifm and cava follow st's colors on their own.
   - `grey` the Onyx look, cream text and a gold accent (default)
   - `gruvbox` gruvbox dark, hard
   - `black` near black and muted
@@ -93,4 +106,4 @@ theme new 2b2f2a      build a whole theme from one color and switch to it
 theme new 2b2f2a moss same, with your own name
 ```
 
-To make one by hand, copy a file in `themes/` and change its colors. `theme` refuses a theme with a missing color or text that is hard to read, and says which line.
+To make one by hand, copy a file in `themes/` and change its colors. `theme` refuses a theme with a missing or malformed color and names it, and the tests refuse one whose text is hard to read.
