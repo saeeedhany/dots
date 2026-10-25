@@ -48,10 +48,48 @@ theme_block() {
   done
 }
 
-@test "the theme survives without storage" {
-  grep -q 'try' "$REPO_ROOT/site.js"
-  grep -q "localStorage.getItem('dots-theme')" "$REPO_ROOT/site.js"
-  grep -q "localStorage.setItem('dots-theme'" "$REPO_ROOT/site.js"
+sitejs() {
+  SITE_JS="${SITE_JS:-$REPO_ROOT/site.js}" STORAGE="$1" node -e '
+    const vm = require("vm");
+    const fs = require("fs");
+    const noop = () => {};
+    const store = process.env.STORAGE === "blocked"
+      ? { getItem() { throw new Error("blocked"); }, setItem() { throw new Error("blocked"); } }
+      : { getItem: () => process.env.STORAGE || null, setItem: noop };
+    const ctx = {
+      document: { documentElement: { dataset: {} }, addEventListener: noop, querySelector: () => null, querySelectorAll: () => [] },
+      window: { addEventListener: noop },
+      localStorage: store,
+      getComputedStyle: () => ({ getPropertyValue: () => "" }),
+      navigator: {}, setTimeout, clearTimeout, setInterval: noop,
+    };
+    const out = vm.runInNewContext(fs.readFileSync(process.env.SITE_JS, "utf8") +
+      "\n;JSON.stringify({ theme: document.documentElement.dataset.theme, themes: THEMES })", ctx);
+    process.stdout.write(out);
+  '
+}
+
+@test "with storage blocked the page still loads, in black" {
+  [ "$(sitejs blocked | jq -r .theme)" = black ]
+}
+
+@test "a saved theme loads, and an unknown one falls back to black" {
+  [ "$(sitejs blue | jq -r .theme)" = blue ]
+  [ "$(sitejs nope | jq -r .theme)" = black ]
+}
+
+@test "the theme picker names and strip colors match the theme files" {
+  local json n k i
+  json="$(sitejs "")"
+  [ "$(jq -r '.themes | keys | join(" ")' <<<"$json")" = "$(theme_names | paste -sd' ')" ]
+  while read -r n; do
+    i=1
+    for k in bg fg accent green red color5; do
+      [ "$(jq -r --arg n "$n" --argjson i "$i" '.themes[$n][$i]' <<<"$json")" = "$(sed -n "s/^$k=//p" "$REPO_ROOT/themes/$n" | tr 'A-F' 'a-f')" ] ||
+        { echo "$n $k drifted"; return 1; }
+      i=$((i + 1))
+    done
+  done < <(theme_names)
 }
 
 @test "the design page shows every token with its live value" {

@@ -41,6 +41,9 @@ This repository contains configuration files for the following tools:
 - **[Tmux](config/tmux)**
   Terminal multiplexing optimized for long-running sessions and parallel tasks ([guide](manuals/tmux.md))
 
+- **[Fontconfig](config/fontconfig)**
+  Font preferences for Arabic: Noto Sans Arabic for Arabic text, Noto Sans Mono first for monospace
+
 - **[Zathura](config/zathura)**
   A minimal, keyboard-centric document viewer
 
