@@ -161,3 +161,11 @@ sitejs() {
 @test "packages.txt gains no new comments for emacs" {
   ! grep -q 'emacs, its language servers' "$REPO_ROOT/packages/pacman.txt"
 }
+
+@test "every page shows a notice that leads to the install section until it is seen" {
+  grep -q 'id="install"' "$REPO_ROOT/index.html"
+  grep -qF "'#install'" "$REPO_ROOT/site.js"
+  grep -qF "'index.html#install'" "$REPO_ROOT/site.js"
+  grep -qF "localStorage.setItem('dots-install', 'seen')" "$REPO_ROOT/site.js"
+  grep -q '^\.notes {' "$REPO_ROOT/site.css"
+}

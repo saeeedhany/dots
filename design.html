@@ -115,8 +115,8 @@
   <p class="lead">tokens say what a color is. rules say where it may go. every rule removes something.</p>
   <ol class="rules">
     <li><span><b>one accent per region</b>a window shows the accent in one or two places at most: where the cursor is and which line it is on. if three things are accent, none of them is.</span></li>
-    <li><span><b>lifts, not boxes</b>a bar or a popup is separated from the surface by being one step lighter, not by a frame. the emacs mode line even draws its padding as a box in its own background color, so the box exists for spacing and is never seen.</span></li>
-    <li><span><b>one border, one pixel</b>when two things must be divided, a single line of <code>line</code> divides them. no double borders, no shadows, no rounded corners.</span></li>
+    <li><span><b>lifts, not boxes</b>a bar is separated from the surface by being one step lighter, not by a frame. menus and notifications float over everything, so they get the same thin frame in <code>line2</code>, or they would get lost on a single flat color. the emacs mode line even draws its padding as a box in its own background color, so the box exists for spacing and is never seen.</span></li>
+    <li><span><b>one border, one pixel</b>when two things must be divided, a single line of <code>line</code> divides them, and the focused window's line is <code>line2</code>, one step brighter. no double borders, no shadows, no rounded corners.</span></li>
     <li><span><b>color means something</b>green and red never appear because a design wanted warmth. if you see red, something is wrong or was removed.</span></li>
     <li><span><b>bold almost never</b>bold is kept for the one heading or match you must not miss. magit's section headings are plain accent text; only the top two heading levels of a markdown note are bold.</span></li>
     <li><span><b>dim instead of hide</b>comments, line numbers and hints stay on screen at fg2 and fg3. you can always read them, you never have to.</span></li>

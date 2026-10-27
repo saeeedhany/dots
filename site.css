@@ -148,8 +148,8 @@ code, .k { color: var(--fg); }
 .cursor { display: inline-block; width: .6em; height: 1.1em; background: var(--accent); vertical-align: text-bottom; animation: blink 1.1s steps(1) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
 .notif {
-  position: absolute; top: 2.6em; right: 1em; width: 30%; padding: .6em .9em;
-  background: var(--bg); border: 1px solid var(--accent); color: var(--fg1);
+  position: absolute; bottom: 1em; right: 1em; width: 30%; padding: .6em .9em;
+  background: var(--bg); border: 1px solid var(--line2); color: var(--fg1);
 }
 .notif b { display: block; color: var(--fg); font-weight: 700; }
 .caption { font-size: 12px; color: var(--fg2); }
@@ -274,13 +274,27 @@ footer nav { display: flex; gap: 18px; }
 .picker button:hover { color: var(--fg); }
 .picker button.cur { color: var(--accent); }
 
-.toast {
-  position: fixed; top: 34px; right: 14px; z-index: 20; min-width: 220px; max-width: 320px;
-  background: var(--bg); border: 1px solid var(--accent); padding: 10px 14px; color: var(--fg1); font-size: 13px;
-  opacity: 0; transform: translateY(-6px); pointer-events: none; transition: opacity .2s, transform .2s;
+.notes {
+  position: fixed; bottom: 14px; right: 14px; z-index: 20; width: 320px; max-width: calc(100vw - 28px);
+  display: flex; flex-direction: column; align-items: flex-end; gap: 8px; pointer-events: none;
 }
-.toast.on { opacity: 1; transform: none; }
-.toast b { display: block; color: var(--fg); }
+.toast, .hint {
+  min-width: 220px; max-width: 100%; pointer-events: auto;
+  background: var(--bg); border: 1px solid var(--accent); padding: 10px 14px; color: var(--fg1); font-size: 13px;
+}
+.toast { display: none; }
+.toast.on, .hint.on { display: block; animation: pop .2s ease-out; }
+.toast b, .hint b { display: block; color: var(--fg); }
+.hint { display: none; position: relative; width: 100%; text-decoration: none; padding-right: 34px; }
+.hint .go { display: block; margin-top: 6px; color: var(--accent); }
+.hint:hover { background: var(--bg1); }
+.hint:hover .go { color: var(--accent_light1); }
+.hint .x {
+  position: absolute; top: 6px; right: 8px; padding: 0 4px; border: 0; background: none;
+  color: var(--fg2); font: inherit; cursor: pointer;
+}
+.hint .x:hover { color: var(--fg); }
+@keyframes pop { from { opacity: 0; transform: translateY(6px); } }
 
 @media (max-width: 720px) {
   body { font-size: 13px; }
@@ -303,5 +317,5 @@ footer nav { display: flex; gap: 18px; }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  .cursor { animation: none; }
+  .cursor, .toast.on, .hint.on { animation: none; }
 }

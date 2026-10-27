@@ -30,6 +30,43 @@ function toast(title, body) {
   toast.timer = setTimeout(() => t.classList.remove('on'), 2200);
 }
 
+function notes() {
+  const box = document.createElement('div');
+  box.className = 'notes';
+  document.body.appendChild(box);
+  const toast = $('#toast');
+  if (toast) box.appendChild(toast);
+  return box;
+}
+
+function installHint(box) {
+  try { if (localStorage.getItem('dots-install') === 'seen') return; } catch (e) {}
+  const target = $('#install');
+  const h = document.createElement('a');
+  h.className = 'hint';
+  h.href = target ? '#install' : (location.pathname.includes('/blog/') ? '../' : '') + 'index.html#install';
+  h.setAttribute('role', 'status');
+  h.innerHTML = '<b>dots</b>this whole setup installs on a fresh arch machine with one command' +
+    '<span class="go">❯ show me how</span><button class="x" aria-label="dismiss">x</button>';
+  box.appendChild(h);
+  let gone = false;
+  const done = () => {
+    gone = true;
+    h.classList.remove('on');
+    try { localStorage.setItem('dots-install', 'seen'); } catch (e) {}
+  };
+  h.addEventListener('click', e => {
+    if (e.target.closest('.x')) e.preventDefault();
+    done();
+  });
+  setTimeout(() => { if (!gone) h.classList.add('on'); }, 1200);
+  if (target) {
+    new IntersectionObserver((entries, obs) => {
+      if (entries.some(e => e.isIntersecting)) { done(); obs.disconnect(); }
+    }).observe(target);
+  }
+}
+
 function copy(text, title) {
   const done = () => toast(title, text);
   if (navigator.clipboard) navigator.clipboard.writeText(text).then(done, done);
@@ -109,6 +146,7 @@ function tick() {
 
 document.addEventListener('DOMContentLoaded', () => {
   applyTheme(savedTheme(), false);
+  installHint(notes());
   tick();
   setInterval(tick, 1000);
   window.addEventListener('storage', e => {
