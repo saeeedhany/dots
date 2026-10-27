@@ -25,11 +25,11 @@ super + Escape
 
 # Take a full screenshot
 super + s
-    scrot ~/Pictures/screenshot_%Y-%m-%d-%H%M%S.png -e 'xclip -selection clipboard -t image/png -i $f' && notify-send -u low screenshot 'saved and copied'
+    mkdir -p ~/Pictures/Screenshots && scrot ~/Pictures/Screenshots/screenshot_%Y-%m-%d-%H%M%S.png -e 'xclip -selection clipboard -t image/png -i $f' && notify-send -u low screenshot 'saved and copied'
 
 # Take a specific part of the screen
 super + shift + s
-    scrot -s ~/Pictures/screenshot_%Y-%m-%d-%H%M%S.png -e 'xclip -selection clipboard -t image/png -i $f' && notify-send -u low screenshot 'saved and copied'
+    mkdir -p ~/Pictures/Screenshots && scrot -s ~/Pictures/Screenshots/screenshot_%Y-%m-%d-%H%M%S.png -e 'xclip -selection clipboard -t image/png -i $f' && notify-send -u low screenshot 'saved and copied'
 
 # Pick a color anywhere on screen; its hex goes to the clipboard
 super + c
