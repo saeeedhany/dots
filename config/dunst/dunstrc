@@ -9,8 +9,9 @@
     ### Geometry ###
     width = (300, 400)
     height = (0, 300)
-    origin = top-right
-    offset = (10, 50)
+    origin = bottom-right
+    offset = (12, 12)
+    frame_width = 1
     scale = 0
     notification_limit = 3
     
@@ -52,7 +53,7 @@
     always_run_script = true
     title = Dunst
     class = Dunst
-    corner_radius = 8
+    corner_radius = 0
     ignore_dbusclose = false
     force_xwayland = false
     force_xinerama = false

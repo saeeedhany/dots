@@ -17,6 +17,9 @@ teardown() { teardown_fake_home; }
   grep -qx 'dwm.normbgcolor: #1b1f27' "$HOME/.cache/theme/Xresources"
   grep -q '^st.color1: #' "$HOME/.cache/theme/Xresources"
   grep -qx 'dmenu.selforeground: #cdd3de' "$HOME/.cache/theme/Xresources"
+  grep -qx 'dwm.normbordercolor: #3a4354' "$HOME/.cache/theme/Xresources"
+  grep -qx 'dwm.selbordercolor: #454f63' "$HOME/.cache/theme/Xresources"
+  grep -qx 'dmenu.bordercolor: #454f63' "$HOME/.cache/theme/Xresources"
   grep -qx 'bg=#1b1f27' "$HOME/.cache/theme/colors.sh"
   grep -qx 'THEME=blue' "$HOME/.cache/theme/colors.sh"
 }

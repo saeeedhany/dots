@@ -13,12 +13,12 @@ render_dunst() {
 [urgency_low]
     background = "$bg"
     foreground = "$fg1"
-    frame_color = "$line"
+    frame_color = "$line2"
 
 [urgency_normal]
     background = "$bg"
     foreground = "$fg"
-    frame_color = "$line"
+    frame_color = "$line2"
 
 [urgency_critical]
     background = "$bg"

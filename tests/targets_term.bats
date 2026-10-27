@@ -66,3 +66,11 @@ teardown() {
   [[ "$ls_colors" == *"di=1;38;2;$(rgb blue):"* ]]
   [[ "$ls_colors" == *"ln=0;38;2;$(rgb color6):"* ]]
 }
+
+@test "notifications wear a thin frame and sit in the bottom right" {
+  f="$HOME/.config/dunst/dunstrc.d/theme.conf"
+  [ "$(grep -c 'frame_color = "#bcb6a7"' "$f")" -eq 2 ]
+  grep -qx '    origin = bottom-right' "$REPO_ROOT/config/dunst/dunstrc"
+  grep -qx '    offset = (12, 12)' "$REPO_ROOT/config/dunst/dunstrc"
+  grep -qx '    frame_width = 1' "$REPO_ROOT/config/dunst/dunstrc"
+}

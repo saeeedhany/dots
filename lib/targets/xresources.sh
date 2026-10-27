@@ -25,9 +25,10 @@ signal_patched() {
 render_xresources() {
   local i c
   {
-    for c in normbgcolor normbordercolor selbgcolor selbordercolor; do
-      printf 'dwm.%s: %s\n' "$c" "$bg"
-    done
+    printf 'dwm.normbgcolor: %s\n' "$bg"
+    printf 'dwm.selbgcolor: %s\n' "$bg"
+    printf 'dwm.normbordercolor: %s\n' "$line"
+    printf 'dwm.selbordercolor: %s\n' "$line2"
     printf 'dwm.normfgcolor: %s\n' "$fg1"
     printf 'dwm.selfgcolor: %s\n' "$fg"
     printf 'st.background: %s\n' "$bg"
@@ -41,6 +42,7 @@ render_xresources() {
     printf 'dmenu.foreground: %s\n' "$fg1"
     printf 'dmenu.selbackground: %s\n' "$bg"
     printf 'dmenu.selforeground: %s\n' "$fg"
+    printf 'dmenu.bordercolor: %s\n' "$line2"
     printf 'slock.init: %s\n' "$bg"
     printf 'slock.input: %s\n' "$line"
     printf 'slock.failed: %s\n' "$red_dark"
