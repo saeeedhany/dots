@@ -4,7 +4,7 @@ load test_helper
 
 setup() {
   setup_repo_root
-  REAL_SUCKLESS="$HOME/gits/suckless"
+  REAL_SUCKLESS="$HOME/code/saeeedhany/suckless"
   setup_fake_home
   export SUCKLESS_DIR="$BATS_TEST_TMPDIR/suckless"
   mkdir -p "$SUCKLESS_DIR/dwm"

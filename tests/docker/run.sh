@@ -6,7 +6,7 @@
 set -euo pipefail
 
 REPO_ROOT="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/../.." && pwd)"
-SUCKLESS="${1:-$HOME/gits/suckless}"
+SUCKLESS="${1:-$HOME/code/saeeedhany/suckless}"
 CTX="$(mktemp -d)"
 trap 'rm -rf "$CTX"' EXIT
 

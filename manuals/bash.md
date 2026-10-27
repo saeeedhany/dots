@@ -11,7 +11,7 @@ Anything only one machine needs goes in `~/.config/local.bash`, which `bashrc` l
 ## prompt
 
 ```
-~/gits/dots main ❯
+~/code/saeeedhany/dots main ❯
 ```
 
 The directory, the git branch when you are in a repository, then `❯`. The colors come from the current theme, so `theme <name>` changes them in every new shell.
