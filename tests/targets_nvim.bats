@@ -42,3 +42,18 @@ nv() { nvim --headless -c "lua io.write($1)" -c 'qa!' 2>/dev/null; }
 @test "no theme applied yet: nvim falls back to gruvbox" {
   [ "$(nv 'vim.g.colors_name')" = "gruvbox" ]
 }
+
+@test "telescope moves with ctrl j and ctrl k" {
+  [ "$(nv 'require("telescope.config").values.mappings.i["<C-j>"]')" = "move_selection_next" ]
+  [ "$(nv 'require("telescope.config").values.mappings.i["<C-k>"]')" = "move_selection_previous" ]
+}
+
+@test "completion menu moves with ctrl j and ctrl k" {
+  [ "$(nv 'tostring(require("cmp").get_config().mapping["<C-J>"] ~= nil)')" = "true" ]
+  [ "$(nv 'tostring(require("cmp").get_config().mapping["<C-K>"] ~= nil)')" = "true" ]
+}
+
+@test "snacks picker moves with ctrl j and ctrl k" {
+  [ "$(nv 'require("snacks.picker.config").get().win.input.keys["<C-J>"][1]')" = "list_down" ]
+  [ "$(nv 'require("snacks.picker.config").get().win.input.keys["<C-K>"][1]')" = "list_up" ]
+}
