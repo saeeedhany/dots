@@ -25,7 +25,7 @@ teardown() {
   cmd="$(grep -A1 -x 'super + s' "$REPO_ROOT/config/sxhkd/sxhkdrc" | tail -1)"
   sh -c "$cmd"
   sleep 0.5
-  ls "$HOME"/Pictures/Screenshots/screenshot_*.png >/dev/null
+  ls "$HOME"/pictures/screenshots/screenshot_*.png >/dev/null
   xclip -o -selection clipboard -t TARGETS | grep -qx 'image/png'
   [ "$(xclip -o -selection clipboard -t image/png | head -c 8 | od -An -tx1 | tr -d ' \n')" = 89504e470d0a1a0a ]
   grep -q 'copied' "$BATS_TEST_TMPDIR/notified"
@@ -33,7 +33,7 @@ teardown() {
 
 @test "super shift s does the same for a selected area" {
   grep -A1 -x 'super + shift + s' "$REPO_ROOT/config/sxhkd/sxhkdrc" | tail -1 |
-    grep -qF "mkdir -p ~/Pictures/Screenshots && scrot -s ~/Pictures/Screenshots/screenshot_%Y-%m-%d-%H%M%S.png -e 'xclip -selection clipboard -t image/png -i \$f'"
+    grep -qF "mkdir -p ~/pictures/screenshots && scrot -s ~/pictures/screenshots/screenshot_%Y-%m-%d-%H%M%S.png -e 'xclip -selection clipboard -t image/png -i \$f'"
 }
 
 @test "clip keeps real copied text, but not a screenshot" {

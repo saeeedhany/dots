@@ -26,7 +26,7 @@ teardown() { teardown_fake_home; }
 
 @test "theme blue makes a single-color 1920x1080 wallpaper" {
   "$REPO_ROOT/theme" blue
-  f="$HOME/Pictures/Wallpapers/blue.png"
+  f="$HOME/pictures/wallpapers/blue.png"
   [ "$(magick identify -format '%wx%h' "$f")" = "1920x1080" ]
   run magick "$f" -format %c histogram:info:-
   [ "$(printf '%s\n' "$output" | grep -c .)" -eq 1 ]
@@ -35,10 +35,10 @@ teardown() { teardown_fake_home; }
 
 @test "a second run reuses the wallpaper" {
   "$REPO_ROOT/theme" blue
-  before=$(stat -c %Y "$HOME/Pictures/Wallpapers/blue.png")
+  before=$(stat -c %Y "$HOME/pictures/wallpapers/blue.png")
   sleep 1
   "$REPO_ROOT/theme" blue
-  [ "$(stat -c %Y "$HOME/Pictures/Wallpapers/blue.png")" = "$before" ]
+  [ "$(stat -c %Y "$HOME/pictures/wallpapers/blue.png")" = "$before" ]
 }
 
 @test "an unknown theme writes nothing and keeps the current one" {
@@ -46,7 +46,7 @@ teardown() { teardown_fake_home; }
   run "$REPO_ROOT/theme" purple
   [ "$status" -eq 1 ]
   [ "$(cat "$HOME/.config/theme")" = grey ]
-  [ ! -e "$HOME/Pictures/Wallpapers/purple.png" ]
+  [ ! -e "$HOME/pictures/wallpapers/purple.png" ]
 }
 
 @test "without X it skips the reloads and still succeeds" {

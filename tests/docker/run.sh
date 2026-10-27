@@ -22,7 +22,7 @@ docker run --rm --network host dots-clean-machine bash -c '
   ./dots/install.sh --yes --skip aur
   ./dots/install.sh --only verify --yes
   ~/.local/bin/theme white
-  for f in ~/.cache/theme/Xresources ~/Pictures/Wallpapers/white.png \
+  for f in ~/.cache/theme/Xresources ~/pictures/wallpapers/white.png \
            ~/.config/vesktop/themes/white.theme.css ~/.config/theme; do
     [ -e "$f" ] || { echo "missing: $f"; exit 1; }
   done

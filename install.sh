@@ -16,7 +16,7 @@ export REPO_ROOT
 # not run yet; theme and the linked tools live there.
 export PATH="$HOME/.local/bin:$PATH"
 
-STEPS=(check packages aur suckless links wallpapers fonts theme verify)
+STEPS=(check packages aur suckless links folders wallpapers fonts theme verify)
 SUCKLESS_URL="${SUCKLESS_URL:-https://github.com/saeeedhany/suckless}"
 SUCKLESS_DIR="${SUCKLESS_DIR:-$(dirname "$REPO_ROOT")/suckless}"
 DRY_RUN=0
@@ -80,9 +80,27 @@ step_suckless() {
 
 step_links() { link_all; }
 
+user_dirs() {
+  local k
+  printf 'XDG_DOWNLOAD_DIR="$HOME/downloads"\n'
+  printf 'XDG_DOCUMENTS_DIR="$HOME/documents"\n'
+  printf 'XDG_PICTURES_DIR="$HOME/pictures"\n'
+  for k in DESKTOP TEMPLATES PUBLICSHARE MUSIC VIDEOS; do
+    printf 'XDG_%s_DIR="$HOME/"\n' "$k"
+  done
+}
+
+step_folders() {
+  run_cmd "mkdir ~/downloads ~/documents ~/pictures" mkdir -p "$HOME/downloads" "$HOME/documents" \
+    "$HOME/pictures/screenshots" "$HOME/pictures/wallpapers" "$HOME/.config"
+  is_dry_run && { printf '[dry-run] write ~/.config/user-dirs.dirs and user-dirs.conf\n'; return 0; }
+  user_dirs > "$HOME/.config/user-dirs.dirs"
+  printf 'enabled=False\n' > "$HOME/.config/user-dirs.conf"
+}
+
 step_wallpapers() {
-  run_cmd "mkdir ~/Pictures/Wallpapers" mkdir -p "$HOME/Pictures/Wallpapers"
-  run_cmd "copy wallpapers" rsync -a --ignore-existing "$REPO_ROOT/wallpapers/" "$HOME/Pictures/Wallpapers/"
+  run_cmd "mkdir ~/pictures/wallpapers" mkdir -p "$HOME/pictures/wallpapers"
+  run_cmd "copy wallpapers" rsync -a --ignore-existing "$REPO_ROOT/wallpapers/" "$HOME/pictures/wallpapers/"
 }
 
 step_fonts() { run_cmd "fc-cache" fc-cache -f; }

@@ -13,7 +13,7 @@ teardown() { teardown_fake_home; }
   run "$REPO_ROOT/install.sh" --dry-run --yes
   [ "$status" -eq 0 ]
   order=$(printf '%s\n' "$output" | grep -oE '== [a-z]+' | cut -c4- | paste -sd' ')
-  [ "$order" = "check packages aur suckless links wallpapers fonts theme verify" ]
+  [ "$order" = "check packages aur suckless links folders wallpapers fonts theme verify" ]
   [ -z "$(ls -A "$HOME")" ]
 }
 
@@ -116,4 +116,25 @@ STUB
   body=$(awk '/^step_suckless\(\)/,/^}/' "$REPO_ROOT/install.sh")
   [[ "$body" == *'make -C "$SUCKLESS_DIR" install'* ]]
   [[ "$body" != *sudo* ]]
+}
+
+@test "folders writes lowercase user dirs, sends the unused ones home, and makes the folders" {
+  run "$REPO_ROOT/install.sh" --only folders --yes
+  [ "$status" -eq 0 ]
+  f="$HOME/.config/user-dirs.dirs"
+  grep -qx 'XDG_DOWNLOAD_DIR="$HOME/downloads"' "$f"
+  grep -qx 'XDG_DOCUMENTS_DIR="$HOME/documents"' "$f"
+  grep -qx 'XDG_PICTURES_DIR="$HOME/pictures"' "$f"
+  for k in DESKTOP TEMPLATES PUBLICSHARE MUSIC VIDEOS; do
+    grep -qx "XDG_${k}_DIR=\"\$HOME/\"" "$f"
+  done
+  grep -qx 'enabled=False' "$HOME/.config/user-dirs.conf"
+  for d in downloads documents pictures/screenshots pictures/wallpapers; do
+    [ -d "$HOME/$d" ]
+  done
+}
+
+@test "no capitalized standard folder is named anywhere in dots" {
+  cd "$REPO_ROOT"
+  ! git ls-files -z -- . ':!docs' | xargs -0 grep -nE '(~|HOME)/(Pictures|Downloads|Documents|Desktop|Music|Videos|Templates|Public)\b' 
 }

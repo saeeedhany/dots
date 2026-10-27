@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
-# Flat wallpaper in the theme's bg, kept in ~/Pictures/Wallpapers/<theme>.png
+# Flat wallpaper in the theme's bg, kept in ~/pictures/wallpapers/<theme>.png
 # shellcheck disable=SC2154 # theme variables are set by theme_load
 
-wallpaper_path() { printf '%s/Pictures/Wallpapers/%s.png' "$HOME" "$THEME"; }
+wallpaper_path() { printf '%s/pictures/wallpapers/%s.png' "$HOME" "$THEME"; }
 
 render_wallpaper() {
   local out have
