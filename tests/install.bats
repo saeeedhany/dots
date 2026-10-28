@@ -13,7 +13,7 @@ teardown() { teardown_fake_home; }
   run "$REPO_ROOT/install.sh" --dry-run --yes
   [ "$status" -eq 0 ]
   order=$(printf '%s\n' "$output" | grep -oE '== [a-z]+' | cut -c4- | paste -sd' ')
-  [ "$order" = "check packages aur suckless links folders wallpapers fonts theme verify" ]
+  [ "$order" = "check packages aur suckless links folders defaults wallpapers fonts theme verify" ]
   [ -z "$(ls -A "$HOME")" ]
 }
 
@@ -137,4 +137,19 @@ STUB
 @test "no capitalized standard folder is named anywhere in dots" {
   cd "$REPO_ROOT"
   ! git ls-files -z -- . ':!docs' | xargs -0 grep -nE '(~|HOME)/(Pictures|Downloads|Documents|Desktop|Music|Videos|Templates|Public)\b' 
+}
+
+@test "defaults opens images in imv and pdfs in zathura, and keeps other defaults" {
+  mkdir -p "$HOME/.config"
+  printf '[Default Applications]\ntext/html=zen.desktop\napplication/pdf=old.desktop\n' > "$HOME/.config/mimeapps.list"
+  run "$REPO_ROOT/install.sh" --only defaults --yes
+  [ "$status" -eq 0 ]
+  f="$HOME/.config/mimeapps.list"
+  grep -qx 'text/html=zen.desktop' "$f"
+  grep -qx 'application/pdf=org.pwmt.zathura.desktop' "$f"
+  [ "$(grep -c '^application/pdf=' "$f")" -eq 1 ]
+  for t in png jpeg webp gif bmp; do
+    grep -qx "image/$t=imv.desktop" "$f"
+  done
+  grep -qx imv "$REPO_ROOT/packages/pacman.txt"
 }

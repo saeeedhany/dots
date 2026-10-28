@@ -50,6 +50,7 @@ tree
 nnn
 zathura
 zathura-pdf-poppler
+imv
 
 # themes
 jq

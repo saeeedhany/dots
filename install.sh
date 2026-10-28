@@ -11,12 +11,14 @@ export REPO_ROOT
 . "$REPO_ROOT/lib/link.sh"
 # shellcheck source=lib/pkg.sh
 . "$REPO_ROOT/lib/pkg.sh"
+# shellcheck source=lib/theme.sh
+. "$REPO_ROOT/lib/theme.sh"
 
 # On a fresh machine ~/.local/bin is only added to PATH by bashrc, which has
 # not run yet; theme and the linked tools live there.
 export PATH="$HOME/.local/bin:$PATH"
 
-STEPS=(check packages aur suckless links folders wallpapers fonts theme verify)
+STEPS=(check packages aur suckless links folders defaults wallpapers fonts theme verify)
 SUCKLESS_URL="${SUCKLESS_URL:-https://github.com/saeeedhany/suckless}"
 SUCKLESS_DIR="${SUCKLESS_DIR:-$(dirname "$REPO_ROOT")/suckless}"
 DRY_RUN=0
@@ -96,6 +98,15 @@ step_folders() {
   is_dry_run && { printf '[dry-run] write ~/.config/user-dirs.dirs and user-dirs.conf\n'; return 0; }
   user_dirs > "$HOME/.config/user-dirs.dirs"
   printf 'enabled=False\n' > "$HOME/.config/user-dirs.conf"
+}
+
+step_defaults() {
+  local f="$HOME/.config/mimeapps.list" t
+  is_dry_run && { printf '[dry-run] open images in imv and pdfs in zathura\n'; return 0; }
+  for t in png jpeg webp gif bmp; do
+    ini_set "$f" "Default Applications" "image/$t" imv.desktop
+  done
+  ini_set "$f" "Default Applications" application/pdf org.pwmt.zathura.desktop
 }
 
 step_wallpapers() {
