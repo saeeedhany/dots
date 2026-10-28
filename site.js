@@ -40,31 +40,89 @@ function notes() {
 }
 
 function installHint(box) {
-  try { if (localStorage.getItem('dots-install') === 'seen') return; } catch (e) {}
   const target = $('#install');
+  const block = $('#install-cmd');
+  const btn = $('#install-cmd .copy');
+  const cmd = btn ? btn.dataset.copy : 'git clone https://github.com/saeeedhany/dots && ./dots/install.sh';
+  const still = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
   const h = document.createElement('a');
   h.className = 'hint';
   h.href = target ? '#install' : (location.pathname.includes('/blog/') ? '../' : '') + 'index.html#install';
   h.setAttribute('role', 'status');
-  h.innerHTML = '<b>dots</b>this whole setup installs on a fresh arch machine with one command' +
-    '<span class="go">❯ show me how</span><button class="x" aria-label="dismiss">x</button>';
+  h.innerHTML = '<b class="t"></b><span class="body"></span><span class="go"></span>' +
+    '<button class="m" aria-label="minimize">_</button>';
   box.appendChild(h);
-  let gone = false;
-  const done = () => {
-    gone = true;
-    h.classList.remove('on');
-    try { localStorage.setItem('dots-install', 'seen'); } catch (e) {}
+  const t = h.querySelector('.t'), body = h.querySelector('.body'), go = h.querySelector('.go');
+  let here = false, typing;
+
+  const stored = v => { try { v ? localStorage.setItem('dots-install', 'min') : localStorage.removeItem('dots-install'); } catch (e) {} };
+  let min = false;
+  try { min = localStorage.getItem('dots-install') === 'min'; } catch (e) {}
+
+  const type = () => {
+    clearInterval(typing);
+    body.innerHTML = '<span class="term"><span class="p">❯</span> <span class="typed"></span><i class="cursor"></i></span>';
+    const out = body.querySelector('.typed');
+    if (still) { out.textContent = cmd; return; }
+    let i = 0;
+    typing = setInterval(() => {
+      out.textContent = cmd.slice(0, ++i);
+      if (i >= cmd.length) clearInterval(typing);
+    }, 28);
   };
+
+  const paint = () => {
+    h.classList.toggle('min', min);
+    h.classList.toggle('here', here);
+    h.querySelector('.m').hidden = min;
+    if (min) {
+      clearInterval(typing);
+      t.textContent = '';
+      body.textContent = '';
+      go.textContent = here ? '❯ here it is' : '❯ install';
+      h.setAttribute('aria-label', 'open the install notice');
+      return;
+    }
+    h.removeAttribute('aria-label');
+    if (here) {
+      t.textContent = 'you found it';
+      type();
+      go.textContent = '❯ copy it, give it a try';
+    } else {
+      clearInterval(typing);
+      t.textContent = 'dots';
+      body.textContent = 'this whole setup installs on a fresh arch machine with one command';
+      go.textContent = '❯ show me how';
+    }
+  };
+
   h.addEventListener('click', e => {
-    if (e.target.closest('.x')) e.preventDefault();
-    done();
+    if (e.target.closest('.m')) {
+      e.preventDefault();
+      min = true; stored(true); paint();
+    } else if (min) {
+      e.preventDefault();
+      min = false; stored(false); paint();
+    } else if (here) {
+      e.preventDefault();
+      copy(cmd, 'copied');
+      go.textContent = '❯ now paste it in a terminal on arch';
+    }
   });
-  setTimeout(() => { if (!gone) h.classList.add('on'); }, 1200);
+
   if (target) {
-    new IntersectionObserver((entries, obs) => {
-      if (entries.some(e => e.isIntersecting)) { done(); obs.disconnect(); }
-    }).observe(target);
+    new IntersectionObserver(entries => {
+      const now = entries.some(e => e.isIntersecting);
+      if (now === here) return;
+      here = now;
+      if (block) {
+        block.classList.toggle('lit', here);
+      }
+      paint();
+    }, { rootMargin: '0px 0px -40% 0px' }).observe(target);
   }
+  paint();
+  setTimeout(() => h.classList.add('on'), 1200);
 }
 
 function copy(text, title) {

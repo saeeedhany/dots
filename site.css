@@ -189,7 +189,7 @@ ol.rules span { color: var(--fg1); }
 
 .block {
   position: relative; border: 1px solid var(--line); padding: 14px 16px; margin: 10px 0 6px;
-  white-space: pre; overflow-x: auto; color: var(--fg); font-variant-ligatures: none;
+  white-space: pre; overflow-x: auto; color: var(--fg); font-variant-ligatures: none; transition: border-color .4s;
 }
 .block .dim { color: var(--fg2); }
 .copy {
@@ -289,11 +289,18 @@ footer nav { display: flex; gap: 18px; }
 .hint .go { display: block; margin-top: 6px; color: var(--accent); }
 .hint:hover { background: var(--bg1); }
 .hint:hover .go { color: var(--accent_light1); }
-.hint .x {
-  position: absolute; top: 6px; right: 8px; padding: 0 4px; border: 0; background: none;
+.hint .m {
+  position: absolute; top: 4px; right: 8px; padding: 0 4px; border: 0; background: none;
   color: var(--fg2); font: inherit; cursor: pointer;
 }
-.hint .x:hover { color: var(--fg); }
+.hint .m:hover { color: var(--fg); }
+.hint .term { display: block; margin-top: 4px; color: var(--fg); overflow-wrap: anywhere; }
+.hint .term .p { color: var(--accent); }
+.hint .term .cursor { width: .5em; height: 1em; margin-left: 1px; }
+.hint.min { width: auto; min-width: 0; padding: 6px 12px; }
+.hint.min .go { margin-top: 0; }
+.hint.min .t, .hint.min .body { display: none; }
+.block.lit { border-color: var(--accent); }
 @keyframes pop { from { opacity: 0; transform: translateY(6px); } }
 
 @media (max-width: 720px) {

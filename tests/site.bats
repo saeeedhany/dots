@@ -162,10 +162,16 @@ sitejs() {
   ! grep -q 'emacs, its language servers' "$REPO_ROOT/packages/pacman.txt"
 }
 
-@test "every page shows a notice that leads to the install section until it is seen" {
+@test "the install notice shows on every visit, minimizes to a chip, and changes in the install section" {
   grep -q 'id="install"' "$REPO_ROOT/index.html"
-  grep -qF "'#install'" "$REPO_ROOT/site.js"
+  grep -q 'id="install-cmd"' "$REPO_ROOT/index.html"
   grep -qF "'index.html#install'" "$REPO_ROOT/site.js"
-  grep -qF "localStorage.setItem('dots-install', 'seen')" "$REPO_ROOT/site.js"
+  ! grep -qF "'seen'" "$REPO_ROOT/site.js"
+  grep -qF "localStorage.setItem('dots-install', 'min')" "$REPO_ROOT/site.js"
+  grep -qF 'aria-label="minimize"' "$REPO_ROOT/site.js"
+  grep -qF 'you found it' "$REPO_ROOT/site.js"
+  grep -qF "#install-cmd .copy" "$REPO_ROOT/site.js"
   grep -q '^\.notes {' "$REPO_ROOT/site.css"
+  grep -q '^\.hint\.min' "$REPO_ROOT/site.css"
+  grep -q '^\.block\.lit' "$REPO_ROOT/site.css"
 }
