@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 render_opencode() {
-  local dir="$HOME/.config/opencode" tui tmp
+  local dir="$HOME/.config/opencode" cli tmp
   mkdir -p "$dir/themes"
   jq -n \
     --arg bg "$bg" --arg bg1 "$bg1" --arg bg2 "$bg2" --arg bg3 "$bg3" \
@@ -34,14 +34,14 @@ render_opencode() {
       syntaxPunctuation: $fg1
     }
   }' > "$dir/themes/dots.json"
-  tui="$dir/tui.json"
-  [[ -f "$tui" ]] || printf '{"$schema": "https://opencode.ai/tui.json"}\n' > "$tui"
+  cli="$dir/cli.json"
+  [[ -f "$cli" ]] || printf '{"$schema": "https://opencode.ai/v2/cli.json"}\n' > "$cli"
   tmp="$(mktemp)"
-  if jq '.theme = "dots"' "$tui" > "$tmp" 2>/dev/null; then
-    mv "$tmp" "$tui"
+  if jq '.theme = ((.theme | objects) // {}) + {name: "dots"}' "$cli" > "$tmp" 2>/dev/null; then
+    mv "$tmp" "$cli"
   else
     rm -f "$tmp"
-    warn "opencode: $tui is not valid JSON; pick the dots theme with /theme"
+    warn "opencode: $cli is not valid JSON; pick the dots theme with /theme"
   fi
 }
 

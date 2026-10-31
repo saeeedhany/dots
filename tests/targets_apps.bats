@@ -10,21 +10,23 @@ setup() {
 
 teardown() { teardown_fake_home; }
 
-@test "opencode gets a dots theme and tui.json selects it" {
+@test "opencode gets a dots theme and cli.json selects it" {
   "$REPO_ROOT/theme" white >/dev/null
   f="$HOME/.config/opencode/themes/dots.json"
   [ "$(jq -r .theme.background "$f")" = "#e8e6e1" ]
   [ "$(jq -r .theme.text "$f")" = "#3a3633" ]
   [ "$(jq -r '.theme | length' "$f")" -ge 49 ]
-  [ "$(jq -r .theme "$HOME/.config/opencode/tui.json")" = "dots" ]
+  [ "$(jq -r .theme.name "$HOME/.config/opencode/cli.json")" = "dots" ]
+  [ "$(jq -r '."$schema"' "$HOME/.config/opencode/cli.json")" = "https://opencode.ai/v2/cli.json" ]
 }
 
-@test "opencode tui.json keeps its other settings" {
+@test "opencode cli.json keeps its other settings" {
   mkdir -p "$HOME/.config/opencode"
-  echo '{"plugin":["a"],"theme":"gruvbox"}' > "$HOME/.config/opencode/tui.json"
+  echo '{"plugins":["a"],"theme":{"name":"gruvbox","mode":"dark"}}' > "$HOME/.config/opencode/cli.json"
   "$REPO_ROOT/theme" white >/dev/null
-  [ "$(jq -r '.plugin[0]' "$HOME/.config/opencode/tui.json")" = "a" ]
-  [ "$(jq -r .theme "$HOME/.config/opencode/tui.json")" = "dots" ]
+  [ "$(jq -r '.plugins[0]' "$HOME/.config/opencode/cli.json")" = "a" ]
+  [ "$(jq -r .theme.name "$HOME/.config/opencode/cli.json")" = "dots" ]
+  [ "$(jq -r .theme.mode "$HOME/.config/opencode/cli.json")" = "dark" ]
 }
 
 @test "btop gets a dots theme and btop.conf selects it, keeping other settings" {
