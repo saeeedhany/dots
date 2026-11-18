@@ -8,9 +8,9 @@ setup() {
   unset VISUAL
   SL="$BATS_TEST_TMPDIR/suckless"
   export SUCKLESS_DIR="$SL"
-  for t in dwm st dmenu; do fake_tool "$t" config.def.h; done
+  for t in dwm st dmenu note; do fake_tool "$t" config.def.h; done
   fake_tool dwmblocks blocks.def.h
-  printf 'all install:\n\tfor t in dwm st dmenu dwmblocks; do $(MAKE) -C $$t $@ || exit 1; done\n' > "$SL/Makefile"
+  printf 'all install:\n\tfor t in dwm st dmenu dwmblocks note; do $(MAKE) -C $$t $@ || exit 1; done\n' > "$SL/Makefile"
 }
 
 teardown() { teardown_fake_home; }
@@ -55,10 +55,16 @@ editor() {
   [ -f "$HOME/.local/bin/dmenu" ]
 }
 
+@test "suckless note -n builds and installs note" {
+  EDITOR=false run "$REPO_ROOT/bin/suckless" note -n
+  [ "$status" -eq 0 ]
+  [ -f "$HOME/.local/bin/note" ]
+}
+
 @test "no tool builds and installs every tool" {
   run "$REPO_ROOT/bin/suckless"
   [ "$status" -eq 0 ]
-  for t in dwm st dmenu dwmblocks; do
+  for t in dwm st dmenu dwmblocks note; do
     [ -f "$HOME/.local/bin/$t" ] || { echo "missing $t"; return 1; }
   done
 }

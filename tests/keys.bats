@@ -22,6 +22,7 @@ static const Key keys[] = {
 	{ MODKEY|ControlMask,           XK_Return, spawn,          {.v = floattermcmd } },
 	{ MODKEY|ControlMask,           XK_w,      spawnfloat,     {.v = webcmd } },
 	{ MODKEY,                       XK_n,      spawn,          {.v = notecmd } },
+	{ MODKEY|ShiftMask,             XK_n,      spawn,          {.v = noterestorecmd } },
 	{ MODKEY|ShiftMask,             XK_p,      togglesticky,   {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
@@ -54,7 +55,8 @@ key() { "$REPO_ROOT/bin/keys" | awk -v k="$1" 'BEGIN { FS = "  +" } $1 == k { pr
 }
 
 @test "note and pin keys are described" {
-  [ "$(key 'super n')" = "open or start a note" ]
+  [ "$(key 'super n')" = "new sticky note" ]
+  [ "$(key 'super shift n')" = "bring back closed notes" ]
   [ "$(key 'super shift p')" = "pin the window to every tag, or unpin it" ]
 }
 

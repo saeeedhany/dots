@@ -37,7 +37,8 @@ dwm_keys() {
     function desc(f, a,   i) {
       gsub(/[ \t{}]/, "", a)
       if (f == "spawn" && a ~ /dmenucmd/) return "launcher"
-      if (f == "spawn" && a ~ /notecmd/) return "open or start a note"
+      if (f == "spawn" && a ~ /noterestorecmd/) return "bring back closed notes"
+      if (f == "spawn" && a ~ /notecmd/) return "new sticky note"
       if (f == "spawn" && a ~ /floattermcmd/) return "floating terminal"
       if (f == "spawn" && a ~ /termcmd/) return "terminal"
       if (f == "spawnfloat" && a ~ /webcmd/) return "floating firefox, this one window"

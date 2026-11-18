@@ -11,6 +11,7 @@ command -v xss-lock >/dev/null && xss-lock -- slock &
 command -v clipnotify >/dev/null && clip daemon &
 dunst &
 sxhkd &
+command -v note >/dev/null && note -r &
 [ -x ~/.fehbg ] && ~/.fehbg &
 picom &
 # libinput leaves tap-to-click off by default; enable it for the ELAN touchpad

@@ -46,6 +46,9 @@ render_xresources() {
     printf 'slock.init: %s\n' "$bg"
     printf 'slock.input: %s\n' "$line"
     printf 'slock.failed: %s\n' "$red_dark"
+    printf 'note.background: %s\n' "$bg3"
+    printf 'note.foreground: %s\n' "$fg"
+    printf 'note.cursor: %s\n' "$cursor"
   } > "$HOME/.cache/theme/Xresources"
 }
 
@@ -57,4 +60,5 @@ reload_xresources() {
     xsetroot -name "$(xprop -root WM_NAME 2>/dev/null | sed -n 's/^WM_NAME([A-Z0-9_]*) = "\(.*\)"$/\1/p')"
   fi
   signal_patched st cursorColor USR1 >/dev/null
+  signal_patched note note.background USR1 >/dev/null
 }

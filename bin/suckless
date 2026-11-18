@@ -5,14 +5,14 @@ REPO_ROOT="$(cd "$(dirname "$(readlink -f "${BASH_SOURCE[0]}")")/.." && pwd)"
 . "$REPO_ROOT/lib/log.sh"
 . "$REPO_ROOT/lib/suckless.sh"
 
-TOOLS=(dwm st dmenu dwmblocks)
+TOOLS=(dwm st dmenu dwmblocks note)
 
 usage() {
   cat <<'USAGE'
 usage: suckless              build and install every tool
        suckless <tool>       edit its settings, then build, install and reload it
        suckless <tool> -n    build, install and reload it, without the editor
-tools: dwm st dmenu dwmblocks slock
+tools: dwm st dmenu dwmblocks note slock
 USAGE
 }
 
@@ -44,6 +44,7 @@ reload() {
       ;;
     st) info "st: new windows use the new build" ;;
     dmenu) info "dmenu: the next launch uses the new build" ;;
+    note) info "note: new notes use the new build; open ones keep running the old one until closed" ;;
     dwmblocks)
       if [[ -n "${DISPLAY:-}" ]] && pgrep -x -u "$UID" dwmblocks >/dev/null; then
         pkill -x -u "$UID" dwmblocks
