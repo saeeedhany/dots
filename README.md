@@ -102,6 +102,7 @@ While functionality comes first, visual consistency still matters:
   - `black` near black and muted
   - `blue` cool dark slate
   - `white` soft warm off-white
+  - `construct` phosphor greens over a layered code-rain wallpaper
 - A collection of curated **[Wallpapers](wallpapers)**
 
 ```

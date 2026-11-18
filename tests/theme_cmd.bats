@@ -59,7 +59,7 @@ teardown() { teardown_fake_home; }
   "$REPO_ROOT/theme" white
   run "$REPO_ROOT/theme"
   [ "$status" -eq 0 ]
-  [ "$(printf '%s\n' "$output" | grep -c .)" -eq 5 ]
+  [ "$(printf '%s\n' "$output" | grep -c .)" -eq "$(find "$REPO_ROOT/themes" -maxdepth 1 -type f | wc -l)" ]
   printf '%s\n' "$output" | grep -qx '\* white'
 }
 
