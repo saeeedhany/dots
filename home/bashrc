@@ -112,7 +112,6 @@ alias f='feh --bg-fill'
 
 alias ls='ls -lh --color=auto'
 alias la='ls -A'
-alias rm='rmx'
 alias l='command ls -CF --color=auto'
 alias tree='tree -C'
 alias grep='grep --color=auto'

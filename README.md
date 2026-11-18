@@ -91,6 +91,10 @@ slock locks the screen on lid close, suspend, after 10 idle minutes and on `supe
 
 `suckless` works in the suckless repo next to this one (the installer clones it there, so `~/code/saeeedhany/dots` pairs with `~/code/saeeedhany/suckless`); set `SUCKLESS_DIR` to use another folder. `keys` reads every binding from the code itself, so it never goes out of date, and `super /` shows the same list in dmenu.
 
+## rmx
+
+I use **[rmx](https://github.com/saeeedhany/rmx)** instead of the regular `rm`. It is a remover written in C with preview, exclusions and an optional trash. It is not part of these dots, so install it from its repo if you want it.
+
 ## Aesthetics & Visual Consistency
 
 While functionality comes first, visual consistency still matters:
