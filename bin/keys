@@ -38,6 +38,7 @@ dwm_keys() {
       gsub(/[ \t{}]/, "", a)
       if (f == "spawn" && a ~ /dmenucmd/) return "launcher"
       if (f == "spawn" && a ~ /noterestorecmd/) return "bring back closed notes"
+      if (f == "spawn" && a ~ /notepickcmd/) return "pick a saved note"
       if (f == "spawn" && a ~ /notecmd/) return "new sticky note"
       if (f == "spawn" && a ~ /floattermcmd/) return "floating terminal"
       if (f == "spawn" && a ~ /termcmd/) return "terminal"
