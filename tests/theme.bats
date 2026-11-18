@@ -8,9 +8,9 @@ setup() {
   source "$REPO_ROOT/lib/theme.sh"
 }
 
-@test "theme_names lists the five themes" {
+@test "theme_names lists the six themes" {
   run theme_names
-  [ "$(printf '%s' "$output" | paste -sd' ')" = "black blue grey gruvbox white" ]
+  [ "$(printf '%s' "$output" | paste -sd' ')" = "black blue construct grey gruvbox white" ]
 }
 
 @test "THEME_KEYS has 39 keys" {

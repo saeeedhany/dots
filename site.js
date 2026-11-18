@@ -1,6 +1,7 @@
 const THEMES = {
   black: ['near black and muted', '#161717', '#c8c5bf', '#c2a46a', '#8f9a6d', '#ba6962', '#a08299'],
   blue: ['cool dark slate', '#1b1f27', '#cdd3de', '#81a1c1', '#9bb48a', '#c47a7a', '#b48ead'],
+  construct: ['phosphor greens over code rain', '#050a07', '#cfe9d6', '#57dd7f', '#72d98c', '#dd7a72', '#b193c4'],
   grey: ['the onyx look, cream text and a gold accent', '#282828', '#ccc3b8', '#c8a46b', '#8aa66a', '#c26a6a', '#a8879a'],
   gruvbox: ['gruvbox dark, hard', '#1d2021', '#ebdbb2', '#83a598', '#b8bb26', '#fb4934', '#b16286'],
   white: ['soft warm off white', '#e8e6e1', '#3a3633', '#3f6b8a', '#5f6a2c', '#a8423a', '#8a4f72']
