@@ -13,6 +13,8 @@ dunst &
 sxhkd &
 [ -x ~/.fehbg ] && ~/.fehbg &
 picom &
+# libinput leaves tap-to-click off by default; enable it for the ELAN touchpad
+xinput set-prop "ELAN0300:00 04F3:3206 Touchpad" "libinput Tapping Enabled" 1 2>/dev/null
 /usr/lib/xdg-desktop-portal-gtk &
 /usr/lib/xdg-desktop-portal &
 exec dwm
