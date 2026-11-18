@@ -22,6 +22,14 @@ signal_patched() {
   done
 }
 
+tint() {
+  local a="${1#\#}" b="${2#\#}" i out="#"
+  for i in 0 2 4; do
+    out+="$(printf '%02x' $(( (16#${a:i:2} * 3 + 16#${b:i:2}) / 4 )))"
+  done
+  printf '%s' "$out"
+}
+
 render_xresources() {
   local i c
   {
@@ -47,6 +55,10 @@ render_xresources() {
     printf 'slock.input: %s\n' "$line"
     printf 'slock.failed: %s\n' "$red_dark"
     printf 'note.background: %s\n' "$bg3"
+    printf 'note.color1: %s\n' "$(tint "$bg3" "$accent")"
+    printf 'note.color2: %s\n' "$(tint "$bg3" "$green")"
+    printf 'note.color3: %s\n' "$(tint "$bg3" "$blue")"
+    printf 'note.color4: %s\n' "$(tint "$bg3" "$red")"
     printf 'note.foreground: %s\n' "$fg"
     printf 'note.cursor: %s\n' "$cursor"
   } > "$HOME/.cache/theme/Xresources"

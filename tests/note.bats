@@ -30,3 +30,12 @@ val() { sed -n "s/^$1=//p" "$REPO_ROOT/themes/blue" | tr 'A-F' 'a-f'; }
 @test "the old nvim note script is gone" {
   [ ! -e "$REPO_ROOT/bin/note" ]
 }
+
+@test "theme gives notes four tints of its own colors, matching the compiled black defaults" {
+  "$REPO_ROOT/theme" black >/dev/null
+  f="$HOME/.cache/theme/Xresources"
+  grep -qx "note.color1: #4a4435" "$f"
+  grep -qx "note.color2: #3d4136" "$f"
+  grep -qx "note.color3: #383e43" "$f"
+  grep -qx "note.color4: #483533" "$f"
+}
