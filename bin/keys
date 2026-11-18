@@ -37,6 +37,7 @@ dwm_keys() {
     function desc(f, a,   i) {
       gsub(/[ \t{}]/, "", a)
       if (f == "spawn" && a ~ /dmenucmd/) return "launcher"
+      if (f == "spawn" && a ~ /notecmd/) return "open or start a note"
       if (f == "spawn" && a ~ /floattermcmd/) return "floating terminal"
       if (f == "spawn" && a ~ /termcmd/) return "terminal"
       if (f == "spawnfloat" && a ~ /webcmd/) return "floating firefox, this one window"
@@ -51,6 +52,7 @@ dwm_keys() {
       if (f == "setlayout" && match(a, /layouts\[[0-9]+\]/)) { i = substr(a, RSTART + 8, RLENGTH - 9); return lay[i] }
       if (f == "setlayout") return "switch to the last layout"
       if (f == "togglefloating") return "float or tile the window"
+      if (f == "togglesticky") return "pin the window to every tag, or unpin it"
       if (f == "tag" && a ~ /~0/) return "put the window on every tag"
       if (f == "focusmon") return a ~ /-/ ? "focus the previous monitor" : "focus the next monitor"
       if (f == "tagmon") return a ~ /-/ ? "send the window to the previous monitor" : "send the window to the next monitor"

@@ -4,7 +4,7 @@ load test_helper
 
 setup() {
   setup_repo_root
-  REAL_SUCKLESS="$HOME/code/saeeedhany/suckless"
+  REAL_SUCKLESS="$(dirname "$REPO_ROOT")/suckless"
   setup_fake_home
   export SUCKLESS_DIR="$BATS_TEST_TMPDIR/suckless"
   mkdir -p "$SUCKLESS_DIR/dwm"
@@ -21,6 +21,8 @@ static const Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_Return, spawn,          {.v = termcmd } },
 	{ MODKEY|ControlMask,           XK_Return, spawn,          {.v = floattermcmd } },
 	{ MODKEY|ControlMask,           XK_w,      spawnfloat,     {.v = webcmd } },
+	{ MODKEY,                       XK_n,      spawn,          {.v = notecmd } },
+	{ MODKEY|ShiftMask,             XK_p,      togglesticky,   {0} },
 	{ MODKEY,                       XK_j,      focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_h,      setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_m,      setlayout,      {.v = &layouts[2]} },
@@ -49,6 +51,11 @@ key() { "$REPO_ROOT/bin/keys" | awk -v k="$1" 'BEGIN { FS = "  +" } $1 == k { pr
   [ "$(key 'super m')" = "monocle layout [M]" ]
   [ "$(key 'super ,')" = "focus the previous monitor" ]
   [ "$(key 'super ctrl shift q')" = "restart dwm" ]
+}
+
+@test "note and pin keys are described" {
+  [ "$(key 'super n')" = "open or start a note" ]
+  [ "$(key 'super shift p')" = "pin the window to every tag, or unpin it" ]
 }
 
 @test "tag keys collapse to one line per action, only up to the real tags" {

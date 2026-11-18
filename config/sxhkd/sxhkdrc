@@ -12,10 +12,6 @@ super + shift + equal
 super + shift + minus
     brightnessctl set 10%-
 
-# Quick app launches
-super + n
-    st -e nnn
-
 # Window management helpers
 super + shift + x
     xkill
